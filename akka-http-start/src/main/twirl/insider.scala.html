@@ -1,0 +1,10 @@
+
+@(sun: String)
+<html>
+@* Is a comment and is not rendered) *@
+<body>
+<div>@scala.xml.Unparsed(sun) World!</div>
+
+<p> @html.index.render(10, 100, 3, "OK", "KO") </p>
+</body>
+</html>

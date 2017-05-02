@@ -1,0 +1,120 @@
+2016-03-17 15:09:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Nieznany typ danych: ":"
+Unknown data type: ":"; SQL statement:
+Create table Weather ( id:Long, date:DateTime, press:Double, temp:Double, humi:Double, sun: Int, wind: Int) [50004-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:4059)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:3922)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:5864)
+	at org.h2.command.Parser.parseCreate(Parser.java:4217)
+	at org.h2.command.Parser.parsePrepared(Parser.java:360)
+	at org.h2.command.Parser.parse(Parser.java:315)
+	at org.h2.command.Parser.parse(Parser.java:287)
+	at org.h2.command.Parser.prepareCommand(Parser.java:252)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:170)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:158)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1388)
+	at org.h2.server.web.WebApp.query(WebApp.java:1061)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1023)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1010)
+	at org.h2.server.web.WebThread.process(WebThread.java:164)
+	at org.h2.server.web.WebThread.run(WebThread.java:89)
+	at java.lang.Thread.run(Thread.java:745)
+2016-03-17 15:10:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Nieznany typ danych: ":"
+Unknown data type: ":"; SQL statement:
+Create table Weather ( id:Long, date:DateTime, press:Double, temp:Double, humi:Double, sun: Integer, wind: Integer) [50004-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:4059)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:3922)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:5864)
+	at org.h2.command.Parser.parseCreate(Parser.java:4217)
+	at org.h2.command.Parser.parsePrepared(Parser.java:360)
+	at org.h2.command.Parser.parse(Parser.java:315)
+	at org.h2.command.Parser.parse(Parser.java:287)
+	at org.h2.command.Parser.prepareCommand(Parser.java:252)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:170)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:158)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1388)
+	at org.h2.server.web.WebApp.query(WebApp.java:1061)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1023)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1010)
+	at org.h2.server.web.WebThread.process(WebThread.java:164)
+	at org.h2.server.web.WebThread.run(WebThread.java:89)
+	at java.lang.Thread.run(Thread.java:745)
+2016-03-17 15:13:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Nieznany typ danych: ":"
+Unknown data type: ":"; SQL statement:
+Create table Weather ( id:BigInt, date:BigInt, press:Double, temp:Double, humi:Double, sun: INT, wind: INT) [50004-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:4059)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:3922)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:5864)
+	at org.h2.command.Parser.parseCreate(Parser.java:4217)
+	at org.h2.command.Parser.parsePrepared(Parser.java:360)
+	at org.h2.command.Parser.parse(Parser.java:315)
+	at org.h2.command.Parser.parse(Parser.java:287)
+	at org.h2.command.Parser.prepareCommand(Parser.java:252)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:170)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:158)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1388)
+	at org.h2.server.web.WebApp.query(WebApp.java:1061)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1023)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1010)
+	at org.h2.server.web.WebThread.process(WebThread.java:164)
+	at org.h2.server.web.WebThread.run(WebThread.java:89)
+	at java.lang.Thread.run(Thread.java:745)
+2016-03-17 15:15:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Nieznany typ danych: ":"
+Unknown data type: ":"; SQL statement:
+Create table Weather ( id:BIGINT, date:BIGINT, press:DOUBLE, temp:DOUBLE, humi:DOUBLE, sun: INT, wind: INT) [50004-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:4059)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:3922)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:5864)
+	at org.h2.command.Parser.parseCreate(Parser.java:4217)
+	at org.h2.command.Parser.parsePrepared(Parser.java:360)
+	at org.h2.command.Parser.parse(Parser.java:315)
+	at org.h2.command.Parser.parse(Parser.java:287)
+	at org.h2.command.Parser.prepareCommand(Parser.java:252)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:170)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:158)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1388)
+	at org.h2.server.web.WebApp.query(WebApp.java:1061)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1023)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1010)
+	at org.h2.server.web.WebThread.process(WebThread.java:164)
+	at org.h2.server.web.WebThread.run(WebThread.java:89)
+	at java.lang.Thread.run(Thread.java:745)
+2016-03-17 22:29:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Błąd składniowy w wyrażeniu SQL "SELECT * FROM WEATHER ORDER BY DATE DESC LIMITS[*] 1 "
+Syntax error in SQL statement "SELECT * FROM WEATHER ORDER BY DATE DESC LIMITS[*] 1 "; SQL statement:
+Select * FROM weather Order By date Desc Limits 1 [42000-191]
+2016-03-23 21:09:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Błąd składniowy w wyrażeniu SQL "DELETE *[*] FROM WEATHER "; oczekiwano "identifier"
+Syntax error in SQL statement "DELETE *[*] FROM WEATHER "; expected "identifier"; SQL statement:
+delete * FROM WEATHER [42001-191]
+2016-03-23 21:10:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Błąd składniowy w wyrażeniu SQL "DROP WEATHER[*] "; oczekiwano "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE"
+Syntax error in SQL statement "DROP WEATHER[*] "; expected "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE"; SQL statement:
+drop Weather [42001-191]

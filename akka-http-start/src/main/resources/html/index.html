@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Test JSON</title>
+    <script >
+
+    </script>
+</head>
+<body>
+
+<div><img src="/img/temp.png" style="width:24px;height:24px;"/>
+    <span id="temp"> </span> °C
+</div>
+<div><img src="/img/press.png" style="width:24px;height:24px;"/>
+    <span id="press"></span> hPa
+</div>
+<div><img src="/img/humi.png" style="width:24px;height:24px;"/>
+    <span id="humi"></span> %
+</div>
+<div><img src="/img/wind.png" style="width:24px;height:24px;"/>
+    <span id="wind"></span>
+</div>
+<div><img src="/img/sun.png" style="width:24px;height:24px;"/>
+    <span id="sun"></span>
+</div>
+<script>
+function loadDoc() {
+  var sun = ["bardzo duże", "duże", "średnie", "małe", "bardzo małe"];
+  var wind = ["bardzo duży", "duży", "średni", "mały", "bardzo mały"];
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+    var json = JSON.parse(xhttp.responseText);
+      document.getElementById("temp").innerHTML = json.temp;
+      document.getElementById("press").innerHTML = json.press;
+      document.getElementById("humi").innerHTML = json.humi;
+      document.getElementById("wind").innerHTML = wind[json.wind];
+      document.getElementById("sun").innerHTML = sun[json.sun];
+    }
+  };
+  xhttp.open("GET", "http://localhost:9000/api/json", true);
+  xhttp.send();
+}
+loadDoc();
+</script>
+
+
+
+
+</body>
+</html>
