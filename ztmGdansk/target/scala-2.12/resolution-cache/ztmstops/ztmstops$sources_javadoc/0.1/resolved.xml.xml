@@ -4,7 +4,7 @@
 		module="ztmstops$sources_javadoc"
 		revision="0.1"
 		status="integration"
-		publication="20180608160217"
+		publication="20180608191916"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
