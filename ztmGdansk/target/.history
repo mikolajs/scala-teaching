@@ -1,0 +1,11 @@
+set name := "ztmStops"
+set scalaVersion :="2.12.6"
+set version := "0.1"
+session save
+exit
+eclipse:eclipse
+eclipse
+exit
+eclipse
+run
+exit

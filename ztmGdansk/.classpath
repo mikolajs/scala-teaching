@@ -1,0 +1,66 @@
+<classpath>
+  <classpathentry kind="src" path="src/main/scala"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"></classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/io.circe/circe-core_2.12/srcs/circe-core_2.12-0.9.3-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/io.circe/circe-core_2.12/jars/circe-core_2.12-0.9.3.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/io.circe/circe-core_2.12/docs/circe-core_2.12-0.9.3-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/io.circe/circe-numbers_2.12/srcs/circe-numbers_2.12-0.9.3-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/io.circe/circe-numbers_2.12/jars/circe-numbers_2.12-0.9.3.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/io.circe/circe-numbers_2.12/docs/circe-numbers_2.12-0.9.3-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/org.typelevel/cats-core_2.12/srcs/cats-core_2.12-1.0.1-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/org.typelevel/cats-core_2.12/jars/cats-core_2.12-1.0.1.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/org.typelevel/cats-core_2.12/docs/cats-core_2.12-1.0.1-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/org.typelevel/cats-macros_2.12/srcs/cats-macros_2.12-1.0.1-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/org.typelevel/cats-macros_2.12/jars/cats-macros_2.12-1.0.1.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/org.typelevel/cats-macros_2.12/docs/cats-macros_2.12-1.0.1-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/org.typelevel/machinist_2.12/srcs/machinist_2.12-0.6.2-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/org.typelevel/machinist_2.12/jars/machinist_2.12-0.6.2.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/org.typelevel/machinist_2.12/docs/machinist_2.12-0.6.2-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/org.typelevel/cats-kernel_2.12/srcs/cats-kernel_2.12-1.0.1-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/org.typelevel/cats-kernel_2.12/jars/cats-kernel_2.12-1.0.1.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/org.typelevel/cats-kernel_2.12/docs/cats-kernel_2.12-1.0.1-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/io.circe/circe-generic_2.12/srcs/circe-generic_2.12-0.9.3-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/io.circe/circe-generic_2.12/jars/circe-generic_2.12-0.9.3.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/io.circe/circe-generic_2.12/docs/circe-generic_2.12-0.9.3-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/org.typelevel/macro-compat_2.12/srcs/macro-compat_2.12-1.1.1-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/org.typelevel/macro-compat_2.12/jars/macro-compat_2.12-1.1.1.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/org.typelevel/macro-compat_2.12/docs/macro-compat_2.12-1.1.1-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/com.chuusai/shapeless_2.12/srcs/shapeless_2.12-2.3.3-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/com.chuusai/shapeless_2.12/bundles/shapeless_2.12-2.3.3.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/com.chuusai/shapeless_2.12/docs/shapeless_2.12-2.3.3-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/io.circe/circe-parser_2.12/srcs/circe-parser_2.12-0.9.3-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/io.circe/circe-parser_2.12/jars/circe-parser_2.12-0.9.3.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/io.circe/circe-parser_2.12/docs/circe-parser_2.12-0.9.3-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/io.circe/circe-jawn_2.12/srcs/circe-jawn_2.12-0.9.3-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/io.circe/circe-jawn_2.12/jars/circe-jawn_2.12-0.9.3.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/io.circe/circe-jawn_2.12/docs/circe-jawn_2.12-0.9.3-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry sourcepath="/home/ms/.ivy2/cache/org.spire-math/jawn-parser_2.12/srcs/jawn-parser_2.12-0.11.1-sources.jar" kind="lib" path="/home/ms/.ivy2/cache/org.spire-math/jawn-parser_2.12/jars/jawn-parser_2.12-0.11.1.jar">
+    <attributes>
+      <attribute name="javadoc_location" value="jar:file:/home/ms/.ivy2/cache/org.spire-math/jawn-parser_2.12/docs/jawn-parser_2.12-0.11.1-javadoc.jar!/"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
+</classpath>
