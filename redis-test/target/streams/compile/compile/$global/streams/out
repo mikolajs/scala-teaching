@@ -1,4 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0m/home/ms/Programy/scala-teaching/redis-test/src/main/scala/eu/brosbit/Main.scala:8:39: value openOr is not a member of Option[String][0m
-[0m[[0m[31merror[0m] [0m[0m    println(redis.get("klucztestowy").openOr("Brak klucza"))[0m
-[0m[[0m[31merror[0m] [0m[0m                                      ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
