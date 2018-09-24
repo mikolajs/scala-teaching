@@ -1,0 +1,38 @@
+<html>
+<head>
+<script>
+var socket = new WebSocket("ws://localhost:9090/process");
+var info = document.getElementById("info");
+socket.onopen = function() {  
+info.innerHTML = "ready state: " + info.readyState;
+socket.send("PING");
+info.innerHTML +="<br/> message was sent"
+};
+socket.onmessage = function(event){
+  info.innerHTML += "<br/> data received: " + event.data;
+};
+socket.onclose = function(){
+info.innerHTML += "<br/> connection closed ";
+}
+</script>
+</head>
+<body>
+<div id="info"> 
+</div>
+<script>
+var socket = new WebSocket("ws://localhost:9090/process");
+var info = document.getElementById("info");
+socket.onopen = function() {  
+info.innerHTML = "ready state: " + info.readyState;
+socket.send("PING");
+info.innerHTML +="<br/> message was sent"
+};
+socket.onmessage = function(event){
+  info.innerHTML += "<br/> data received: " + event.data;
+};
+socket.onclose = function(){
+info.innerHTML += "<br/> connection closed ";
+}
+</script>
+<body>
+</html>
