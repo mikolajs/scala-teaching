@@ -4,6 +4,7 @@ package eu.dgt
 import scala.concurrent.{ Await, ExecutionContext, Future }
 import scala.concurrent.duration.Duration
 import scala.util.{ Failure, Success }
+import scala.io.StdIn
 
 import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.Http
@@ -37,17 +38,20 @@ object QuickstartServer extends App with UserRoutes {
   //#http-server
   val serverBinding: Future[Http.ServerBinding] =
     Http().bindAndHandle(routes, "localhost", 8080)
+  StdIn.readLine() // let it run until user presses return
+  serverBinding
+    .flatMap(_.unbind()) // trigger unbinding from the port
+    .onComplete(_ => system.terminate())
 
-  serverBinding.onComplete {
-    case Success(bound) =>
-      println(s"Server online at http://${bound.localAddress.getHostString}:${bound.localAddress.getPort}/")
-    case Failure(e) =>
-      Console.err.println(s"Server could not start!")
-      e.printStackTrace()
-      system.terminate()
-  }
-
-  Await.result(system.whenTerminated, Duration.Inf)
+  //  serverBinding.onComplete {
+  //    case Success(bound) =>
+  //      println(s"Server online at http://${bound.localAddress.getHostString}:${bound.localAddress.getPort}/")
+  //    case Failure(e) =>
+  //      Console.err.println(s"Server could not start!")
+  //      e.printStackTrace()
+  //      system.terminate()
+  //  }
+  //Await.result(system.whenTerminated, Duration.Inf)
   //#http-server
   //#main-class
 }
