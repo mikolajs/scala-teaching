@@ -1,0 +1,219 @@
+{
+    "version" : "1.1.0-M2",
+    "project" : {
+        "name" : "cats-learnig-test",
+        "directory" : "/home/administrator/Programy/scala-teaching/cats-learnig",
+        "sources" : [
+            "/home/administrator/Programy/scala-teaching/cats-learnig/src/test/scala-2.12",
+            "/home/administrator/Programy/scala-teaching/cats-learnig/src/test/scala",
+            "/home/administrator/Programy/scala-teaching/cats-learnig/src/test/java",
+            "/home/administrator/Programy/scala-teaching/cats-learnig/target/scala-2.12/src_managed/test"
+        ],
+        "dependencies" : [
+            "cats-learnig"
+        ],
+        "classpath" : [
+            "/home/administrator/Programy/scala-teaching/cats-learnig/.bloop/cats-learnig/scala-2.12/classes",
+            "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar",
+            "/home/administrator/.ivy2/cache/org.typelevel/cats-core_2.12/jars/cats-core_2.12-1.0.0-MF.jar",
+            "/home/administrator/.ivy2/cache/org.typelevel/cats-macros_2.12/jars/cats-macros_2.12-1.0.0-MF.jar",
+            "/home/administrator/.ivy2/cache/org.typelevel/machinist_2.12/jars/machinist_2.12-0.6.1.jar",
+            "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar",
+            "/home/administrator/.ivy2/cache/org.typelevel/cats-kernel_2.12/jars/cats-kernel_2.12-1.0.0-MF.jar"
+        ],
+        "out" : "/home/administrator/Programy/scala-teaching/cats-learnig/.bloop/cats-learnig",
+        "classesDir" : "/home/administrator/Programy/scala-teaching/cats-learnig/.bloop/cats-learnig/scala-2.12/test-classes",
+        "resources" : [
+            "/home/administrator/Programy/scala-teaching/cats-learnig/src/test/resources",
+            "/home/administrator/Programy/scala-teaching/cats-learnig/target/scala-2.12/resource_managed/test"
+        ],
+        "scala" : {
+            "organization" : "org.scala-lang",
+            "name" : "scala-compiler",
+            "version" : "2.12.6",
+            "options" : [
+                "-encoding",
+                "UTF-8",
+                "-deprecation",
+                "-unchecked",
+                "-feature",
+                "-language:higherKinds",
+                "-Xlint",
+                "-Xfatal-warnings",
+                "-Ypartial-unification",
+                "-P:semanticdb:failures:warning",
+                "-P:semanticdb:sourceroot:/home/administrator/Programy/scala-teaching/cats-learnig",
+                "-Yrangepos",
+                "-Xplugin-require:semanticdb",
+                "-Xplugin:/home/administrator/.ivy2/cache/org.spire-math/kind-projector_2.12/jars/kind-projector_2.12-0.9.3.jar",
+                "-Xplugin:/home/administrator/.ivy2/cache/org.scalameta/semanticdb-scalac_2.12.6/jars/semanticdb-scalac_2.12.6-4.1.0.jar"
+            ],
+            "jars" : [
+                "/home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar",
+                "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar",
+                "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar",
+                "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar",
+                "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar"
+            ],
+            "setup" : {
+                "order" : "mixed",
+                "addLibraryToBootClasspath" : true,
+                "addCompilerToClasspath" : false,
+                "addExtraJarsToClasspath" : false,
+                "manageBootClasspath" : true,
+                "filterLibraryFromClasspath" : true
+            }
+        },
+        "java" : {
+            "options" : [
+            ]
+        },
+        "test" : {
+            "frameworks" : [
+                {
+                    "names" : [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names" : [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names" : [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names" : [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names" : [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                }
+            ],
+            "options" : {
+                "excludes" : [
+                ],
+                "arguments" : [
+                ]
+            }
+        },
+        "platform" : {
+            "name" : "jvm",
+            "config" : {
+                "home" : "/usr/lib/jvm/java-11-openjdk-amd64",
+                "options" : [
+                ]
+            },
+            "mainClass" : [
+            ]
+        },
+        "resolution" : {
+            "modules" : [
+                {
+                    "organization" : "org.scala-lang",
+                    "name" : "scala-library",
+                    "version" : "2.12.6",
+                    "artifacts" : [
+                        {
+                            "name" : "scala-library",
+                            "path" : "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar"
+                        },
+                        {
+                            "name" : "scala-library",
+                            "classifier" : "sources",
+                            "path" : "/home/administrator/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.6-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization" : "org.typelevel",
+                    "name" : "cats-core_2.12",
+                    "version" : "1.0.0-MF",
+                    "artifacts" : [
+                        {
+                            "name" : "cats-core_2.12",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/cats-core_2.12/jars/cats-core_2.12-1.0.0-MF.jar"
+                        },
+                        {
+                            "name" : "cats-core_2.12",
+                            "classifier" : "sources",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/cats-core_2.12/srcs/cats-core_2.12-1.0.0-MF-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization" : "org.typelevel",
+                    "name" : "cats-macros_2.12",
+                    "version" : "1.0.0-MF",
+                    "artifacts" : [
+                        {
+                            "name" : "cats-macros_2.12",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/cats-macros_2.12/jars/cats-macros_2.12-1.0.0-MF.jar"
+                        },
+                        {
+                            "name" : "cats-macros_2.12",
+                            "classifier" : "sources",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/cats-macros_2.12/srcs/cats-macros_2.12-1.0.0-MF-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization" : "org.typelevel",
+                    "name" : "machinist_2.12",
+                    "version" : "0.6.1",
+                    "artifacts" : [
+                        {
+                            "name" : "machinist_2.12",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/machinist_2.12/jars/machinist_2.12-0.6.1.jar"
+                        },
+                        {
+                            "name" : "machinist_2.12",
+                            "classifier" : "sources",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/machinist_2.12/srcs/machinist_2.12-0.6.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization" : "org.scala-lang",
+                    "name" : "scala-reflect",
+                    "version" : "2.12.6",
+                    "artifacts" : [
+                        {
+                            "name" : "scala-reflect",
+                            "path" : "/home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar"
+                        },
+                        {
+                            "name" : "scala-reflect",
+                            "classifier" : "sources",
+                            "path" : "/home/administrator/.ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.12.6-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization" : "org.typelevel",
+                    "name" : "cats-kernel_2.12",
+                    "version" : "1.0.0-MF",
+                    "artifacts" : [
+                        {
+                            "name" : "cats-kernel_2.12",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/cats-kernel_2.12/jars/cats-kernel_2.12-1.0.0-MF.jar"
+                        },
+                        {
+                            "name" : "cats-kernel_2.12",
+                            "classifier" : "sources",
+                            "path" : "/home/administrator/.ivy2/cache/org.typelevel/cats-kernel_2.12/srcs/cats-kernel_2.12-1.0.0-MF-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

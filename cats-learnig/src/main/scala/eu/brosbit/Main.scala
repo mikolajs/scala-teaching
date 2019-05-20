@@ -1,4 +1,4 @@
-package eu.dgt
+package eu.brosbit
 
 import cats.instances.string._
 import cats.syntax.semigroup._
