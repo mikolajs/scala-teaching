@@ -1,5 +1,97 @@
 [0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
 [0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
+java.nio.file.NoSuchFileException: /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
+	at sun.nio.fs.UnixException.translateToIOException(UnixException.java:86)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:102)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:107)
+	at sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:144)
+	at sun.nio.fs.LinuxFileSystemProvider.readAttributes(LinuxFileSystemProvider.java:99)
+	at java.nio.file.Files.readAttributes(Files.java:1737)
+	at bloop.ScalaInstance.$anonfun$hashCode$1(ScalaInstance.scala:65)
+	at scala.collection.TraversableLike.$anonfun$map$1(TraversableLike.scala:237)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:39)
+	at scala.collection.TraversableLike.map(TraversableLike.scala:237)
+	at scala.collection.TraversableLike.map$(TraversableLike.scala:230)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:108)
+	at bloop.ScalaInstance.<init>(ScalaInstance.scala:61)
+	at bloop.ScalaInstance$.newInstance$1(ScalaInstance.scala:109)
+	at bloop.ScalaInstance$.$anonfun$apply$7(ScalaInstance.scala:114)
+	at java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1660)
+	at bloop.ScalaInstance$.apply(ScalaInstance.scala:114)
+	at bloop.data.Project$.$anonfun$fromConfig$1(Project.scala:110)
+	at scala.Option.flatMap(Option.scala:188)
+	at bloop.data.Project$.fromConfig(Project.scala:106)
+	at bloop.data.Project$.fromBytesAndOrigin(Project.scala:170)
+	at bloop.engine.BuildLoader$.$anonfun$loadBuildFromConfigurationFiles$2(BuildLoader.scala:42)
+	at monix.eval.internal.TaskRunLoop$.monix$eval$internal$TaskRunLoop$$loop$1(TaskRunLoop.scala:187)
+	at monix.eval.internal.TaskRunLoop$RestartCallback$1.onSuccess(TaskRunLoop.scala:119)
+	at monix.eval.Task$.$anonfun$forkedUnit$2(Task.scala:1463)
+	at monix.execution.internal.forkJoin.AdaptedForkJoinTask.exec(AdaptedForkJoinTask.scala:27)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+[0m[31m[E][0m /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
+java.nio.file.NoSuchFileException: /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
+	at sun.nio.fs.UnixException.translateToIOException(UnixException.java:86)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:102)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:107)
+	at sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:144)
+	at sun.nio.fs.LinuxFileSystemProvider.readAttributes(LinuxFileSystemProvider.java:99)
+	at java.nio.file.Files.readAttributes(Files.java:1737)
+	at bloop.ScalaInstance.$anonfun$hashCode$1(ScalaInstance.scala:65)
+	at scala.collection.TraversableLike.$anonfun$map$1(TraversableLike.scala:237)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:39)
+	at scala.collection.TraversableLike.map(TraversableLike.scala:237)
+	at scala.collection.TraversableLike.map$(TraversableLike.scala:230)
+	at scala.collection.AbstractTraversable.map(Traversable.scala:108)
+	at bloop.ScalaInstance.<init>(ScalaInstance.scala:61)
+	at bloop.ScalaInstance$.newInstance$1(ScalaInstance.scala:109)
+	at bloop.ScalaInstance$.$anonfun$apply$7(ScalaInstance.scala:114)
+	at java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1660)
+	at bloop.ScalaInstance$.apply(ScalaInstance.scala:114)
+	at bloop.data.Project$.$anonfun$fromConfig$1(Project.scala:110)
+	at scala.Option.flatMap(Option.scala:188)
+	at bloop.data.Project$.fromConfig(Project.scala:106)
+	at bloop.data.Project$.fromBytesAndOrigin(Project.scala:170)
+	at bloop.engine.BuildLoader$.$anonfun$loadBuildFromConfigurationFiles$2(BuildLoader.scala:42)
+	at monix.eval.internal.TaskRunLoop$.monix$eval$internal$TaskRunLoop$$loop$1(TaskRunLoop.scala:187)
+	at monix.eval.internal.TaskRunLoop$RestartCallback$1.onSuccess(TaskRunLoop.scala:119)
+	at monix.eval.Task$.$anonfun$forkedUnit$2(Task.scala:1463)
+	at monix.execution.internal.forkJoin.AdaptedForkJoinTask.exec(AdaptedForkJoinTask.scala:27)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.pollAndExecAll(ForkJoinPool.java:1021)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.execLocalTasks(ForkJoinPool.java:1046)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1058)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
+[0m[31m[E][0m /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
+[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
 [0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
 [0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
 [0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
@@ -43,100 +135,6 @@ java.nio.file.NoSuchFileException: /home/administrator/.sbt/boot/scala-2.12.6/li
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
 [0m[31m[E][0m /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
-[0m[31m[E][0m /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
-java.nio.file.NoSuchFileException: /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
-	at sun.nio.fs.UnixException.translateToIOException(UnixException.java:86)
-	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:102)
-	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:107)
-	at sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
-	at sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:144)
-	at sun.nio.fs.LinuxFileSystemProvider.readAttributes(LinuxFileSystemProvider.java:99)
-	at java.nio.file.Files.readAttributes(Files.java:1737)
-	at bloop.ScalaInstance.$anonfun$hashCode$1(ScalaInstance.scala:65)
-	at scala.collection.TraversableLike.$anonfun$map$1(TraversableLike.scala:237)
-	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
-	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
-	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:39)
-	at scala.collection.TraversableLike.map(TraversableLike.scala:237)
-	at scala.collection.TraversableLike.map$(TraversableLike.scala:230)
-	at scala.collection.AbstractTraversable.map(Traversable.scala:108)
-	at bloop.ScalaInstance.<init>(ScalaInstance.scala:61)
-	at bloop.ScalaInstance$.newInstance$1(ScalaInstance.scala:109)
-	at bloop.ScalaInstance$.$anonfun$apply$7(ScalaInstance.scala:114)
-	at java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1660)
-	at bloop.ScalaInstance$.apply(ScalaInstance.scala:114)
-	at bloop.data.Project$.$anonfun$fromConfig$1(Project.scala:110)
-	at scala.Option.flatMap(Option.scala:188)
-	at bloop.data.Project$.fromConfig(Project.scala:106)
-	at bloop.data.Project$.fromBytesAndOrigin(Project.scala:170)
-	at bloop.engine.BuildLoader$.$anonfun$loadBuildFromConfigurationFiles$2(BuildLoader.scala:42)
-	at monix.eval.internal.TaskRunLoop$.monix$eval$internal$TaskRunLoop$$loop$1(TaskRunLoop.scala:187)
-	at monix.eval.internal.TaskRunLoop$RestartCallback$1.onSuccess(TaskRunLoop.scala:119)
-	at monix.eval.Task$.$anonfun$forkedUnit$2(Task.scala:1463)
-	at monix.execution.internal.forkJoin.AdaptedForkJoinTask.exec(AdaptedForkJoinTask.scala:27)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.pollAndExecAll(ForkJoinPool.java:1021)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.execLocalTasks(ForkJoinPool.java:1046)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1058)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-xml_2.12.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-library.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-compiler.jar doesn't exist!
-[0m[33m[W][0m Scala instance jar /home/administrator/.sbt/boot/scala-2.12.6/lib/scala-reflect.jar doesn't exist!
-java.nio.file.NoSuchFileException: /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
-	at sun.nio.fs.UnixException.translateToIOException(UnixException.java:86)
-	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:102)
-	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:107)
-	at sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
-	at sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:144)
-	at sun.nio.fs.LinuxFileSystemProvider.readAttributes(LinuxFileSystemProvider.java:99)
-	at java.nio.file.Files.readAttributes(Files.java:1737)
-	at bloop.ScalaInstance.$anonfun$hashCode$1(ScalaInstance.scala:65)
-	at scala.collection.TraversableLike.$anonfun$map$1(TraversableLike.scala:237)
-	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
-	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
-	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:39)
-	at scala.collection.TraversableLike.map(TraversableLike.scala:237)
-	at scala.collection.TraversableLike.map$(TraversableLike.scala:230)
-	at scala.collection.AbstractTraversable.map(Traversable.scala:108)
-	at bloop.ScalaInstance.<init>(ScalaInstance.scala:61)
-	at bloop.ScalaInstance$.newInstance$1(ScalaInstance.scala:109)
-	at bloop.ScalaInstance$.$anonfun$apply$7(ScalaInstance.scala:114)
-	at java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1660)
-	at bloop.ScalaInstance$.apply(ScalaInstance.scala:114)
-	at bloop.data.Project$.$anonfun$fromConfig$1(Project.scala:110)
-	at scala.Option.flatMap(Option.scala:188)
-	at bloop.data.Project$.fromConfig(Project.scala:106)
-	at bloop.data.Project$.fromBytesAndOrigin(Project.scala:170)
-	at bloop.engine.BuildLoader$.$anonfun$loadBuildFromConfigurationFiles$2(BuildLoader.scala:42)
-	at monix.eval.internal.TaskRunLoop$.monix$eval$internal$TaskRunLoop$$loop$1(TaskRunLoop.scala:187)
-	at monix.eval.internal.TaskRunLoop$RestartCallback$1.onSuccess(TaskRunLoop.scala:119)
-	at monix.eval.Task$.$anonfun$forkedUnit$2(Task.scala:1463)
-	at monix.execution.internal.forkJoin.AdaptedForkJoinTask.exec(AdaptedForkJoinTask.scala:27)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.pollAndExecAll(ForkJoinPool.java:1021)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.execLocalTasks(ForkJoinPool.java:1046)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1058)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
-[0m[31m[E][0m /home/administrator/.sbt/boot/scala-2.12.6/lib/jline.jar
 INFO  bloop exit: 1
 ERROR Failed to connect with build server, no functionality will work.
 scala.meta.internal.metals.BloopServers$NoResponse$: no response: bloop bsp
@@ -153,5 +151,4 @@ scala.meta.internal.metals.BloopServers$NoResponse$: no response: bloop bsp
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
 
-INFO  no build target: using presentation compiler with only scala-library
 INFO  shutting down Metals
