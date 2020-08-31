@@ -1,0 +1,147 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "root-test",
+        "directory": "/home/ms/Programming/scala-teaching/rekrutacja",
+        "workspaceDir": "/home/ms/Programming/scala-teaching/rekrutacja",
+        "sources": [
+            "/home/ms/Programming/scala-teaching/rekrutacja/src/test/scala-2.13",
+            "/home/ms/Programming/scala-teaching/rekrutacja/src/test/scala",
+            "/home/ms/Programming/scala-teaching/rekrutacja/src/test/java",
+            "/home/ms/Programming/scala-teaching/rekrutacja/target/scala-2.13/src_managed/test"
+        ],
+        "dependencies": [
+            "root"
+        ],
+        "classpath": [
+            "/home/ms/Programming/scala-teaching/rekrutacja/.bloop/root/scala-2.13/classes",
+            "/home/ms/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.13.2.jar",
+            "/home/ms/.ivy2/cache/com.github.tototoshi/scala-csv_2.13/jars/scala-csv_2.13-1.3.6.jar"
+        ],
+        "out": "/home/ms/Programming/scala-teaching/rekrutacja/.bloop/root",
+        "classesDir": "/home/ms/Programming/scala-teaching/rekrutacja/.bloop/root/scala-2.13/test-classes",
+        "resources": [
+            "/home/ms/Programming/scala-teaching/rekrutacja/src/test/resources",
+            "/home/ms/Programming/scala-teaching/rekrutacja/target/scala-2.13/resource_managed/test"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "2.13.2",
+            "options": [
+                
+            ],
+            "jars": [
+                "/home/ms/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.13.2.jar",
+                "/home/ms/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.13.2.jar",
+                "/home/ms/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.13.2.jar",
+                "/home/ms/.ivy2/cache/org.jline/jline/jars/jline-3.14.1.jar",
+                "/home/ms/.ivy2/cache/net.java.dev.jna/jna/jars/jna-5.3.1.jar"
+            ],
+            "analysis": "/home/ms/Programming/scala-teaching/rekrutacja/target/streams/test/bloopAnalysisOut/$global/streams/inc_compile_2.13.zip",
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "/usr/lib/jvm/java-8-oracle/jre",
+                "options": [
+                    "-Duser.dir=/home/ms/Programming/scala-teaching/rekrutacja"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.13.2",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/ms/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.13.2.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/ms/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.13.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.github.tototoshi",
+                    "name": "scala-csv_2.13",
+                    "version": "1.3.6",
+                    "artifacts": [
+                        {
+                            "name": "scala-csv_2.13",
+                            "path": "/home/ms/.ivy2/cache/com.github.tototoshi/scala-csv_2.13/jars/scala-csv_2.13-1.3.6.jar"
+                        },
+                        {
+                            "name": "scala-csv_2.13",
+                            "classifier": "sources",
+                            "path": "/home/ms/.ivy2/cache/com.github.tototoshi/scala-csv_2.13/srcs/scala-csv_2.13-1.3.6-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "test"
+        ]
+    }
+}
