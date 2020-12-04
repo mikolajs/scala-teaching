@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Image upload</title>
+</head>
+<body>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Test ładowania pliku</legend>
+        <label>Pobierz plik:<input type="file" accept="image/*" name="file" /></label><br/>
+        <input type="submit" value="Dodaj" />
+    </fieldset>
+</form>
+</body>
+</html>

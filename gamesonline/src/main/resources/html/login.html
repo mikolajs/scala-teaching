@@ -1,0 +1,146 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="shortcut icon" href="/img/flavicon.ico" />
+    <title>LOGIN</title>
+    <script >
+    var signing = "in";
+     function createLogin(){
+       let url = "/login/";
+       if(signing == "in"){
+         url += "signin?name=";
+       } else {
+         url += "signon?name=";
+       }
+       url += document.getElementById("inputName").value.trim();
+       url += "&password=";
+       url += document.getElementById("inputPassword").value.trim();
+       return url;
+     }
+     function makeLogin(){
+       document.getElementById('errorsInfo').innerHTML = "";
+       let url = createLogin();
+       console.log(url);
+       var xhttp = new XMLHttpRequest();
+       xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+          //expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+          let objJSON = JSON.parse(this.responseText);
+          let code = objJSON.code;
+          if(signing == "on"){
+            //alert(this.responseText);
+            if(objJSON.ins == false) {
+              document.getElementById('errorsInfo').innerHTML = "Wpisana nazwa już istnieje";
+              return;
+            }
+          } else {
+            //alert(this.responseText);
+          }
+          let exhours = 5;
+          let d = new Date();
+          d.setTime(d.getTime() + (exhours*60*60*1000));
+          var expires = " ;expires="+ d.toUTCString();
+          document.cookie = "gameplayer="+code + expires + " ;path=/";
+          document.location.href = "http://" + document.location.host + "/html/searchgame.html";
+         }
+       };
+       xhttp.open("GET", url, true);
+       xhttp.send();
+     }
+
+     function onChangeSign(elem){
+       let action = elem.value;
+       if(signing == action) return;
+       signing = action;
+       if(action == "in") {
+         document.getElementById("infoHeader").innerHTML = "Proszę się zalogować";
+         document.getElementById("btnSign").innerHTML = "Zaloguj";
+       } else {
+         document.getElementById("infoHeader").innerHTML = "Proszę utworzyć konto";
+         document.getElementById("btnSign").innerHTML = "Utwórz konto";
+       }
+     }
+    </script>
+    <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #f5f5f5;
+    }
+
+    .form-signin {
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      margin: auto;
+    }
+    .form-signin .checkbox {
+      font-weight: 400;
+    }
+    .form-signin .form-control {
+      position: relative;
+      box-sizing: border-box;
+      height: auto;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .form-signin .form-control:focus {
+      z-index: 2;
+    }
+    .form-signin input[type="email"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .form-signin input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+
+    </style>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container-fluid">
+
+    <div class="form-signin">
+        <fieldset>
+          <h1 class="h3 mb-3 font-weight-normal" id="infoHeader">Proszę się zalogować</h1>
+            <label for="inputEmail" class="sr-only">Nazwa gracza:</label>
+  <input type="text" id="inputName" class="form-control" placeholder="Nazwa gracza" required autofocus>
+  <label for="inputPassword" class="sr-only">Hasło:</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="hasło" required>
+  <button class="btn btn-lg btn-primary btn-block" type="submit" id="btnSign" onclick="makeLogin();">Zaloguj</button>
+        </fieldset>
+        <div class="">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sign" id="signin" value="in" onchange="onChangeSign(this);" checked>
+            <label class="form-check-label" for="signin" >Zaloguj się</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sign" id="signon" onchange="onChangeSign(this);" value="on" >
+            <label class="form-check-label" for="signon">Utwórz gracza</label>
+          </div>
+        </div>
+        <div class="card">  <div class="card-body" id="errorsInfo"></div>
+</div>
+    </div>
+</div>
+
+
+
+
+
+</body>
+</html>

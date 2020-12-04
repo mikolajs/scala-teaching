@@ -4,7 +4,7 @@ import play.twirl.sbt.SbtTwirl
 name          := "akka-http-start"
 organization  := "pl.edu.osp"
 version       := "0.0.2"
-scalaVersion  := "2.11.7"
+scalaVersion  := "2.13.333"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
 lazy val `akka-http-start` = (project in file(".")).enablePlugins(SbtTwirl, JavaAppPackaging)

@@ -1,0 +1,123 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="shortcut icon" href="/img/flavicon.ico"/>
+    <title>Wybór gracza</title>
+    <script src="/js/searching.js"></script>
+    <script >
+      var searching = new Searching();
+    </script>
+    <style>
+    html,
+    body {
+      height: 100%;
+    }
+    main {
+      margin-top: 10px;
+    }
+
+    </style> <link href="../css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <div class="bg-dark text-center text-white" id="navbarHeader">
+      <div class="container">
+        <div class="row">
+          <p>Gra <span>Kółko i krzyżyk 5 w rzędzie</span> (TicTacToe5)
+            <button onclick="searching.logout();">LOGOUT</button> </p>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+<main role="main">
+
+  <div class="container">
+        <div class="jumbotron rounded bg-info">
+            <div class="col-md-10">
+              <h1 class="display-4 font-italic">Gracze poszukujący</h1>
+              <p class="lead">Gra jest obowiązkowa</p>
+              <hr class="my-4">
+              <p class="lead">Jesteś graczem o kodzie: <span id="playerCode"></span></p>
+                <p>Utwórz własną grę:
+                  <button class="btn btn-success" onclick="searching.makeOwnGame();">Zatwierdź</button> </p>
+            </div>
+        </div>
+  </div>
+
+    <div class="container">
+          <div class="row">
+            <div class="col-7">
+              <h3>Pokoje</h3>
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Nazwa gracza</th>
+                    <th scope="col">Punkty</th>
+                    <th scope="col">Połącz</th>
+                  </tr>
+                </thead>
+                <tbody id ="tableRoomBody">
+                </tbody>
+                <tfoot class="thead-dark">
+                  <tr>
+                    <th scope="col">Nazwa gracza</th>
+                    <th scope="col">Punkty</th>
+                    <th scope="col">Połącz</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="col-5">
+              <h3>Gracze</h3>
+              <table class="table table-striped">
+              <thead class="thead-dark">
+              <tr>
+              <th scope="col">Nazwa gracza</th>
+              <th scope="col">Punkty</th>
+              </tr>
+              </thead>
+              <tbody id ="tableUserBody">
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+              </tbody>
+              <tfoot class="thead-dark">
+                <tr>
+                  <th scope="col">Nazwa gracza</th>
+                  <th scope="col">Punkty</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+
+    </div>
+  </div>
+</main>
+
+<div class="modal" tabindex="-1" role="dialog" style="display:none;" id="popInfoModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="popInfoHead">Brak połączenia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" onclick="searching.closeModal();">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="popInfoText">Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+          onclick="searching.closeModal();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script> searching.init(); </script>
+  </body>
+</html>
