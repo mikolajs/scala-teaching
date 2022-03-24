@@ -7,6 +7,7 @@ import akka.http.scaladsl.server.Directives._
 import eu.brosbit.games.GamesPlayers
 import spray.json.DefaultJsonProtocol.{StringJsonFormat, jsonFormat2}
 
+import scala.concurrent.duration.DurationInt
 import scala.io.StdIn
 import scala.util.Try
 
@@ -120,32 +121,17 @@ object HttpServerRoutingMinimal {
                   }
                 }
               }
-            },
-            path("ismoved"){
-              get {
-                parameter("room"){ aRoom =>
-                  headerValueByName("code") { code =>
-                    val json = GamesPlayers.checkMove(code, aRoom)
-                    if(json.isDefined) complete(json)
-                    else complete(StatusCodes.NotAcceptable)
-                  }
-                }
-              }
             }
           )
-        } ~ pathPrefix("html") {
-            getFromResourceDirectory("html")
-        } ~ pathPrefix("js") {
-            getFromResourceDirectory("js")
-        }  ~ pathPrefix("img") {
-           getFromResourceDirectory("img")
-        }  ~ pathPrefix("css") {
-          getFromResourceDirectory("css")
         }
 
-      val bindingFuture = Http().newServerAt("localhost", 9090).bind(route)
-
-      println(s"Server online at http://localhost:9090/\nPress RETURN to stop...")
+      val bindingFuture = Http().newServerAt("localhost", 9099).bind(route)
+      println(s"Server online at http://localhost:9099/\nPress RETURN to stop...")
+      system.scheduler.scheduleWithFixedDelay(300.seconds, 300.seconds)(
+        () => {
+          GamesPlayers.clearDysfunctionalRooms()
+        }
+      )
       StdIn.readLine() // let it run until user presses return
       bindingFuture
         .flatMap(_.unbind()) // trigger unbinding from the port

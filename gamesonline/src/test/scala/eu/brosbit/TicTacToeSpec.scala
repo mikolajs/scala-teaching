@@ -4,6 +4,7 @@ import eu.brosbit.games.{GameMove, PlayerLogged, TicTacToe5}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TicTacToeSpec extends FlatSpec with Matchers {
+  /*
   val player1 = PlayerLogged("1234", "graczA")
   val player2 = PlayerLogged("5678", "graczB")
   val ticTacToe5 = new TicTacToe5("123456", player1, player2)
@@ -89,4 +90,5 @@ class TicTacToeSpec extends FlatSpec with Matchers {
     infoNext1 shouldEqual("next")
     infoWrong1 shouldEqual("wrong user")
   }
+  */
 }

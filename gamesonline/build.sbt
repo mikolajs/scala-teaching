@@ -1,3 +1,7 @@
+//import org.apache.logging.log4j.core.config.composite.MergeStrategy
+import sbt.Keys.mainClass
+//import sun.security.tools.PathList
+
 lazy val akkaHttpVersion = "10.2.1"
 lazy val akkaVersion    = "2.6.10"
 
@@ -5,7 +9,8 @@ lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
       organization    := "eu.brosbit",
-      scalaVersion    := "2.13.3"
+      scalaVersion    := "2.13.3",
+      mainClass in Compile := Some("eu.brosbit.HttpServerRoutingMinimal")
     )),
     name := "GamesOnline",
     libraryDependencies ++= Seq(
@@ -20,3 +25,8 @@ lazy val root = (project in file(".")).
       "org.scalatest"     %% "scalatest"                % "3.0.8"         % Test
     )
   )
+
+
+
+
+
