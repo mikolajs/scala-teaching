@@ -1,55 +1,79 @@
 package eu.brosbit.games
 
-case class PlayerSign(val code:String, val s:Char, var move:Boolean)
+import java.util.Date
+
+case class PlayerSign(code:String, s:Char, var move:Boolean, var points:Int = 0, var last: Long = new Date().getTime)
 
 class TicTacToe5(roomCode:String, player1:PlayerLogged, player2:PlayerLogged) {
 
-  val pools = Array.ofDim[Char](60, 60).map(_.map(_ => '.'))
+  private val pools = Array.ofDim[Char](60, 60).map(_.map(_ => '.'))
 ///todo: make all methods, create for console test
-  val ps1 = PlayerSign(player1.code, 'o', true)
-  val ps2 = PlayerSign(player2.code, 'x', false)
-  var lastMove = (-1, -1)
-  var lastWon = false
-  var lastUser = ""
-  var gameNumb = 0
+  private val ps1 = PlayerSign(player1.code, 'o', move = true)
+  private val ps2 = PlayerSign(player2.code, 'x', move = false)
+  private var lastMove = (-1, -1)
+  private var lastWon = false
+  private var lastUser = ""
+  private var gameNumb = 0
+  private val lasting = 200000L
 
   def mkMove(userCode:String, row:Int, col:Int):String = {
     val ps = if(ps1.move) ps1 else ps2
     if(userCode != ps.code) return "wrong user"
     if(pools(row)(col) != '.')  return "wrong place"
     pools(row)(col) = ps.s
+    lastUser = userCode
+    lastMove = (row, col)
+    if(userCode == ps1.code) ps1.last = new Date().getTime
+    else ps2.last = new Date().getTime
     if(checkIfIs5(row, col)) {
-      gameNumb += 1
-      lastUser = userCode
-        if(gameNumb % 2 == 0){
-        ps1.move = true
-        ps2.move = false
-      } else {
-        ps1.move = false
-        ps2.move = true
-      }
-      pools.map(_.map(_ => '.'))
-      lastMove = (row, col)
       lastWon = true
-
+      if(ps1.code == userCode) {
+        ps1.points += 1
+        player1.points = ps1.points
+      } else {
+        ps2.points += 1
+        player2.points = ps2.points
+      }
+      mkWin()
       "won"
     } else {
       lastWon = false
-      lastUser = userCode
       ps1.move = !ps1.move
       ps2.move = !ps2.move
-      lastMove = (row, col)
       "next"
     }
   }
 
   def checkLastMove(userCode:String):String = {
-    if(userCode != ps1.code && userCode != ps2.code) return s"""{"check":"NO",  "error":"not your game"}"""
-    val last = if(lastWon) "won" else "next"
-    val whoMove = if(ps1.move) ps1.code else ps2.code
-    if(userCode != whoMove)
-      s"""{"check":"NO",  "user":"$lastUser", "effect":"wait"}"""
-    else s"""{"check":"OK", "user":"$lastUser", "effect":"$last", "row":${lastMove._1}, "col":${lastMove._2} }"""
+    if(userCode != ps1.code && userCode != ps2.code) return s"""{"game":"NO",  "error":"not your game"}"""
+    if(userCode == ps1.code) ps1.last = new Date().getTime else ps2.last = new Date().getTime
+    val nextUser = if(ps1.move) ps1.code else ps2.code
+    if(lastWon){
+      lastMove = (-1, -1)
+      lastWon = false
+    }
+    s"""{"game":"OK", "lastuser":"$lastUser", "row":${lastMove._1}, "col":${lastMove._2},
+       |"nextuser":"$nextUser" , "turn":$gameNumb }""".stripMargin
+  }
+
+  def checkHealth():Boolean = {
+    val now = new Date().getTime
+    if(ps1.code == "" && ps2.code == "") false
+    else if(ps1.code == "") (now - ps2.last) < lasting
+    else if(ps2.code == "") (now - ps1.last < lasting)
+    else (now - ps2.last) < lasting && (now - ps1.last < lasting)
+  }
+
+  private  def mkWin(): Unit ={
+    gameNumb += 1
+    if(gameNumb % 2 == 0){
+      ps1.move = true
+      ps2.move = false
+    } else {
+      ps1.move = false
+      ps2.move = true
+    }
+    for(i <- 0 until 60; j <- 0 until 60) pools(i)(j) = '.'
   }
 
   private def checkIfIs5(row:Int, col:Int):Boolean =  {
@@ -125,7 +149,7 @@ class TicTacToe5(roomCode:String, player1:PlayerLogged, player2:PlayerLogged) {
       r -= 1
     }
     if (size >= 5) {
-      println("player " + elem + " won!")
+      //println("player " + elem + " won!")
       return true
     }
     false

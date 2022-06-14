@@ -1,0 +1,157 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "root",
+        "directory": "/home/ms/Programming/scala-teaching/scala3_test",
+        "workspaceDir": "/home/ms/Programming/scala-teaching/scala3_test",
+        "sources": [
+            "/home/ms/Programming/scala-teaching/scala3_test/src/main/scala",
+            "/home/ms/Programming/scala-teaching/scala3_test/src/main/scala-3.0.0-RC2",
+            "/home/ms/Programming/scala-teaching/scala3_test/src/main/scala-3",
+            "/home/ms/Programming/scala-teaching/scala3_test/src/main/java",
+            "/home/ms/Programming/scala-teaching/scala3_test/target/scala-3.0.0-RC2/src_managed/main"
+        ],
+        "dependencies": [
+            
+        ],
+        "classpath": [
+            "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3.0.0-RC2/3.0.0-RC2/scala3-library_3.0.0-RC2-3.0.0-RC2.jar",
+            "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.5/scala-library-2.13.5.jar"
+        ],
+        "out": "/home/ms/Programming/scala-teaching/scala3_test/.bloop/root",
+        "classesDir": "/home/ms/Programming/scala-teaching/scala3_test/.bloop/root/scala-3.0.0-RC2/classes",
+        "resources": [
+            "/home/ms/Programming/scala-teaching/scala3_test/src/main/resources",
+            "/home/ms/Programming/scala-teaching/scala3_test/target/scala-3.0.0-RC2/resource_managed/main"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "3.0.0-RC2",
+            "options": [
+                
+            ],
+            "jars": [
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3.0.0-RC2/3.0.0-RC2/scala3-compiler_3.0.0-RC2-3.0.0-RC2.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.0.0-RC2/scala3-interfaces-3.0.0-RC2.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3.0.0-RC2/3.0.0-RC2/scala3-library_3.0.0-RC2-3.0.0-RC2.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/tasty-core_3.0.0-RC2/3.0.0-RC2/tasty-core_3.0.0-RC2-3.0.0-RC2.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-asm/9.1.0-scala-1/scala-asm-9.1.0-scala-1.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.3.5/compiler-interface-1.3.5.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-reader/3.19.0/jline-reader-3.19.0.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-terminal/3.19.0/jline-terminal-3.19.0.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-terminal-jna/3.19.0/jline-terminal-jna-3.19.0.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.5/scala-library-2.13.5.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.7.0/protobuf-java-3.7.0.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.3.0/util-interface-1.3.0.jar",
+                "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.3.1/jna-5.3.1.jar"
+            ],
+            "analysis": "/home/ms/Programming/scala-teaching/scala3_test/target/streams/compile/bloopAnalysisOut/_global/streams/inc_compile_3.0.0-RC2.zip",
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": false,
+                "filterLibraryFromClasspath": false
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "/usr/lib/jvm/jdk-11.0.8",
+                "options": [
+                    "-Duser.dir=/home/ms/Programming/scala-teaching/scala3_test"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala3-library_3.0.0-RC2",
+                    "version": "3.0.0-RC2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala3-library_3.0.0-RC2",
+                            "path": "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3.0.0-RC2/3.0.0-RC2/scala3-library_3.0.0-RC2-3.0.0-RC2.jar"
+                        },
+                        {
+                            "name": "scala3-library_3.0.0-RC2",
+                            "classifier": "sources",
+                            "path": "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3.0.0-RC2/3.0.0-RC2/scala3-library_3.0.0-RC2-3.0.0-RC2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.13.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.5/scala-library-2.13.5.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/ms/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.5/scala-library-2.13.5-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "library"
+        ]
+    }
+}

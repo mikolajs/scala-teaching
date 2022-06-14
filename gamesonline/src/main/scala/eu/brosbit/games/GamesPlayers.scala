@@ -2,16 +2,12 @@ package eu.brosbit.games
 
 import java.util.{Date, UUID}
 
-import eu.brosbit.NewUserCreate
-import eu.brosbit.games.GamesPlayers.rooms
-
-
-case class PlayerLogged(code: String = "", name:String = "", expires:Long = 0, points:Int = 0) {
+case class PlayerLogged(code: String = "", name:String = "", expires:Long = 0, var points:Int = 0) {
   def jsonStr = s"""{"code":"$code", "name":"$name", "expires":"$expires", "points":$points}"""
 }
 
 case class RoomInfo(roomCode:String, player1:PlayerLogged, player2:PlayerLogged, game:Boolean = false) {
-  def jsonStr =
+  def jsonStr:String =
     s"""{"roomCode":"$roomCode", "player1":${if(player1 != null) player1.jsonStr else PlayerLogged().jsonStr},
        |"player2":${if(player2 != null) player2.jsonStr else PlayerLogged().jsonStr} }""".stripMargin
 }
@@ -20,21 +16,26 @@ case class  GameMove(row:Int, col:Int)
 
 object GamesPlayers {
 
-  val loggedIn = collection.mutable.Map[String, PlayerLogged]() // code, name
-  val rooms = collection.mutable.Map[String, RoomInfo]()
-  val games = collection.mutable.Map[String, TicTacToe5]()
+  private val loggedIn = collection.mutable.Map[String, PlayerLogged]() // code, name
+  private val rooms = collection.mutable.Map[String, RoomInfo]()
+  private val games = collection.mutable.Map[String, TicTacToe5]()
 
 
   def mkLogin(userName:String, points:Int):String = {
-    val code = UUID.randomUUID().toString
     loggedIn.find(p => p._2.name == userName) match {
-      case Some((c, ps)) => loggedIn.put(code, PlayerLogged(code, ps.name, new Date().getTime+72000000L, points))
-      case _ =>  loggedIn += (code -> PlayerLogged(code, userName, new Date().getTime+72000000L,  points))
+      case Some((_, ps)) =>
+        loggedIn.put(ps.code, PlayerLogged(ps.code, ps.name, new Date().getTime+72000000L, points))
+        ps.code
+      case _ =>  {
+        val code = UUID.randomUUID().toString
+        loggedIn += (code -> PlayerLogged(code, userName, new Date().getTime+72000000L,  points))
+        code
+      }
     }
-    code
   }
 
   def mkLogout(code:String):Option[String] = {
+    clearRoom(code)
     loggedIn.remove(code).map(_.name)
   }
 
@@ -72,30 +73,36 @@ object GamesPlayers {
       (room._2.player2 != null && room._2.player2.code == userCode))
     if(roomOpt.isDefined && roomOpt.get._1 == roomCode) return Some(""" {"add":"NO", "error":"already in"} """)
 
-
     val user = loggedIn(userCode)
     if(rooms.isDefinedAt(roomCode)) {
-      val room = rooms(roomCode)
-      if(room.player1 == null) rooms.put(roomCode, RoomInfo(roomCode, user, room.player2, false))
-      else if(room.player2 == null) rooms.put(roomCode, RoomInfo(roomCode, room.player1, user, false))
-      else return Some(""" {"add":"NO", "error":"already full"} """)
+      var room = rooms(roomCode)
+      if(room.player1 != null && room.player2 != null) return Some(""" {"add":"NO", "error":"already full"} """)
+      if(room.player1 == null) rooms.put(roomCode, RoomInfo(roomCode, user, room.player2))
+      else rooms.put(roomCode, RoomInfo(roomCode, room.player1, user))
+      room = rooms(roomCode)
+      if(!room.game) {
+        games.put(roomCode, new TicTacToe5(roomCode, room.player1, room.player2))
+        rooms.put(roomCode, RoomInfo(roomCode, room.player1, room.player2, game = true))
+      }
     } else {
+      clearRoom(userCode) //delete old room
       val newRoomCode = UUID.randomUUID().toString
-      rooms.put(newRoomCode, RoomInfo(newRoomCode, user, null, false))
-      return Some(s""" {"add":"OK", "roomCode":"${newRoomCode}"} """)
+      rooms.put(newRoomCode, RoomInfo(newRoomCode, user, null))
+      return Some(s""" {"add":"OK", "roomCode":"$newRoomCode"} """)
     }
-    Some(s""" {"add":"OK", "roomCode":"${roomCode}"} """)
+    Some(s""" {"add":"OK", "roomCode":"$roomCode"} """)
   }
 
 
   def checkRoom(userCode: String, roomCode: String): Option[String] = {
-    if(!loggedIn.isDefinedAt(userCode)) return Some(""" {"check":"NO", "error":"not logged"} """ )
-    if(!rooms.isDefinedAt(roomCode)) return Some(""" {"check":"NO", "error":"room not exists"} """ )
+    if(!loggedIn.isDefinedAt(userCode)) return Some(""" {"check":"NO", "info":"not logged"} """ )
+    if(!rooms.isDefinedAt(roomCode)) return Some(""" {"check":"NO", "info":"room not exists"} """ )
     val room = rooms(roomCode)
+    if((room.player1 != null && room.player1.code != userCode) && (room.player2 != null && room.player2.code != userCode))
+        return Some(""" {"check":"NO", "info":"its not your room"} """)
 
-    Some(s""" {"check":"OK", "roomInfo":${room.jsonStr}} """)
-
-
+    val move = if(games.isDefinedAt(roomCode)) games(roomCode).checkLastMove(userCode) else """ {"game":"NO", "info":"Not started yet"} """
+    Some(s""" {"check":"OK", "roomInfo":${room.jsonStr}, "move":$move} """)
   }
 
   def nextMove(userCode: String, roomCode: String, row: Int, col: Int): Option[String] = {
@@ -105,11 +112,7 @@ object GamesPlayers {
     if(room.player1 == null || room.player2 == null) return Some(""" {"add":"NO", "info":"second player not in game"} """)
     if(room.player1.code != userCode && room.player2.code != userCode)
       return Some(""" {"add":"NO", "info":"its not your room"} """)
-    if(room.game == false) {
-      //clearNotWorkingGame(roomCode)
-      games.put(roomCode, new TicTacToe5(roomCode, room.player1, room.player2))
-      rooms.put(roomCode, RoomInfo(roomCode, room.player1, room.player2, true))
-    }
+
     val game = games(roomCode)
     val info = game.mkMove(userCode, row, col)
     if(info == "next") Some(""" {"add":"OK", "info":"next"} """)
@@ -122,14 +125,34 @@ object GamesPlayers {
     if(!loggedIn.isDefinedAt(userCode)) return Some(""" {"check":"NO", "info":"not logged"} """ )
     if(!rooms.isDefinedAt(roomCode)) return Some(""" {"check":"NO", "info":"room not exists"} """ )
     val room = rooms(roomCode)
-    if(room.player1 == null || room.player2 == null) return Some(""" {"check":"NO", "info":"second player not in game"} """)
     if(room.player1.code != userCode && room.player2.code != userCode)
       return Some(""" {"check":"NO", "info":"its not your room"} """)
-    if(room.game == false)  return Some(""" {"check":"NO", "info":"not started yet"} """)
+    if(!room.game)  return Some(""" {"check":"NO", "info":"not started yet"} """)
 
     val game = games(roomCode)
     val info = game.checkLastMove(userCode)
     Some(info)
+  }
+
+  def clearDysfunctionalRooms() = {
+    val keys = games.keys
+    keys.foreach(key =>{
+      if(!games(key).checkHealth()) {
+        games.remove(key)
+        rooms.remove(key)
+      }
+    })
+  }
+  def clearRoom(userCode:String): Unit = {
+    val toClearRooms = rooms.filter(room => {
+      (room._2.player1 != null && room._2.player1.code == userCode) ||
+        (room._2.player2 != null && room._2.player2.code == userCode)} )
+    toClearRooms.foreach(cRooms =>
+      if(rooms.isDefinedAt(cRooms._1)) {
+        rooms.remove(cRooms._1)
+        games.remove(cRooms._1)
+      }
+    )
   }
 
   ///todo: ???? i need clear working rooms with games when people don't play
