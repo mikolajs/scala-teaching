@@ -9,3 +9,7 @@ rekrutacja/.idea/
 rekrutacja/target
 rekrutacja/project/target
 
+**/project
+**/target
+
+**/.idea
