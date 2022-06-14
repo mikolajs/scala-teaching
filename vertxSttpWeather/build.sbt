@@ -14,6 +14,7 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "io.vertx" % "vertx-core" % "4.3.1",
       "io.vertx" % "vertx-web" % "4.3.1",
+      "io.vertx" % "vertx-web-client" % "4.3.1",
       "com.softwaremill.sttp.client3" %% "core" % "3.6.2",
       "org.scalactic" %% "scalactic" % "3.2.12",
       "org.scalatest" %% "scalatest" % "3.2.12" % "test"
