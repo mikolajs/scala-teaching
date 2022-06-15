@@ -1,7 +1,7 @@
 val scala3Version = "3.1.0"
 cancelable in Global := true
 
-fork / run := true
+//fork / run := true
 
 
 lazy val root = project
