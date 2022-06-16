@@ -1,4 +1,4 @@
-package net.brosbit
+package eu.brosbit
 
 case class Person(fName:String, lName:String)
 

@@ -1,4 +1,4 @@
-package net.brosbit
+package eu.brosbit
 
   import com.sun.net.httpserver.HttpServer
   import io.vertx.core.Handler
