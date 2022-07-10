@@ -54,6 +54,7 @@ object Main {
     val t = req.params().get("t")
     val h = req.params().get("h")
     val nr = req.path().split('/').last.toInt
+    println(s"t=$t and h = $h on thermometer $nr")
     val res = req.response()
       .putHeader("content-type", "text/html")
       .putHeader("Access-Control-Allow-Orgin", "*")

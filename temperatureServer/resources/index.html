@@ -8,14 +8,16 @@
   </head>
   <body>
     <h1>Ustaw temperaturę pieca:</h1>
-    <input id="set" type="range"  min="14" max="28" onclick="change(this);">
+    <input id="set" type="number"  min="14" max="28" onchange="change(this);">
+    <h1>Temperatura pieca:</h1>
+    <h2> <span id="owen">0</span> </h2>
     <h1>Aktualne temperatury:</h1>
     <div id="measures">
     <h2>Licznik 1: <span id="measure1">0</span></h2>
     <h2>Licznik 2: <span id="measure2">0</span></h2>
     </div>
-    <h1>Temperatura nastawu pieca:</h1>
-    <h2> <span id="owen">???</span> </h2>
+
+
     <p id="info"></p>
     <script type="text/javascript">
       setInterval(() => {
