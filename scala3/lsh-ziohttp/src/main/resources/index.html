@@ -1,0 +1,48 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="img/logo.ico"/>
+  <title>Landshunger</title>
+  <script src="js/pixi-legacy.min.js"></script>
+  <script src="js/hexpoint.js"></script>
+  <script src="js/plainpoint.js"></script>
+  <script src="js/theworld.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/grid.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/hexlib-fastopt.js"></script>
+<style> * {padding: 0; margin: 0}
+ canvas { float: left;}
+ #scrollUp, #scrollDown, #scrollLeft, #scrollRight {
+   padding: 0; margin: 0; display: block;
+   background-color: black; color: white;
+ }
+ #scrollUp, #scrollDown {
+   width: 1260px; height: 20px; margin-left: 20px; margin-right: 20px;
+   text-align: center;
+ }
+ #scrollLeft, #scrollRight {
+   width: 20px; height: 612px; display: inline;
+ }
+ #scrollLeft { float: left;}
+ #scrollRight { float: left;}
+ #empty {  width: 1260px; height: 612px;  padding: 0; margin: 0; display: block;}
+</style>
+</head>
+<body>
+  <script type="text/javascript">
+    //var bigMap = new WorldMap();
+    var main = new Main();
+   </script>
+   <div id="empty"></div>
+
+
+<script>
+ let hex = new HexFlat(10, 10);
+ let mpf = new MapPosition(1,1);
+ let mpt = new MapPosition(0,7);
+ console.log("Distance: " + hex.getDistance(mpf, mpt));
+</script>
+</body>
+</html>
