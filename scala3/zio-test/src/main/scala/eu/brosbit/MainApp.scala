@@ -4,7 +4,18 @@ import zio.*
 
 object MainApp extends ZIOAppDefault {
 
-  def run = myAppLogic.exitCode
+  val action: ZIO[Any, Throwable, Unit] =
+    for { 
+      now  <- zio.ZIO.attempt {new java.util.Date()}
+      _ <- Console.printLine(now)
+    } yield ()
+
+  val  repeated = action.repeat(Schedule.fixed(10.seconds)).fork
+
+
+  def run = 
+     repeated.zip( 
+     myAppLogic.exitCode)
 
   val myAppLogic =
     for {
