@@ -4,9 +4,9 @@ import java.time.LocalDate
 
 val r = Random()
 
-def loadNamesMen = Source.fromFile("nazwiska_m.csv").getLines.toList.map(_.toLowerCase)
+def loadNamesMen = Source.fromFile("nazwiska_m.csv").getLines.toList.map(_.toLowerCase.split('-').head)
   .map(s => s.substring(0, 1).toUpperCase  + s.substring(1))
-def loadNamesWoman = Source.fromFile("nazwiska_z.csv").getLines.toList.map(_.toLowerCase)
+def loadNamesWoman = Source.fromFile("nazwiska_z.csv").getLines.toList.map(_.toLowerCase.split('-').head)
   .map(s => s.substring(0, 1).toUpperCase  + s.substring(1))
 def loadFirstNames = 
   val firstNames = Source.fromFile("imiona.csv").getLines.toList.map(_.toLowerCase)
@@ -18,14 +18,14 @@ def createMenNames =
   val names = loadNamesMen
   val firsts = loadFirstNames._1
   (1 to 40).map(i => 
-    names(r.nextInt(names.size)) + ";" + firsts(r.nextInt(firsts.size))
+    firsts (r.nextInt(firsts.size)) + ";" + names(r.nextInt(names.size))
   ).toList
   
 def createWomanNames = 
   val names = loadNamesWoman
   val firsts = loadFirstNames._2
   (1 to 40).map(i => 
-    names(r.nextInt(names.size)) + ";" + firsts (r.nextInt(firsts.size))
+    firsts (r.nextInt(firsts.size)) + ";" + names(r.nextInt(names.size))
   ).toList
   
 def createControlPesel(s:String) = 
@@ -35,7 +35,6 @@ def createControlPesel(s:String) =
     w += (s(i).toInt-'0'.toInt)*a(i)
   w %= 10
   if w == 0 then 0 else 10 - w
-  w
   
 def createPesel(y:Int) = 
   val ld = LocalDate.of(LocalDate.now.getYear - y + r.nextInt(2), 1 + r.nextInt(12), 1 + r.nextInt(28))
