@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
       "dev.zio"       %% "zio-json"       % "0.4.2",
       "io.d11"        %% "zhttp"          % ZHTTPVersion,
       "io.d11" %% "zhttp" % ZHTTPVersion % Test,
-      // "io.igl" %% "jwt" % "1.2.2",
+       "io.igl" %% "jwt" % "1.2.2",
        //"com.github.jwt-scala" %% "jwt-core" % "9.2.0",
        //"pdi" %% "jwt-core" % "0.14.1",
       //"dev.zio" %% "zio-test"     % ZioVersion % Test,
