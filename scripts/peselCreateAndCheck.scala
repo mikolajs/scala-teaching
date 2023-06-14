@@ -22,8 +22,10 @@ def writeToFile(p:String, data:String) =
   Files.write(Paths.get(p), data.getBytes)
   
 
-lazy val menNames = Source.fromFile("nazwiska_m.csv").getLines().toList.map(_.map(changeLetter))
-lazy val womanNames = Source.fromFile("nazwiska_z.csv").getLines().toList.map(_.map(changeLetter))
+lazy val menNames = Source.fromFile("nazwiska_m.csv").getLines().toList
+  .map(_.split(' ').head).map(_.map(changeLetter)).filterNot(n => n.exists(c => c.toInt > 127))
+lazy val womanNames = Source.fromFile("nazwiska_z.csv").getLines().toList
+  .map(_.split(' ').head).map(_.map(changeLetter)).filterNot(n => n.exists(c => c.toInt > 127))
 
 def checkCode(p:String) = 
   val arr = Array(1, 3, 5, 9, 1, 3, 5, 9, 1, 3)
@@ -37,10 +39,16 @@ def checkCode(p:String) =
 def createPesel(y:Int) = 
   val ld = LocalDate.of(LocalDate.now.getYear - y + r.nextInt(2), 1 + r.nextInt(12), 1 + r.nextInt(28))
   val a = if ld.getYear % 100 < 10 then "0" + (ld.getYear % 100).toString else (ld.getYear % 100).toString
-  val p0 = a + (ld.getMonthValue + 20).toString +
+  val p0 = a + toMonth(y, ld.getMonthValue) +
        ld.toString.split("-").last +
        (1 to 4).map(i => r.nextInt(10).toString).flatten.mkString
   p0 + checkCode(p0).toString
+
+def toMonth(y:Int, m:Int) = 
+  val t = LocalDate.now().getYear - 2000 
+  if t <= y && m < 10 then "0"+m.toString
+  else if t <= y then m.toString
+  else (m+20).toString
 
 def randomPesel = createPesel(r.nextInt(70)+5) 
 
@@ -51,13 +59,13 @@ def addName(pesel:String) =
   else womanNames(r.nextInt(womanNames.length))
 
 @main def main():Unit = 
-  println(checkCode("7105220393"))
   val ab = ArrayBuffer[String]()  
-  while ab.length < 2000 do
+  while ab.length < 250000 do
     val pesel = randomPesel
     if pesel.length == 11 then ab += pesel+ " " +addName(pesel)
+    else println(pesel)
   
-  writeToFile("lista_uzytkownikow.txt", ab.mkString("\n"))
-  writeToFile("poszukiwanie.txt", r.shuffle(ab).mkString("\n"))
+  writeToFile("poszukiwanie.txt", ab.mkString("\n"))
+  writeToFile("lista_uzytkownikow.txt", ab.sorted.mkString("\n"))
 
  
