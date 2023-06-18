@@ -19,17 +19,31 @@ def changeLetter(letter:Char) =
 
 def addNumb(s:String) = 
   val n = r.nextInt(10)
-  val p = r.nextInt(10)
+  val p = r.nextInt(s.length)
   s.take(p) + n.toString + s.drop(p)
 
 def addUpper(s:String) =
   val p = r.nextInt(s.length)
   s.take(p) + s(p).toString.toUpperCase()+ s.drop(p+1)
 
+def addAt(s:String) = 
+  val p = r.nextInt(s.length)
+  s.take(p) + '@'.toString + s.drop(p)
+
+def toExcalmation(s:String) = 
+  ///TODO change 1 or i or I to !
+  return s
+  
+def addUnderscore(s:String) = 
+  val p = r.nextInt(s.length)
+  s.take(p) + '_'.toString + s.drop(p)
+
 def randomize(s:String) = 
   var str = s
-  for i <- 0 until (r.nextInt(2) + 1) do str = addUpper(str)
   for i <- 0 until (r.nextInt(2) + 1) do str = addNumb(str)
+  for i <- 0 until (r.nextInt(4) + 1) do str = addUpper(str)
+  if r.nextInt(2) == 1 then str = addUnderscore(str) 
+  if r.nextInt(3) == 1 then str = addAt(str)
   str
 
 val symb = "!@#$%^&*()"
@@ -49,15 +63,16 @@ def writeToFile(p:String, data:String) =
   Files.write(Paths.get(p), data.getBytes)
 
 @main def main():Unit = 
-  val po = 30
+  val po = 100
   val names = Source.fromFile("imiona.csv").getLines().toList 
    .map(_.split(','))
+   .map(_.head).map(_.toLowerCase())
    .map(n => n.map(changeLetter(_)))
-   .filterNot(n => n.exits(c => c < 32 && c > 127))
+   .filterNot(n => n.exists(c => c < 33 || c > 127))
    .map(n => (for i <- 0 to (r.nextInt(po)+1) yield n).toList)
    .flatten.take(250000)
-   .map(_.head).map(_.toLowerCase())
    .map(randomize(_))
+   .distinct
 
   val users = names.sorted.map(n => n + " " + randomPass)
   writeToFile("loginy.txt", users.mkString("\n"))
