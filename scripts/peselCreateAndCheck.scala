@@ -23,9 +23,9 @@ def writeToFile(p:String, data:String) =
   
 
 lazy val menNames = Source.fromFile("nazwiska_m.csv").getLines().toList
-  .map(_.split(' ').head).map(_.map(changeLetter)).filterNot(n => n.exists(c => c.toInt > 127))
+  .map(_.split(' ').head).map(_.map(changeLetter)).filterNot(n => n.exists(c => c.toInt > 127 || c.toInt < 33))
 lazy val womanNames = Source.fromFile("nazwiska_z.csv").getLines().toList
-  .map(_.split(' ').head).map(_.map(changeLetter)).filterNot(n => n.exists(c => c.toInt > 127))
+  .map(_.split(' ').head).map(_.map(changeLetter)).filterNot(n => n.exists(c => c.toInt > 127 || c.toInt < 33))
 
 def checkCode(p:String) = 
   val arr = Array(1, 3, 5, 9, 1, 3, 5, 9, 1, 3)

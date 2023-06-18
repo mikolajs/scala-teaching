@@ -50,12 +50,14 @@ def writeToFile(p:String, data:String) =
 
 @main def main():Unit = 
   val po = 30
-  val names = Source.fromFile("imiona.csv").getLines().toList
+  val names = Source.fromFile("imiona.csv").getLines().toList 
    .map(_.split(','))
+   .map(n => n.map(changeLetter(_)))
+   .filterNot(n => n.exits(c => c < 32 && c > 127))
    .map(n => (for i <- 0 to (r.nextInt(po)+1) yield n).toList)
    .flatten.take(250000)
    .map(_.head).map(_.toLowerCase())
-   .map(n => n.map(changeLetter(_))).map(randomize(_))
+   .map(randomize(_))
 
   val users = names.sorted.map(n => n + " " + randomPass)
   writeToFile("loginy.txt", users.mkString("\n"))
