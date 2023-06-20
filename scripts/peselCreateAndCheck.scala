@@ -60,12 +60,13 @@ def addName(pesel:String) =
 
 @main def main():Unit = 
   val ab = ArrayBuffer[String]()  
-  while ab.length < 250000 do
+  while ab.length < 210000 do
     val pesel = randomPesel
-    if pesel.length == 11 then ab += pesel+ " " +addName(pesel)
+    if pesel.length == 11 then ab += pesel
     else println(pesel)
+  val pesels = ab.distinct.take(200000).map(p => p + " " + addName(p))
   
-  writeToFile("poszukiwanie.txt", ab.mkString("\n"))
-  writeToFile("lista_uzytkownikow.txt", ab.sorted.mkString("\n"))
+  writeToFile("poszukiwanie.txt", pesels.mkString("\n"))
+  writeToFile("lista_uzytkownikow.txt", pesels.sorted.mkString("\n"))
 
  

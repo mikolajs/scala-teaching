@@ -32,7 +32,7 @@ def addAt(s:String) =
 
 def toExcalmation(s:String) = 
   ///TODO change 1 or i or I to !
-  return s
+  s
   
 def addUnderscore(s:String) = 
   val p = r.nextInt(s.length)
@@ -63,16 +63,16 @@ def writeToFile(p:String, data:String) =
   Files.write(Paths.get(p), data.getBytes)
 
 @main def main():Unit = 
-  val po = 100
+  val po = 30 
   val names = Source.fromFile("imiona.csv").getLines().toList 
    .map(_.split(','))
    .map(_.head).map(_.toLowerCase())
    .map(n => n.map(changeLetter(_)))
    .filterNot(n => n.exists(c => c < 33 || c > 127))
    .map(n => (for i <- 0 to (r.nextInt(po)+1) yield n).toList)
-   .flatten.take(250000)
+   .flatten
    .map(randomize(_))
-   .distinct
+   .distinct.take(200000)
 
   val users = names.sorted.map(n => n + " " + randomPass)
   writeToFile("loginy.txt", users.mkString("\n"))
