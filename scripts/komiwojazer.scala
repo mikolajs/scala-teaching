@@ -1,6 +1,6 @@
 import scala.collection.mutable.*
 
-val size = 20 
+val size = 60 
 val neighbours = 6
 
 case class Town(x:Int, y:Int, name:String):
@@ -119,7 +119,7 @@ def run():Unit =
   println("connected towns: " + connected.size)
   println("connection with 1 edge " + withOneConnection.size)
   val str = connections.map(tuple => tuple._1.name + " " + tuple._2.name + " " + tuple._3).mkString("\n")
-  writeToFile(s"komiwojadzer_$size.txt", str)
+  writeToFile(s"komiwojazer_$size.txt", str)
   
   /* not working method
   val townsOneConnect = towns.filter(t => withOneConnection.exists(w => w._1 == t.name))
