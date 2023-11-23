@@ -5,22 +5,24 @@ import java.nio.file.{Files, Paths}
 
 val rand = Random()
 
-def notHaveNeighbours(r:Int, c:Int, board:Array[Array[Int]]):Boolean =
+def notHaveNeighbours(r:Int, c:Int, board:Array[Array[Char]]):Boolean =
+  //println(s"check neighbours $r,$c")
   for i <- -1 to 1 do
     for j <- -1 to 1 do
-      if j != 0 && i != 0 then
+      if j != 0 || i != 0 then
         val R = r + i
         val C = c + j
-        if R >= 0 && C >= 0 && R < board.size && C < board.size && board(R)(C) == 1 then return false
+        //println(s"test: $R,$C")
+        if R >= 0 && C >= 0 && R < board.size && C < board.size && board(R)(C) != '.' then return false
   return true
 
-def canAdd(r:Int, c:Int, board:Array[Array[Int]], masts:List[(Int, Int)]):Boolean = 
+def canAdd(r:Int, c:Int, board:Array[Array[Char]], masts:List[(Int, Int)]):Boolean = 
   if r < 0 || c < 0 || r >= board.size || c >= board.size then  false
-  else if board(r)(c) == 1 then false
+  else if board(r)(c) != '.' then false
   else if notHaveNeighbours(r, c, board) && !masts.contains((r, c))  then true
   else false
 
-def canAddNext(r:Int, c:Int, board:Array[Array[Int]], masts:List[(Int, Int)]):(Int, Int) = 
+def canAddNext(r:Int, c:Int, board:Array[Array[Char]], masts:List[(Int, Int)]):(Int, Int) = 
   var d = rand.nextInt(4)
   for i <- 1 to 4 do
     d match { 
@@ -34,12 +36,14 @@ def canAddNext(r:Int, c:Int, board:Array[Array[Int]], masts:List[(Int, Int)]):(I
     d %= 4
   return (-1, -1)
 
-def addShip(N:Int, s:Int, board:Array[Array[Int]]):Unit = 
+def addShip(N:Int, s:Int, board:Array[Array[Char]]):Unit = 
   var masts  = s
   var l:List[(Int,Int)] = Nil
   var r = -1 
   var c = -1 
   while true do
+    l = Nil
+    masts = s
     while
       r = rand.nextInt(N)
       c = rand.nextInt(N)
@@ -57,15 +61,14 @@ def addShip(N:Int, s:Int, board:Array[Array[Int]]):Unit =
         r = t._1
         c = t._2
       else continue = false
-    if !continue then
-      l = Nil
-      masts = s
-    else 
-      l.map(t => board(t._1)(t._2) = 1)
+    if continue then
+      l.map(t => 
+          board(t._1)(t._2) = 'O' 
+      )
       return
   
 def drawShips(N:Int, ships:List[Int]) = 
-  val board = Array.ofDim[Int](N, N)
+  val board = Array.ofDim[Char](N, N).map(a => a.map(_ => '.'))
   for s <- ships do
     addShip(N, s, board)
   board.map(a => a.mkString("")).mkString("\n")
@@ -130,7 +133,21 @@ def createTwoBoards =
   for i <- 1 to 10 do
     str += createTwoBoards
   Files.write(path, str.getBytes)
-   
+  test()
 
-
+def test() =
+  val N = 5
+  val board = Array.ofDim[Char](N, N).map(a => a.map(_ => '.'))
+  board(1)(1) = 'O'
+  board(1)(2) = 'O'
+  board(2)(2) = 'O'
+  if canAdd(0,0, board, Nil) then println("0,0 error")
+  if canAdd(0,1, board, Nil) then println("0,1 error")
+  if canAdd(1,0, board, Nil) then println("1,0 error")
+  if canAdd(2,3, board, Nil) then println("2,3 error")
+  if canAdd(1,3, board, Nil) then println("1,3 error")
+  if canAdd(3,2, board, Nil) then println("3,2 error")
+  if canAdd(3,3, board, Nil) then println("3,3 error")
+  if notHaveNeighbours(1, 0, board) then println("neighbours error")
+  
 
