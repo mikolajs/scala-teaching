@@ -97,7 +97,7 @@ def toCoordinates(shots:List[(Int, Int )]) =
   shots.map(t => (t._2 + 65).toChar.toString + (t._1+1).toString)
 
 def randomShots(N:Int) = 
-  val nr = rand.nextInt(N*N/5) + N*N/5
+  val nr = rand.nextInt(N*N/3) + N*N/3
   val gamer1 = randomShotsForOneGamer(N, nr)
   val gamer2 = randomShotsForOneGamer(N, nr)
   var str = nr.toString
