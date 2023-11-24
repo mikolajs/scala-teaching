@@ -5,22 +5,22 @@ import java.nio.file.{Files, Paths}
 
 val rand = Random()
 
-def notHaveNeighbours(r:Int, c:Int, board:Array[Array[Int]]):Boolean =
+def notHaveNeighbours(r:Int, c:Int, board:Array[Array[Char]]):Boolean =
   for i <- -1 to 1 do
     for j <- -1 to 1 do
-      if j != 0 && i != 0 then
+      if j != 0 || i != 0 then
         val R = r + i
         val C = c + j
-        if R >= 0 && C >= 0 && R < board.size && C < board.size && board(R)(C) == 1 then return false
+        if R >= 0 && C >= 0 && R < board.size && C < board.size && board(R)(C) == 'O' then return false
   return true
 
-def canAdd(r:Int, c:Int, board:Array[Array[Int]], masts:List[(Int, Int)]):Boolean = 
+def canAdd(r:Int, c:Int, board:Array[Array[Char]], masts:List[(Int, Int)]):Boolean = 
   if r < 0 || c < 0 || r >= board.size || c >= board.size then  false
-  else if board(r)(c) == 1 then false
+  else if board(r)(c) == 'O' then false
   else if notHaveNeighbours(r, c, board) && !masts.contains((r, c))  then true
   else false
 
-def canAddNext(r:Int, c:Int, board:Array[Array[Int]], masts:List[(Int, Int)]):(Int, Int) = 
+def canAddNext(r:Int, c:Int, board:Array[Array[Char]], masts:List[(Int, Int)]):(Int, Int) = 
   var d = rand.nextInt(4)
   for i <- 1 to 4 do
     d match { 
@@ -34,7 +34,7 @@ def canAddNext(r:Int, c:Int, board:Array[Array[Int]], masts:List[(Int, Int)]):(I
     d %= 4
   return (-1, -1)
 
-def addShip(N:Int, s:Int, board:Array[Array[Int]]):Unit = 
+def addShip(N:Int, s:Int, board:Array[Array[Char]]):Unit = 
   var masts  = s
   var l:List[(Int,Int)] = Nil
   var r = -1 
@@ -61,11 +61,11 @@ def addShip(N:Int, s:Int, board:Array[Array[Int]]):Unit =
       l = Nil
       masts = s
     else 
-      l.map(t => board(t._1)(t._2) = 1)
+      l.map(t => board(t._1)(t._2) = 'O')
       return
   
 def drawShips(N:Int, ships:List[Int]) = 
-  val board = Array.ofDim[Int](N, N)
+  val board = Array.ofDim[Char](N, N).map(a => a.map(_ => '.'))
   for s <- ships do
     addShip(N, s, board)
   board.map(a => a.mkString("")).mkString("\n")
@@ -97,7 +97,7 @@ def toCoordinates(shots:List[(Int, Int )]) =
   shots.map(t => (t._2 + 65).toChar.toString + (t._1+1).toString)
 
 def randomShots(N:Int) = 
-  val nr = rand.nextInt(N*N/3) + N*N/3
+  val nr = rand.nextInt(N*N/5) +3*N*N/4
   val gamer1 = randomShotsForOneGamer(N, nr)
   val gamer2 = randomShotsForOneGamer(N, nr)
   var str = nr.toString
