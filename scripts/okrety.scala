@@ -40,6 +40,8 @@ def addShip(N:Int, s:Int, board:Array[Array[Char]]):Unit =
   var r = -1 
   var c = -1 
   while true do
+    l = Nil
+    masts = s
     while
       r = rand.nextInt(N)
       c = rand.nextInt(N)
@@ -130,7 +132,21 @@ def createTwoBoards =
   for i <- 1 to 10 do
     str += createTwoBoards
   Files.write(path, str.getBytes)
-   
+  test()
 
-
+def test() =
+  val N = 5
+  val board = Array.ofDim[Char](N, N).map(a => a.map(_ => '.'))
+  board(1)(1) = 'O'
+  board(1)(2) = 'O'
+  board(2)(2) = 'O'
+  if canAdd(0,0, board, Nil) then println("0,0 error")
+  if canAdd(0,1, board, Nil) then println("0,1 error")
+  if canAdd(1,0, board, Nil) then println("1,0 error")
+  if canAdd(2,3, board, Nil) then println("2,3 error")
+  if canAdd(1,3, board, Nil) then println("1,3 error")
+  if canAdd(3,2, board, Nil) then println("3,2 error")
+  if canAdd(3,3, board, Nil) then println("3,3 error")
+  if notHaveNeighbours(1, 0, board) then println("neighbours error")
+  
 
