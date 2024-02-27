@@ -6,19 +6,17 @@ import java.nio.file.{Files, Paths}
 val rand = Random()
 
 def notHaveNeighbours(r:Int, c:Int, board:Array[Array[Char]]):Boolean =
-  //println(s"check neighbours $r,$c")
   for i <- -1 to 1 do
     for j <- -1 to 1 do
       if j != 0 || i != 0 then
         val R = r + i
         val C = c + j
-        //println(s"test: $R,$C")
-        if R >= 0 && C >= 0 && R < board.size && C < board.size && board(R)(C) != '.' then return false
+        if R >= 0 && C >= 0 && R < board.size && C < board.size && board(R)(C) == 'O' then return false
   return true
 
 def canAdd(r:Int, c:Int, board:Array[Array[Char]], masts:List[(Int, Int)]):Boolean = 
   if r < 0 || c < 0 || r >= board.size || c >= board.size then  false
-  else if board(r)(c) != '.' then false
+  else if board(r)(c) == 'O' then false
   else if notHaveNeighbours(r, c, board) && !masts.contains((r, c))  then true
   else false
 
@@ -61,10 +59,11 @@ def addShip(N:Int, s:Int, board:Array[Array[Char]]):Unit =
         r = t._1
         c = t._2
       else continue = false
-    if continue then
-      l.map(t => 
-          board(t._1)(t._2) = 'O' 
-      )
+    if !continue then
+      l = Nil
+      masts = s
+    else 
+      l.map(t => board(t._1)(t._2) = 'O')
       return
   
 def drawShips(N:Int, ships:List[Int]) = 
@@ -100,7 +99,7 @@ def toCoordinates(shots:List[(Int, Int )]) =
   shots.map(t => (t._2 + 65).toChar.toString + (t._1+1).toString)
 
 def randomShots(N:Int) = 
-  val nr = rand.nextInt(N*N/5) + N*N/5
+  val nr = rand.nextInt(N*N/5) +3*N*N/4
   val gamer1 = randomShotsForOneGamer(N, nr)
   val gamer2 = randomShotsForOneGamer(N, nr)
   var str = nr.toString
