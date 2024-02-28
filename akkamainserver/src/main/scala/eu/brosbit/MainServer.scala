@@ -1,7 +1,11 @@
 package eu.brosbit
 
+import java.net._
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
+import akka.actor.{Actor, ActorRef, Props, PoisonPill}
+import akka.io.{IO, Udp, UdpConnected}
+import akka.util.ByteString
 
 import scala.util.Failure
 import scala.util.Success
@@ -34,6 +38,20 @@ class Listener(nextActor: ActorRef) extends Actor {
       case Udp.Unbind  => socket ! Udp.Unbind
       case Udp.Unbound => context.stop(self)
     }
+}
+
+class SimpleSender(remote: InetSocketAddress) extends Actor {
+  import context.system
+  IO(Udp) ! Udp.SimpleSender
+
+  def receive = {
+    case Udp.SimpleSenderReady =>
+      context.become(ready(sender()))
+  }
+  def ready(send: ActorRef): Receive = {
+    case msg: String =>
+      send ! Udp.Send(ByteString(msg), remote)
+  }
 }
 
 object MainServer {
