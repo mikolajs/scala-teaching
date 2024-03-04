@@ -1,6 +1,17 @@
-lazy val akkaVersion    = "2.9.0"
+
+name := "akkaMainServer"
+
+//organization := "eu.brosbit"
+
+version := "1.0"
 
 resolvers += "Akka library repository".at("https://repo.akka.io/maven")
+
+scalaVersion    := "2.13.12"
+
+lazy val akkaVersion    = "2.9.1"
+
+//mainClass in (Compile,run) := Some("eu.brosbit.MainServer")
 
 // Run in a separate JVM, to make sure sbt waits until all threads have
 // finished before returning.
@@ -8,17 +19,7 @@ resolvers += "Akka library repository".at("https://repo.akka.io/maven")
 // sbt tasks, consider https://github.com/spray/sbt-revolver/
 fork := true
 
-lazy val root = (project in file(".")).
-  settings(
-   assembly / mainClass := Some("eu.brosbit.MainServer"),
-    inThisBuild(List(
-      organization    := "eu.brosbit",
-      scalaVersion    := "2.13.12"
-    )),
-    name := "akkaMainServer",
-    libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-actor-typed"         % akkaVersion,
-      "com.typesafe.akka" %% "akka-stream"              % akkaVersion,
+libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-actor"         % akkaVersion,
       "org.scalatest"     %% "scalatest"                % "3.2.12"        % Test
-    )
-  )
+)
