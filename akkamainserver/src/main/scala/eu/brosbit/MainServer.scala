@@ -64,7 +64,7 @@ class SimpleSender(remote: InetSocketAddress) extends Actor {
   }
 }
 
-object MainServer {
+object MainServer extends App {
   val system = ActorSystem("mainServerSystem")
   val saveActor =  system.actorOf(Props[SaveActor]())
   val listener = system.actorOf(Listener.props(saveActor), "listener")
