@@ -4,11 +4,46 @@ import java.net._
 import akka.actor.{ActorSystem, Actor, ActorRef, Props, PoisonPill}
 import akka.io.{IO, Udp, UdpConnected}
 import akka.util.ByteString
+import scala.collection.JavaConverters._
 
 import scala.util.Failure
 import scala.util.Success
+import scala.io.StdIn
+
+object ConfigData {
+  def load = {
+    import java.nio.file.Paths
+    import java.nio.file.Files
+    val path = "/home/administrator/pingserver.cfg"
+    val list = Files.readAllLines(Paths.get(path)).asScala.toList
+    //....
+  }
+}
 
 case class PingData(data:String, add:InetSocketAddress)
+
+class IPsData() {
+  import java.nio.file.Paths
+  import java.nio.file.Files
+  val path = "/home/administrator/ips.txt"
+  val arr = Array.ofDim[String](20).map(_ => "")
+  def openFile = {
+    println("Save ips data")
+    val list = Files.readAllLines(Paths.get(path)).asScala.toList
+    var i = 0
+    list.foreach(e => {
+    	arr(i) = e
+    	i += 1
+    })
+  }
+  def save(id:Int, ip:String) = {
+  	openFile
+  	arr(id-1) = ip
+  	println("size of array = " + arr.size)
+  	Files.write(Paths.get(path), getString.getBytes)
+  }
+  def getString = arr.mkString("\n") 
+}
 
 object Listener {
   def props(saveActor:ActorRef) = Props(new Listener(saveActor))
@@ -20,13 +55,14 @@ class Listener(saveActor:ActorRef) extends Actor {
 
     def receive = {
       case Udp.Bound(local) =>
-        println("recive ping")
+        println("start Listener")
         context.become(ready(sender()))
     }
 
     def ready(socket: ActorRef): Receive = {
       case Udp.Received(data, remote) =>
         val pingData = PingData(data.utf8String, remote)
+        println(s"received ${data.utf8String}")
         socket ! Udp.Send(ByteString.fromString("PONG"), remote) 
         saveActor ! pingData
       case Udp.Unbind  => socket ! Udp.Unbind
@@ -36,13 +72,16 @@ class Listener(saveActor:ActorRef) extends Actor {
 
 class SaveActor() extends Actor {
   import context.system
+  val ipsData = new IPsData()
   def receive = {
     case pd:PingData => save(pd.data, pd.add.getAddress().getHostAddress(), pd.add.getPort().toString())
   }
   def save(d:String, host:String, port:String) = {
-    import java.nio.file.Paths
-    import java.nio.file.Files
-    Files.write(Paths.get("/home/ms/ips.txt"), s"$d -> $host:$port".getBytes)
+    if(d.take(5) == "PONG:" && d.size > 5) {
+      	val id = d.filter(e => e >= '0' && e <= '9')
+      	if(id.size > 0) ipsData.save(id.toInt, host+":"+port)
+    }
+    
   }
 }
 
@@ -60,14 +99,19 @@ class SimpleSender(remote: InetSocketAddress) extends Actor {
   }
   def ready(send: ActorRef): Receive = {
     case msg: String =>
+      println(s"send $msg from simple sender")
       send ! Udp.Send(ByteString(msg), remote)
   }
 }
 
 object MainServer extends App {
   val system = ActorSystem("mainServerSystem")
-  val saveActor =  system.actorOf(Props[SaveActor]())
+  val saveActor =  system.actorOf(Props[SaveActor](), "saveActor")
   val listener = system.actorOf(Listener.props(saveActor), "listener")
-  val simpleSender = system.actorOf(SimpleSender.props(new InetSocketAddress("localhost", 22222)))
-  simpleSender ! "PING"
+  val simpleSender = system.actorOf(SimpleSender.props(new InetSocketAddress("localhost", 11111)), "simpleSender")
+  Thread.sleep(5000)
+  simpleSender ! "PONG:13"
+  println("Press enter to exit...")
+  StdIn.readLine()
+  system.terminate()
 }
