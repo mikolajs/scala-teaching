@@ -85,6 +85,32 @@ class SaveActor() extends Actor {
   }
 }
 
+object Connected {
+  def props(remote:InetSocketAddress) = Props(new Connected(remote))
+}
+
+class Connected(remote: InetSocketAddress) extends Actor {
+  import context.system
+  IO(UdpConnected) ! UdpConnected.Connect(self, remote)
+  IO(Udp) ! Udp.Bind(self, new InetSocketAddress("localhost", 11111))
+
+  def receive = {
+    case UdpConnected.Connected =>
+      context.become(ready(sender()))
+  }
+
+  def ready(connection: ActorRef): Receive = {
+    case UdpConnected.Received(data) =>
+      println("CONNECTED reveived: " + data.utf8String)
+      // process data, send it on, etc.
+    case msg: String =>
+      connection ! UdpConnected.Send(ByteString(msg))
+    case UdpConnected.Disconnect =>
+      connection ! UdpConnected.Disconnect
+    case UdpConnected.Disconnected => context.stop(self)
+  }
+}
+
 object SimpleSender {
   def props(r: InetSocketAddress) = Props(new SimpleSender(r))
 }
@@ -107,10 +133,13 @@ class SimpleSender(remote: InetSocketAddress) extends Actor {
 object MainServer extends App {
   val system = ActorSystem("mainServerSystem")
   val saveActor =  system.actorOf(Props[SaveActor](), "saveActor")
-  val listener = system.actorOf(Listener.props(saveActor), "listener")
+  //val listener = system.actorOf(Listener.props(saveActor), "listener")
+  val connected = system.actorOf(Connected.props(new InetSocketAddress("localhost", 11112)), "connected")
   val simpleSender = system.actorOf(SimpleSender.props(new InetSocketAddress("localhost", 11111)), "simpleSender")
   Thread.sleep(5000)
-  simpleSender ! "PONG:13"
+  simpleSender ! "PONG:15"
+  connected ! "PONG:14"
+  simpleSender ! "PiNG:15"
   println("Press enter to exit...")
   StdIn.readLine()
   system.terminate()
