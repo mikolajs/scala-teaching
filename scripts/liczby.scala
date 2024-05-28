@@ -4,5 +4,7 @@ val r = Random()
 
 
 @main def main():Unit =
-  for i <- 1 to 10000 do
-    println(r.nextInt(10000000))
+  var l:List[Int] = Nil
+  for i <- 1 to 2000 do
+    if r.nextInt(10) < 9 then println(r.nextInt(99998)+ 2) 
+    else println(r.nextInt(26)+ 65) 
