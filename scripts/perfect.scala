@@ -2,7 +2,7 @@ import scala.util.Random
 
 val r = Random()
 def mkRand() = 
-  val s = r.nextInt(1000000) + 1000
+  val s = r.nextInt(600000) + 1000
   val x = r.nextInt(500000)
   val e = if s + x > 1000000 then 1000000 else s + x
   (s, e)
@@ -15,6 +15,6 @@ def mkNearPerfect() =
 
 @main def main():Unit = 
   (1 to 200).map(i => 
-    val p = mkNearPerfect()
-    println(s"${p._1} ${p._2} ${p._3}")
+    val p = mkRand()
+    println(s"${p._1} ${p._2}")
     )
