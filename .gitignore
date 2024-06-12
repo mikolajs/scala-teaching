@@ -1,4 +1,6 @@
 
+*.swp
+
 target/
 project/target
 project/build
