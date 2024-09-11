@@ -4,7 +4,7 @@
      
     scalaVersion := "2.12.1"
      
-    resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
+    resolvers += "Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/"
     
     scalacOptions ++= Seq("-deprecation", "-unchecked")
  

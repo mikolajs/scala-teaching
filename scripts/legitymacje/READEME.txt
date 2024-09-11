@@ -1,0 +1,7 @@
+1. Pobierz z katalogu dla_anglistow plik wyniki.xlsx i eksportuj do csv jako uczniowie.csv
+2. Uruchom skrypt createClassOrdered.scala z parametrem oznaczającym klasę np.: scala createClassOrdered.scala 1A
+3. Ułóż zdjęcia na kartce w takiej kolejności jak w pliku klasa.csv (uwaga, polskie litery  będą na końcu) 
+??? Klejenie??? Klej do papieru?
+4. Zeskanuj kartkę ze zdjęciami: 300. 2550x3510 i przeskaluj: 2100x2950 (powinno być 2570?)  1px to 0,01cm WYSZŁO: szerokość 348px, wysokość: 458px
+
+
