@@ -1,0 +1,13 @@
+Tworzenie bazy danych SQL:
+Zalogowanie: sudo su postgres
+Utworzenie bazy: createdb iothome
+Wejście do bazy danych: psql iothome
+Uruchomienie skryptów:
+Create user iothome with encrypted password 'zaq12wsx';
+GRANT ALL ON DATABASE iothome TO iothome;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO iothome
+
+
+CREATE TABLE boiler (time bigint PRIMARY KEY, temperature real);
+CREATE TABLE measure (thermometer char, time bigint, temperature real);
+CREATE TABLE measure_used (thermometer char, measure_time bigint, boiler_time bigint);

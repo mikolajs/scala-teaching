@@ -1,4 +1,5 @@
 val scala3Version = "3.5.0"
+lazy val doobieVersion = "1.0.0-RC5"
 
 lazy val root = project
   .in(file("."))
@@ -8,5 +9,11 @@ lazy val root = project
     run / fork := true,
     scalaVersion := scala3Version,
 
-    libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
+
+    libraryDependencies ++= Seq(
+      "org.tpolecat" %% "doobie-core"     % doobieVersion,
+      "org.tpolecat" %% "doobie-postgres" % doobieVersion,
+      "org.tpolecat" %% "doobie-specs2"   % doobieVersion,
+      "org.scalameta" %% "munit" % "1.0.0" % Test
+    )
   )
