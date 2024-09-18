@@ -8,12 +8,8 @@ object TemperatureData:
   private val MAX_TEMP = 40
   private val DELTA_TIME = 240000L
   private val lastTemperatures = scala.collection.mutable.Map[Char, TemperatureMeasure]()
-  private val tableTemperaturesWorkingDay = scala.collection.mutable.Map[Int, Float](
-    4 -> 20.0f, 6 -> 18.0f, 15 -> 21.0f, 22 -> 18.0f
-  )
-  private val tableTemperaturesWeekendDay = scala.collection.mutable.Map[Int, Float](
-    8 -> 20.0f, 14 -> 19.0f, 16 -> 21.0f, 22 -> 18.0f
-  )
+  private val tableTemperaturesWorkingDay = loadExpectedTempScheduler("workingdays")
+  private val tableTemperaturesWeekendDay = loadExpectedTempScheduler("freedays")
   private var T_boiler = 20f
 
   def getAfterTime:Float =
@@ -38,6 +34,15 @@ object TemperatureData:
         lastTemperatures.clear()
         scala.math.round(T_boiler*10.0f)/10.0f
       else -1.0
+
+  private def loadExpectedTempScheduler(file:String):Map[Int, Float] =
+    scala.io.Source.fromFile(s"/etc/iothome/$file.cfg").getLines.toList.map(line =>
+      if line.trim.head == '#' then List("", "")
+      else line.trim.split(" ").filter(_.trim.nonEmpty).toList.take(2)
+    ).filter(l => l.length == 2).filterNot(l => l.head.isEmpty)
+      .map(l =>
+        (l.head.split(":").map(_.toInt).reduce((h, m) => h*60+m),
+        l.last.toFloat)).toMap
 
   private def setTempBoiler(dT: Float): Unit =
     if T_boiler + dT > MAX_TEMP then

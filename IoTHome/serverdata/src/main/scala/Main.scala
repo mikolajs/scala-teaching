@@ -15,6 +15,8 @@ def insertData(T:Float, Ta:Float, ta:Long, Tb:Float, tb:Long):Unit =
     DBConnect.mkInsertMeasure('B', tb, Tb)
     DBConnect.mkInsertMeasureUsed('B', tb, boilerTime)
 
+def mkRoundTemp(T: Float): Float = math.round(T * 100) / 100.0f
+  
 @main def main():Unit =
   for i <- 1 to 20 do
     val T = r.nextFloat*30.0f
@@ -29,4 +31,11 @@ def insertData(T:Float, Ta:Float, ta:Long, Tb:Float, tb:Long):Unit =
     if b > 0.0f then println(s"B. Set boiler to: $b")
     val TBoiler = if a > 0.0f then a else b
     insertData(TBoiler, T,ta, T+0.4f, tb)
-    Thread.sleep(10000)
+    Thread.sleep(2000)
+
+  val boilerSet = DBConnect.mkSelectBoilerSet(20)
+  for bs <- boilerSet do
+    println(s"date: ${Date(bs.t).toString}, temp: ${mkRoundTemp(bs.T)}")
+    
+  for chB <- DBConnect.checkData(20) do 
+    println(chB)
