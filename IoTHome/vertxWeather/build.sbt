@@ -1,4 +1,5 @@
-val scala3Version = "3.1.2"
+val scala3Version = "3.5.0"
+lazy val doobieVersion = "1.0.0-RC5"
 cancelable in Global := true
 
 //fork / run := true
@@ -21,14 +22,16 @@ lazy val root = project
     name := "weatherSeverVertx",
     version := "0.1.0",
     scalaVersion := scala3Version,
+    run / fork := true,
     mainClass := Some("eu.brosbit.Main"),
     assemblyJarName := "weather-assembly-0.1.jar",
 
     libraryDependencies ++= Seq(
-      "io.vertx" % "vertx-core" % "4.3.1",
-      "io.vertx" % "vertx-web" % "4.3.1",
-      "io.vertx" % "vertx-web-client" % "4.3.1",
-      "org.scalactic" %% "scalactic" % "3.2.12",
-      "org.scalatest" %% "scalatest" % "3.2.12" % "test"
+      "io.vertx" % "vertx-core" % "4.5.9",
+      "io.vertx" % "vertx-web" % "4.5.9",
+      "io.vertx" % "vertx-web-client" % "4.5.9",
+      "org.tpolecat" %% "doobie-core"     % doobieVersion,
+      "org.tpolecat" %% "doobie-postgres" % doobieVersion,
+      "org.tpolecat" %% "doobie-specs2"   % doobieVersion
     )
   )

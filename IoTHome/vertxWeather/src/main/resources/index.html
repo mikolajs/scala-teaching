@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomiary resources</title>
+</head>
+<body>
+    <div>
+        <h1>Wyniki pomiarów temperatury</h1>
+        <div id="measures">
+
+        </div>
+    </div>
+    <div></div>
+        <h1>Ustawienie temperatury boilera</h1>
+        <div id="boiler">
+
+        </div>
+    </div>
+    <script>
+        function loadMeasures(){
+            console.log("load measures");
+            const req = new XMLHttpRequest();
+            req.addEventListener("load", reqMeasures);
+            req.open("GET", "http://192.168.0.218:8989/lastmeasures");
+            req.send();
+        }
+        function loadBoiler(){
+            console.log("load boiler");
+            const req = new XMLHttpRequest();
+            req.addEventListener("load", reqBoiler);
+            req.open("GET", "http://192.168.0.218:8989/lastboilerset");
+            req.send();
+        }
+        loadMeasures();
+        loadBoiler();
+        function reqMeasures(){
+            //console.log(this.responseText);
+            let json = JSON.parse(this.responseText);
+            let str = '';
+            for(m of json.measures) {
+                str += '<p>';
+                str += 'urządzenie: ';
+                str += m.th;
+                str += ', czas: ';
+                str += new Date(m.t).toLocaleString('pl-Pl');
+                str += ', temperatura: ';
+                str += m.T;
+                str += '</p>';
+            }
+            document.getElementById('measures').innerHTML = str;
+            
+        }
+        function reqBoiler(){
+            let json = JSON.parse(this.responseText);
+            let str = '';
+            for(m of json.boiler) {
+                str += '<p>';
+                str += 'czas: ';
+                str += new Date(m.t).toLocaleString('pl-Pl');
+                str += ', temperatura: ';
+                str += m.T;
+                str += '</p>';
+            }
+            document.getElementById('boiler').innerHTML = str;
+        }
+    </script>
+</body>
+</html>

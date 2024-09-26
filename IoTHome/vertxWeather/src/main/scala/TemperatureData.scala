@@ -1,3 +1,5 @@
+package eu.brosbit
+
 import java.util.{Calendar, Date, GregorianCalendar}
 
 case class TemperatureMeasure(t:Long, T:Float)
@@ -25,17 +27,17 @@ object TemperatureData:
   private def loadExpectedTempScheduler(file:String):Map[Int, Float] =
     val source = scala.io.Source.fromFile(s"/etc/iothome/$file.cfg")
     val map = source.getLines.toList.map(line =>
-      if line.trim.head == '#' then List("", "")
-      else line.trim.split(" ").filter(_.trim.nonEmpty).toList.take(2)
-    ).filter(l => l.length == 2).filterNot(l => l.head.isEmpty)
+        if line.trim.head == '#' then List("", "")
+        else line.trim.split(" ").filter(_.trim.nonEmpty).toList.take(2)
+      ).filter(l => l.length == 2).filterNot(l => l.head.isEmpty)
       .map(l =>
         (l.head.split(":").map(_.toInt).reduce((h, m) => h*60+m),
-        l.last.toFloat)).toMap
+          l.last.toFloat)).toMap
     source.close()
     map
 
   private def setTempBoiler(dT: Float): Unit =
-    if T_boiler + dT <= MIN_TEMP then 
+    if T_boiler + dT <= MIN_TEMP then
       T_boiler = MIN_TEMP
     else if T_boiler + dT > MAX_TEMP then
       T_boiler = MAX_TEMP
