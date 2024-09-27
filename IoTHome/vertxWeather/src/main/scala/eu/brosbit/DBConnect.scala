@@ -14,6 +14,9 @@ case class CheckBoiler(ch:String, tT:Long, TT:Float, tB:Long, TB:Float)
 case class CheckMeasure(th:String, t:Long, T:Float):
   def toJson = s"""{"th":"$th", "t":$t, "T":$T}"""
   
+case class BoilerInfo(t:Long, rt:Float, bt:Float, sb:Float, oem:Int):
+  def toJson = s"""{"time":$t, "returnTemp":$rt, "boilerTemp":$bt, "setpointBound":$sb, "oemDiagnostic":$oem}"""
+  
 
 object DBConnect:
   import cats.effect.unsafe.implicits. global
@@ -66,3 +69,13 @@ object DBConnect:
   def checkLastBoilerSet(last: Int = 25): List[Boiler] =
     sql"select time, temperature from boiler order by time desc limit $last".query[Boiler].stream.compile.toList
       .transact(xa).unsafeRunSync()
+    
+  def checkBoilerInfo(last: Int = 20): List[BoilerInfo] =
+    sql"""select time, return_temperature, boiler_temperature, setpoint_bound, oem_diagnostic from boiler_info 
+         | order by time desc limit $last
+       """.stripMargin.query[BoilerInfo].stream.compile.toList.transact(xa).unsafeRunSync()
+    
+  def mkInsertBoilerInfo(t:Long, returnTemp:Float, boilerTemp:Float, setpointBound:Float, oemDiagnostic:Int):Int =
+    sql"""insert into boiler_info (time, return_temperature, boiler_temperature, setpoint_bound, oem_diagnostic) values
+         | ($t, $returnTemp, $boilerTemp, $setpointBound, $oemDiagnostic)
+       """.stripMargin.update.run.transact(xa).unsafeRunSync()

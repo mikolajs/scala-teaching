@@ -43,7 +43,7 @@ class TemperatureRouter(vertx:Vertx):
     res.putHeader("content-type", "plain/text").end(T.toString)
   )
 
-  router.route(HttpMethod.GET, "/lastmeasures").handler( ctx =>
+  router.route(HttpMethod.GET, "/info/measures").handler( ctx =>
     val measures = DBConnect.checkLastMeasures()
     val res = ctx.response()
     res.putHeader("content-type", "application/json")
@@ -52,13 +52,41 @@ class TemperatureRouter(vertx:Vertx):
     res.end("{\"measures\":[" + measures.map(_.toJson).mkString(",") + "]}\n")
   )
 
-  router.route(HttpMethod.GET, "/lastboilerset").handler(ctx =>
+  router.route(HttpMethod.GET, "/info/boilerset").handler(ctx =>
     val boilers = DBConnect.checkLastBoilerSet()
     val res = ctx.response()
     res.putHeader("content-type", "application/json")
     //res.putHeader("Access-Control-Allow-Origin:", "*")
   //res.putHeader("Accept:", "text/html,application/json;q=0.9,*/*;q=0.8")
     res.end("{\"boiler\":[" + boilers.map(_.toJson).mkString(",") + "]}\n")
+  )
+
+  router.route(HttpMethod.GET, "/addboilerinfo").handler(ctx =>
+    val returnWaterTemp = try ctx.queryParam("rwt").asScala.head.trim.toFloat
+    catch
+      case _ => -1.0f
+
+    val boilerWaterTemp = try ctx.queryParam("bwt").asScala.head.trim.toFloat
+    catch
+      case _ => -1.0f
+
+    val setpointBounds = try ctx.queryParam("spb").asScala.head.trim.toFloat
+    catch
+      case _ => -1.0f
+
+    val oemDiagnostic = try ctx.queryParam("oemd").asScala.head.trim.toInt
+    catch
+      case _ => -1
+    DBConnect.mkInsertBoilerInfo(Date().getTime, returnWaterTemp, boilerWaterTemp, setpointBounds, oemDiagnostic)
+    val res = ctx.response()
+    res.end("OK")
+  )
+
+  router.route(HttpMethod.GET, "/info/boiler").handler(ctx =>
+    val boilerInfoList = DBConnect.checkBoilerInfo()
+    val res = ctx.response()
+    res.putHeader("content-type", "application/json")
+    res.end("{\"boiler\":[" + boilerInfoList.map(_.toJson).mkString(", ") + "]}")
   )
 
   router.route(HttpMethod.GET, "/").handler(ctx =>{
@@ -71,7 +99,18 @@ class TemperatureRouter(vertx:Vertx):
        res.setStatusCode(406)
        res.end("error\n")
     })
+  })
 
+  router.route(HttpMethod.GET, "/boilerstate").handler(ctx =>{
+    val res = ctx.response()
+    //println("Start / page")
+    vertx.fileSystem().readFile("boiler.html").onSuccess(file =>{
+      val data = file.toString("UTF-8")
+      res.end(data)
+    }).onFailure(e =>{
+      res.setStatusCode(406)
+      res.end("error\n")
+    })
   })
 
 
