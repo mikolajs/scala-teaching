@@ -18,7 +18,7 @@
     console.log("load measures");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoiler);
-    req.open("GET", "http://192.168.0.218:8989/info/boiler");
+    req.open("GET", "http://192.168.0.120:8989/info/boiler");
     req.send();
   }
   loadBoilerData();
