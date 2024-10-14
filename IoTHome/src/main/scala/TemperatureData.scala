@@ -1,6 +1,6 @@
 package eu.brosbit
 
-import java.util.{Calendar, Date, GregorianCalendar}
+import java.util.{Calendar, Date}
 
 case class TemperatureMeasure(t:Long, T:Float)
 
@@ -13,16 +13,22 @@ object TemperatureData:
   private val lastTemperatures = scala.collection.mutable.Map[Char, TemperatureMeasure]()
   private val tableTemperaturesWorkingDay = loadExpectedTempScheduler("workingdays")
   private val tableTemperaturesWeekendDay = loadExpectedTempScheduler("freedays")
-  private var T_boiler = 20f
+  private var T_boiler = 25f
+
+  //after read data from boiler
+  def setBoilerTemperature(t:Float):Unit =
+    T_boiler = t
 
   def getTemperatureForBoiler: Float =
     setTempBoiler(countChangeTemp)
-    DBConnect.mkInsertBoiler(Date().getTime, T_boiler)
+    DBConnect.insertBoilerSetTemperature(Date().getTime, T_boiler)
     T_boiler
 
   def addMeasure(C:Char, t:Long, T:Float):Unit =
-    DBConnect.mkInsertMeasure(C, t, T)
+    DBConnect.insertMeasure(C, t, T)
     lastTemperatures += (C -> TemperatureMeasure(t, T))
+    for m <- lastTemperatures do
+      if m._2.t < t - 2L*3600000L then lastTemperatures.remove(m._1)
 
   private def loadExpectedTempScheduler(file:String):Map[Int, Float] =
     val source = scala.io.Source.fromFile(s"/etc/iothome/$file.cfg")
@@ -48,9 +54,10 @@ object TemperatureData:
 
   private def countChangeTemp: Float =
     val T_expected = checkExpectedTemp
+    DBConnect.insertExpectedTemperature(Date().getTime, T_expected)
     val dT = T_expected - countAvgTemperature
-    if dT > 12.0f then 6.0f
-    else if dT.abs > 0.2f then dT * 0.5f
+    if dT > 12.0f then 4.0f
+    else if dT.abs > 0.1f then dT * 0.3f
     else 0.0f
 
   private def checkExpectedTemp:Float =

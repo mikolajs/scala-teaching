@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Stan boilera</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
     req.open("GET", "http://192.168.0.120:8989/info/boiler");
     req.send();
   }
-  loadBoilerData();
+
 
   function reqBoiler(){
     console.log(this.responseText);
@@ -42,7 +43,6 @@
       str += '</p>';
     }
     document.getElementById('dane').innerHTML = str;
-
   }
 </script>
 </body>

@@ -18,7 +18,7 @@ object Main {
     hello
     server.requestHandler(
       temperatureRouter.router
-    ).listen(8989, "192.168.0.120").onSuccess(server => {
+    ).listen(8989, "192.168.0.218").onSuccess(server => {
       println("Server: " + server.actualPort())
     }).onFailure(error => {
       println(s"Cannot set server ${error.toString}")

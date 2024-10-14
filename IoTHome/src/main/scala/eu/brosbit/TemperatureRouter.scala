@@ -3,13 +3,15 @@ package eu.brosbit
 import io.netty.handler.codec.http.HttpResponse
 import io.vertx.core.Vertx
 import io.vertx.core.streams.Pipe
-import io.vertx.core.http.HttpMethod
+import io.vertx.core.http.{HttpMethod, HttpServerResponse}
 import io.vertx.ext.web.Router
-import scala.jdk.CollectionConverters._
+
+import scala.jdk.CollectionConverters.*
 import java.util.Date
 
 class TemperatureRouter(vertx:Vertx):
   val router: Router = Router.router(vertx)
+
   router.route(HttpMethod.GET, "/temp").handler(ctx =>
     val parTemp: Float =
       try ctx.queryParam("T").asScala.head.trim.toFloat
@@ -36,29 +38,12 @@ class TemperatureRouter(vertx:Vertx):
         .putHeader("content-type", "plain/text")
         .end("Wrong parameters\n")
   )
+
   router.route(HttpMethod.GET, "/boiler").handler(ctx =>
     val T = TemperatureData.getTemperatureForBoiler
     val res = ctx.response()
     println(s"Set temperature boiler: $T")
     res.putHeader("content-type", "plain/text").end(T.toString)
-  )
-
-  router.route(HttpMethod.GET, "/info/measures").handler( ctx =>
-    val measures = DBConnect.checkLastMeasures()
-    val res = ctx.response()
-    res.putHeader("content-type", "application/json")
-    //res.putHeader("Access-Control-Allow-Origin:", "*")
-    //res.putHeader("Accept:", "text/html,application/json;q=0.9,*/*;q=0.8")
-    res.end("{\"measures\":[" + measures.map(_.toJson).mkString(",") + "]}\n")
-  )
-
-  router.route(HttpMethod.GET, "/info/boilerset").handler(ctx =>
-    val boilers = DBConnect.checkLastBoilerSet()
-    val res = ctx.response()
-    res.putHeader("content-type", "application/json")
-    //res.putHeader("Access-Control-Allow-Origin:", "*")
-  //res.putHeader("Accept:", "text/html,application/json;q=0.9,*/*;q=0.8")
-    res.end("{\"boiler\":[" + boilers.map(_.toJson).mkString(",") + "]}\n")
   )
 
   router.route(HttpMethod.GET, "/addboilerinfo").handler(ctx =>
@@ -77,17 +62,47 @@ class TemperatureRouter(vertx:Vertx):
     val oemDiagnostic = try ctx.queryParam("oemd").asScala.head.trim.toInt
     catch
       case _ => -1
-    DBConnect.mkInsertBoilerInfo(Date().getTime, returnWaterTemp, boilerWaterTemp, setpointBounds, oemDiagnostic)
+
+    if boilerWaterTemp > 20 then TemperatureData.setBoilerTemperature(boilerWaterTemp)
+    DBConnect.insertBoilerInfo(Date().getTime, returnWaterTemp, boilerWaterTemp, setpointBounds, oemDiagnostic)
     val res = ctx.response()
     res.end("OK")
   )
 
-  router.route(HttpMethod.GET, "/info/boiler").handler(ctx =>
-    val boilerInfoList = DBConnect.checkBoilerInfo()
+  router.route(HttpMethod.GET, "/info/expected_temperature").handler(ctx =>
+    val boilers = DBConnect.selectLastBoilerExpectedTemperature()
+    val res = ctx.response()
+    res.putHeader("content-type", "application/json")
+    //res.putHeader("Access-Control-Allow-Origin:", "*")
+    //res.putHeader("Accept:", "text/html,application/json;q=0.9,*/*;q=0.8")
+    res.end("{\"boiler\":[" + boilers.map(_.toJson).mkString(",") + "]}\n")
+  )
+
+  router.route(HttpMethod.GET, "/info/measures").handler( ctx =>
+    val measures = DBConnect.selectLastMeasures()
+    val res = ctx.response()
+    res.putHeader("content-type", "application/json")
+    //res.putHeader("Access-Control-Allow-Origin:", "*")
+    //res.putHeader("Accept:", "text/html,application/json;q=0.9,*/*;q=0.8")
+    res.end("{\"measures\":[" + measures.map(_.toJson).mkString(",") + "]}\n")
+  )
+
+  router.route(HttpMethod.GET, "/info/boiler_info").handler(ctx =>
+    val boilers = DBConnect.selectLastBoilerInfo()
+    val res = ctx.response()
+    res.putHeader("content-type", "application/json")
+    //res.putHeader("Access-Control-Allow-Origin:", "*")
+  //res.putHeader("Accept:", "text/html,application/json;q=0.9,*/*;q=0.8")
+    res.end("{\"boiler\":[" + boilers.map(_.toJson).mkString(",") + "]}\n")
+  )
+
+  router.route(HttpMethod.GET, "/info/boiler_set_temp").handler(ctx =>
+    val boilerInfoList = DBConnect.selectBoilerSetTemperature()
     val res = ctx.response()
     res.putHeader("content-type", "application/json")
     res.end("{\"boiler\":[" + boilerInfoList.map(_.toJson).mkString(", ") + "]}")
   )
+
 
   router.route(HttpMethod.GET, "/").handler(ctx =>{
     val res = ctx.response()
@@ -101,16 +116,48 @@ class TemperatureRouter(vertx:Vertx):
     })
   })
 
-  router.route(HttpMethod.GET, "/boilerstate").handler(ctx =>{
-    val res = ctx.response()
-    //println("Start / page")
-    vertx.fileSystem().readFile("boiler.html").onSuccess(file =>{
-      val data = file.toString("UTF-8")
-      res.end(data)
-    }).onFailure(e =>{
-      res.setStatusCode(406)
-      res.end("error\n")
+  createStateRoute("chart-utils.min.js")
+  createStateRoute("iothome-chart.js")
+  createStateRoute("boiler.html")
+  createStateRoute("test.html")
+  createStateRoute("test.js")
+  createPictureRoute("favicon.ico")
+
+  private def createStateRoute(path:String):Unit =
+    val arr = path.split('.')
+    val fullPath = if arr.last != "html" then "/"+path else "/"+arr.dropRight(1).mkString(".")
+    println(fullPath)
+    router.route(HttpMethod.GET, fullPath).handler(ctx => {
+      val res = ctx.response()
+      vertx.fileSystem().readFile(path).onSuccess(file => {
+        val data = file.toString("UTF-8")
+        insertTypeString(path, res)
+        res.end(data)
+      }).onFailure(e => {
+        res.setStatusCode(404)
+        res.end("error\n")
+      })
     })
-  })
+    
+  private def createPictureRoute(path:String):Unit =
+    router.route(HttpMethod.GET, "/" + path).handler(ctx => {
+      val res = ctx.response()
+      vertx.fileSystem().readFile(path).onSuccess(file => {
+        val data = file
+        insertTypeString(path, res)
+        res.end(data)
+      }).onFailure(e => {
+        res.setStatusCode(404)
+        res.end("error\n")
+      })
+    })
+    
+  private def insertTypeString(path:String, res:HttpServerResponse):Unit =
+    path.split('.').last match
+      case ext if ext == "js" => res.putHeader("content-type", "text/javascript")
+      case ext if ext == "json" =>res.putHeader("content-type", "application/json")
+      case ext if ext == "ico" => res.putHeader("content-type", "image/x-icon")
+      case ext if ext == "png" => res.putHeader("content/type", "image/png")
+      case _ =>
 
 
