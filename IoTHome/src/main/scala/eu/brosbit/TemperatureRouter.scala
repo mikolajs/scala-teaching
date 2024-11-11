@@ -102,8 +102,30 @@ class TemperatureRouter(vertx:Vertx):
     res.putHeader("content-type", "application/json")
     res.end("{\"boiler\":[" + boilerInfoList.map(_.toJson).mkString(", ") + "]}")
   )
-
-
+  
+  router.route(HttpMethod.GET, "/info/temp_setting").handler(ctx =>
+    val jsonStr = TemperatureData.getOwnSettings
+    val res = ctx.response()
+    res.putHeader("content-type", "application/json")
+    res.end(jsonStr)
+  )
+  
+  router.route(HttpMethod.GET, "/set_temperature").handler(ctx =>
+    val parTemp: Float =
+      try ctx.queryParam("T").asScala.head.trim.toFloat
+      catch
+        case e => 0.0f
+    val parOn: Boolean =
+      try ctx.queryParam("on").asScala.head.trim.toBoolean
+      catch
+        case e => false
+        
+    TemperatureData.setOwnSettings(parTemp, parOn)
+    val res = ctx.response()
+    res.putHeader("content-type", "application/json")
+    res.end(TemperatureData.getOwnSettings)
+  )
+  
   router.route(HttpMethod.GET, "/").handler(ctx =>{
     val res = ctx.response()
     //println("Start / page")
@@ -118,8 +140,9 @@ class TemperatureRouter(vertx:Vertx):
 
   createStateRoute("chart-utils.min.js")
   createStateRoute("iothome-chart.js")
-  createStateRoute("boiler.html")
+  createStateRoute("boilerstate.html")
   createStateRoute("test.html")
+  createStateRoute("own_temp.html")
   createStateRoute("test.js")
   createPictureRoute("favicon.ico")
 

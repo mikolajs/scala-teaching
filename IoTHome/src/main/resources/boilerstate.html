@@ -19,7 +19,7 @@
     console.log("load measures");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoiler);
-    req.open("GET", "http://192.168.0.120:8989/info/boiler");
+    req.open("GET", "/info/boiler_info");
     req.send();
   }
 
@@ -44,6 +44,7 @@
     }
     document.getElementById('dane').innerHTML = str;
   }
+  loadBoilerData();
 </script>
 </body>
 </html>

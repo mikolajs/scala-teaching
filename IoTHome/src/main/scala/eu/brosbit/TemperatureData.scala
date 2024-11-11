@@ -14,6 +14,8 @@ object TemperatureData:
   private val tableTemperaturesWorkingDay = loadExpectedTempScheduler("workingdays")
   private val tableTemperaturesWeekendDay = loadExpectedTempScheduler("freedays")
   private var T_boiler = 25f
+  private var TEMP_SETTING = false
+  private var TEMP_SETTING_VAL = 21.0 //wykorzystać do ustawienia tempeartury i działanie
 
   //after read data from boiler
   def setBoilerTemperature(t:Float):Unit =
@@ -29,6 +31,13 @@ object TemperatureData:
     lastTemperatures += (C -> TemperatureMeasure(t, T))
     for m <- lastTemperatures do
       if m._2.t < t - 2L*3600000L then lastTemperatures.remove(m._1)
+
+  def getOwnSettings = s"""{"settings":{"T":$TEMP_SETTING_VAL, "on":$TEMP_SETTING}}"""
+
+  def setOwnSettings(T: Float, on: Boolean): Unit =
+    TEMP_SETTING = on
+    TEMP_SETTING_VAL = T
+    //setting temperature without data from file
 
   private def loadExpectedTempScheduler(file:String):Map[Int, Float] =
     val source = scala.io.Source.fromFile(s"/etc/iothome/$file.cfg")

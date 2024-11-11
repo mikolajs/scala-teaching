@@ -27,13 +27,14 @@ lazy val root = project
    // mainClass := Some("eu.brosbit.Main"),
     assemblyJarName := "iothome-assembly-0.1.jar",
     assembly / mainClass := Some("eu.brosbit.Main"),
-
+    testFrameworks += new TestFramework("munit.Framework"),
     libraryDependencies ++= Seq(
       "io.vertx" % "vertx-core" % "4.5.9",
       "io.vertx" % "vertx-web" % "4.5.9",
       "io.vertx" % "vertx-web-client" % "4.5.9",
       "org.tpolecat" %% "doobie-core"     % doobieVersion,
       "org.tpolecat" %% "doobie-postgres" % doobieVersion,
-      "org.tpolecat" %% "doobie-specs2"   % doobieVersion
+      "org.tpolecat" %% "doobie-specs2"   % doobieVersion,
+      "org.scalameta" %% "munit" % "0.7.29" % Test
     )
   )

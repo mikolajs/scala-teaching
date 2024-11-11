@@ -8,27 +8,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/chart-utils.min.js"></script>
     <style>
+        .buttons { padding: 5px 10px; background-color: green; color: white;  text-decoration: none;
+            text-align: center; display:inline-block;
+        }
+
     </style>
 </head>
 <body>
     <nav>
-        <a href="/">Pomiary temperatury</a>
-        <a href="/boilerstate">Stan boilera</a>
+        <a href="/" class="buttons">Pomiary temperatury</a>
+        <a href="/boilerstate" class="buttons">Stan boilera</a>
+        <a href="/test" class="buttons">Zestawienie</a>
+        <a href="/own_temp">Własne</a>
     </nav>
     <div>
         <canvas id="myChart"></canvas>
-    </div>
-    <div>
-        <h1>Wyniki pomiarów temperatury</h1>
-        <div id="measures">
-
-        </div>
-    </div>
-    <div>
-        <h1>Ustawienie temperatury boilera</h1>
-        <div id="boiler">
-
-        </div>
     </div>
     <script src="iothome-chart.js"></script>
 </body>
