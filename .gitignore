@@ -17,4 +17,5 @@ rekrutacja/project/target
 **/.idea
 **/.bsp
 script/**/.scala-build/
+script/.scala-build/
 
