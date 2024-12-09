@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>Stan boilera</title>
+</head>
+<body>
+<div>
+  <h1>Stan boilera</h1>
+  <div id="dane">
+
+  </div>
+</div>
+
+<script>
+  function loadBoilerData(){
+    console.log("load measures");
+    const req = new XMLHttpRequest();
+    req.addEventListener("load", reqBoiler);
+    req.open("GET", "/info/boiler_info");
+    req.send();
+  }
+
+
+  function reqBoiler(){
+    console.log(this.responseText);
+    let json = JSON.parse(this.responseText);
+    let str = '';
+    for(b of json.boiler) {
+      str += '<p>';
+      str += 'czas: ';
+      str += new Date(b.time).toLocaleString('pl-Pl');
+      str += ', temperatura wracająca: ';
+      str += b.returnTemp;
+      str += ', temperatura boilera: ';
+      str += b.boilerTemp;
+      str += ', ustwienie temperatury pokrętłem: ';
+      str += b.setpointBound;
+      str += ', OEM kod diagnostyki: ';
+      str += b.oemDiagnostic;
+      str += '</p>';
+    }
+    document.getElementById('dane').innerHTML = str;
+  }
+  loadBoilerData();
+</script>
+</body>
+</html>

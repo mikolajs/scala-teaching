@@ -16,7 +16,7 @@ def mkLetter() = (r.nextInt(26)+97).toChar
 def mkBigLetter() = (r.nextInt(26)+65).toChar
 
 def mkRandomBigString() = 
-  val l = r.nextInt(50)+10
+  val l = r.nextInt(20)+10
   (1 to l).map(i => mkBigLetter()).mkString
 
 def mkRandomString() = 
@@ -25,7 +25,7 @@ def mkRandomString() =
 
 @main def start():Unit =
   val m = (1 to 400).map( i =>
-    mkRandomBigString()
+    mkRandomBigString() + " " + mkBigLetter().toString
   ).mkString("\n")
   println(m)
 
