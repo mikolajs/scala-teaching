@@ -63,7 +63,7 @@ class TemperatureRouter(vertx:Vertx):
     catch
       case _ => -1
 
-    if boilerWaterTemp > 20 then TemperatureData.setBoilerTemperature(boilerWaterTemp)
+    //if boilerWaterTemp > 20 then TemperatureData.setBoilerTemperature(boilerWaterTemp)
     DBConnect.insertBoilerInfo(Date().getTime, returnWaterTemp, boilerWaterTemp, setpointBounds, oemDiagnostic)
     val res = ctx.response()
     res.end("OK")
@@ -119,7 +119,8 @@ class TemperatureRouter(vertx:Vertx):
       try ctx.queryParam("on").asScala.head.trim.toBoolean
       catch
         case e => false
-        
+
+    //println(s"set temperature $parTemp on? $parOn")
     TemperatureData.setOwnSettings(parTemp, parOn)
     val res = ctx.response()
     res.putHeader("content-type", "application/json")

@@ -1,10 +1,9 @@
-let server = 'http://192.168.0.218';
 
 function loadMeasures(){
     console.log("load measures");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqMeasures);
-    req.open("GET", server + ":8989/info/measures");
+    req.open("GET", "/info/measures");
     req.send();
 }
 function reqMeasures(){
@@ -29,7 +28,7 @@ function loadBoilerSet(){
     console.log("load boiler set");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerSet);
-    req.open("GET", server + ":8989/info/boiler_set_temp");
+    req.open("GET", "/info/boiler_set_temp");
     req.send();
 }
 function reqBoilerSet(){
@@ -43,14 +42,14 @@ function reqBoilerSet(){
         str += '</td></tr>';
     }
     document.getElementById('boilerSetTab').innerHTML = str;
-    console.log(json);
+    //console.log(json);
 }
 
 function loadBoilerInfo(){
     console.log("load boiler info");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerInfo);
-    req.open("GET", server + ":8989/info/boiler_info");
+    req.open("GET", "/info/boiler_info");
     req.send();
 }
 function reqBoilerInfo(){
@@ -72,13 +71,13 @@ function reqBoilerInfo(){
 
     }
     document.getElementById('boilerInfoTab').innerHTML = str;
-    console.log(json);
+    //console.log(json);
 }
 function loadBoilerExpectedTemp(){
     console.log("load Expected Temp");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerExpectedTemp);
-    req.open("GET", server + ":8989/info/expected_temperature");
+    req.open("GET", "/info/expected_temperature");
     req.send();
 }
 function reqBoilerExpectedTemp(){
@@ -93,7 +92,7 @@ function reqBoilerExpectedTemp(){
         str += '</td></tr>';
     }
     document.getElementById('expectedTempTab').innerHTML = str;
-    console.log(json);
+    //console.log(json);
 }
 
 loadMeasures();

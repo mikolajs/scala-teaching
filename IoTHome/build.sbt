@@ -21,11 +21,11 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "iothome-server",
-    version := "0.1.0",
+    version := "0.3",
     scalaVersion := scala3Version,
     run / fork := true,
    // mainClass := Some("eu.brosbit.Main"),
-    assemblyJarName := "iothome-assembly-0.1.jar",
+    assemblyJarName := "iothome-assembly-0.3.jar",
     assembly / mainClass := Some("eu.brosbit.Main"),
     testFrameworks += new TestFramework("munit.Framework"),
     libraryDependencies ++= Seq(

@@ -24,7 +24,7 @@ function createMinutesAgo(t){
 
 function createDataChartArray(tempArr, dataArr){
     console.log('create data Array');
-    console.log(tempArr);
+    //console.log(tempArr);
     let lastIndex = 0;
     let lastTemp = 0.0;
     while(tempArr[lastIndex][0] < 0) lastIndex++;
@@ -33,12 +33,12 @@ function createDataChartArray(tempArr, dataArr){
         //while(tempArr[lastIndex][0] < i - 5) lastIndex++;
         if(lastIndex >= tempArr.length) break;
         while(tempArr[lastIndex][0] < i - 8 && lastIndex < tempArr.length - 1) lastIndex++;
-        console.log(tempArr[lastIndex]);
+        //console.log(tempArr[lastIndex]);
         if(tempArr[lastIndex][0] <= i && tempArr[lastIndex][0] >= i - 8) {
             //lastTemp = tempArr[lastIndex][1];
             dataArr.push(tempArr[lastIndex][1]);
         } else dataArr.push(0.0);
-        console.log(i, tempArr[lastIndex][1]);
+        //console.log(i, tempArr[lastIndex][1]);
     }
     //console.log(dataArr);
 }
@@ -87,7 +87,7 @@ function reqBoilerSet(){
     for(b of json.boiler) {
         dataArr.push([createMinutesAgo(b.t), b.T]);
     }
-    console.log(json)
+    //console.log(json)
     console.log('load boiler set');
     createDataChartArray(dataArr, dataBoilerSetChart);
     //console.log(boilerSetDataList);
