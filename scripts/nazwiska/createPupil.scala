@@ -59,8 +59,15 @@ def createEmail(name:String) =
     case _ => n + "@interia.pl"
   
  //parametr y wiek osoby 
-@main def run(y:Int) =
-   val names = createMenNames ++ createWomanNames
-   names.map(s => s + ";" + createEmail(s) +  ";" + createPesel(y).toString + ";").foreach(println)
-   ""
+@main def run():Unit=
+   //val names = createMenNames ++ createWomanNames
+  // names.map(s => s + ";" + createEmail(s) +  ";" + createPesel(y).toString + ";").foreach(println)
+  val names = (loadNamesMen ++ loadNamesWoman).filter(name => 
+      name.split(" ").size == 1)
+  import scala.util.Random
+  val rand = Random()
+  val players = rand.shuffle(names).take(100)
+  for p <- players do
+      val w = (1 to 20).map(i => rand.nextInt(11)).mkString(" ")
+      println(s"$p $w")
 

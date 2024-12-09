@@ -2,9 +2,11 @@ import scala.util.Random
 
 val r = Random()
 
+def rand = r.nextInt(99001)+1000
+def randF = r.nextDouble()*100.0
 
 @main def main():Unit =
-  var l:List[Int] = Nil
-  for i <- 1 to 2000 do
-    if r.nextInt(10) < 9 then println(r.nextInt(99998)+ 2) 
-    else println(r.nextInt(26)+ 65) 
+  for i <- 1 to 1000 do
+     println(s"$randF")
+
+
