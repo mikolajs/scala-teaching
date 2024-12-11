@@ -1,5 +1,6 @@
 import scala.util.Random
 import scala.collection.mutable.Queue
+import scala.collection.mutable.Set
 
 val rand = Random()
 
@@ -17,23 +18,28 @@ class HTree(g:String):
 
 var tree = HTree(letters.head.toString)     
 val queue:Queue[HTree] = Queue()
+var unique:Set[String] = Set()
 
 def mkTree(ht:HTree) = 
-  var a = rand.nextInt(3)
-  var g = rand.nextInt(2)
+  var a = rand.nextInt(2)  
+  var g = rand.nextInt(3) 
   for i <- 1 to a do
     if nr < letters.size then 
-      val genDup = ht.gen + ht.gen(rand.nextInt(ht.gen.length))
-      val newHT = HTree(genDup)
-      ht.list = newHT::ht.list
-      queue += newHT
+      val genDup = ht.gen + ht.gen.last.toString()//(rand.nextInt(ht.gen.length))
+      if !unique.contains(genDup) then
+        val newHT = HTree(genDup)
+        ht.list = newHT::ht.list
+        queue += newHT
+        unique += genDup
   for i <- 1 to g do
     if nr < letters.size then 
       val genMut = ht.gen + letters(nr).toString()
-      nr += 1
-      val newHT = HTree(genMut)
-      ht.list = newHT::ht.list
-      queue += newHT
+      if !unique.contains(genMut) then
+        nr += 1
+        val newHT = HTree(genMut)
+        ht.list = newHT::ht.list
+        queue += newHT
+        unique += genMut  
 
 
 def createTree:Unit = 
@@ -44,13 +50,13 @@ def createTree:Unit =
 
 def printTree:Unit =
   queue += tree
-  var str = ""
+  var listCodes:List[String] = Nil 
   while !queue.isEmpty do
     val ht = queue.dequeue()
-    println(s"${ht.gen}")
+    listCodes = s"${Random.shuffle(ht.gen)}"::listCodes
     for innerHT <- ht.list do 
       queue += innerHT
-  //println(str)
+  println(s"""${listCodes.length} ${Random.shuffle(listCodes).mkString(" ")}""")
 
 
 @main def main():Unit =
