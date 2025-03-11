@@ -1,4 +1,4 @@
-val scala3Version = "3.1.2"
+val scala3Version = "3.3.5"
 cancelable in Global := true
 
 //fork / run := true
