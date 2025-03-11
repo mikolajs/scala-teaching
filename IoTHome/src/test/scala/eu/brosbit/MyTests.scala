@@ -30,4 +30,5 @@ class MyTests extends munit.FunSuite {
       DBConnect.insertBoilerSetTemperature(tt, rand.nextFloat() * 6 + 20.0f)
       DBConnect.insertBoilerInfo(tt - rand.nextLong(1000L), 25.0f + rand.nextFloat()*4, 27.0f + rand.nextFloat()*4, 40.0f, 1234)
   }
+  
 }

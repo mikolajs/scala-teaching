@@ -7,22 +7,24 @@ case class TemperatureMeasure(t:Long, T:Float)
 object TemperatureData:
   private val MAX_SIZE = 20
   private val THERMOMETERS = 2
-  private val MAX_TEMP = 40
-  private val MIN_TEMP = 20
+  private val MAX_TEMP = 40.0f
+  private val MIN_TEMP = 30.0f
   private val DELTA_TIME = 240000L
   private val lastTemperatures = scala.collection.mutable.Map[Char, TemperatureMeasure]()
-  private val tableTemperaturesWorkingDay = loadExpectedTempScheduler("workingdays")
-  private val tableTemperaturesWeekendDay = loadExpectedTempScheduler("freedays")
-  private var T_boiler = 25f
+  private var tableTemperaturesWorkingDay = loadExpectedTempScheduler("workingdays")
+  private var tableTemperaturesWeekendDay = loadExpectedTempScheduler("freedays")
+  private var T_boiler = 30.0f
   private var TEMP_SETTING = false
-  private var TEMP_SETTING_VAL = 21.0 //wykorzystać do ustawienia tempeartury i działanie
+  private var TEMP_SETTING_VAL = 21.0f //wykorzystać do ustawienia tempeartury i działanie
 
   //after read data from boiler
-  def setBoilerTemperature(t:Float):Unit =
-    T_boiler = t
+  //def setBoilerTemperature(t:Float):Unit =
+  //  T_boiler = t
 
   def getTemperatureForBoiler: Float =
-    setTempBoiler(countChangeTemp)
+    val TO = if TEMP_SETTING then TEMP_SETTING_VAL else checkExpectedTemp //oczekiwana
+    val TP = countAvgTemperature // z pomiarów
+    changeBoilerTemp(TO, TP)
     DBConnect.insertBoilerSetTemperature(Date().getTime, T_boiler)
     T_boiler
 
@@ -37,7 +39,10 @@ object TemperatureData:
   def setOwnSettings(T: Float, on: Boolean): Unit =
     TEMP_SETTING = on
     TEMP_SETTING_VAL = T
-    //setting temperature without data from file
+
+  def reloadDataFromFile(): Unit =
+    tableTemperaturesWorkingDay = loadExpectedTempScheduler("workingdays")
+    tableTemperaturesWeekendDay = loadExpectedTempScheduler("freedays")
 
   private def loadExpectedTempScheduler(file:String):Map[Int, Float] =
     val source = scala.io.Source.fromFile(s"/etc/iothome/$file.cfg")
@@ -51,6 +56,27 @@ object TemperatureData:
     source.close()
     map
 
+  private def countAvgTemperature = lastTemperatures.map(_._2.T).sum / lastTemperatures.size
+
+  import scala.compiletime.ops.double
+  import scala.math.*
+
+  private def countChange(TO: Float, TP: Float): Float =
+    val dT = TO - TP
+    val dTU = if abs(dT) < 0.2 then 0.0f
+    else floor(abs(dT)).toFloat + 1.0f
+    if dT > 0 then dTU else -dTU
+
+  private def changeBoilerTemp(TO: Float, TP: Float): Unit =
+    //println(s"T_boiler = $T_boiler")
+    val dT = countChange(TO, TP)
+    //println(s"TO $TO, TP = $TP, dt = $dT")
+    if T_boiler + dT > MAX_TEMP then T_boiler = MAX_TEMP
+    else if T_boiler + dT < MIN_TEMP then T_boiler = MIN_TEMP
+    else T_boiler += dT
+
+  /*
+
   private def setTempBoiler(dT: Float): Unit =
     if T_boiler + dT <= MIN_TEMP then
       T_boiler = MIN_TEMP
@@ -59,16 +85,13 @@ object TemperatureData:
     else
       T_boiler += dT
 
-  private def countAvgTemperature = lastTemperatures.map(_._2.T).sum / lastTemperatures.size
-
-  private def countChangeTemp: Float =
-    val T_expected = checkExpectedTemp
+    val T_expected = if TEMP_SETTING then TEMP_SETTING_VAL else checkExpectedTemp
     DBConnect.insertExpectedTemperature(Date().getTime, T_expected)
     val dT = T_expected - countAvgTemperature
     if dT > 12.0f then 4.0f
     else if dT.abs > 0.1f then dT * 0.3f
     else 0.0f
-
+  */
   private def checkExpectedTemp:Float =
     val gCal = Calendar.getInstance()
     val hh = gCal.get(Calendar.HOUR_OF_DAY)

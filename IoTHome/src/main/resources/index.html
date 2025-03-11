@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <title>Pomiary resources</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/chart-utils.min.js"></script>
@@ -16,13 +16,17 @@
 </head>
 <body>
     <nav>
-        <a href="/" class="buttons">Pomiary temperatury</a>
         <a href="/boilerstate" class="buttons">Stan boilera</a>
         <a href="/test" class="buttons">Zestawienie</a>
-        <a href="/own_temp">Własne</a>
+        <a href="/own_temp" class="buttons">Własna temperatura</a>
     </nav>
     <div>
         <canvas id="myChart"></canvas>
+    </div>
+    <div>
+        <em>Boiler Temperature </em> – dane o temperaturze na boilerze    <br>
+        <em>Temperature Set</em> –  wyliczone ustawienie temperatury i wysłane do kontrolera boilera <br>
+
     </div>
     <script src="iothome-chart.js"></script>
 </body>

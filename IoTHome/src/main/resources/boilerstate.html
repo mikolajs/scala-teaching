@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <title>Stan boilera</title>
 </head>
 <body>
 <div>
+  <a href="/" class="buttons" style="padding: 5px 10px; background-color: crimson; color: white;  text-decoration: none;
+  text-align: center; display:inline-block;"> ← Powrót</a>
   <h1>Stan boilera</h1>
   <div id="dane">
 
@@ -25,7 +27,7 @@
 
 
   function reqBoiler(){
-    console.log(this.responseText);
+    //console.log(this.responseText);
     let json = JSON.parse(this.responseText);
     let str = '';
     for(b of json.boiler) {

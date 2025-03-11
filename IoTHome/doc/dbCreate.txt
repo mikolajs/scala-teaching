@@ -5,7 +5,7 @@ Wejście do bazy danych: psql iothome
 Uruchomienie skryptów:
 Create user iothome with encrypted password 'zaq12wsx';
 GRANT ALL ON DATABASE iothome TO iothome;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO iothome
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO iothome;
 ///za każdym razem po utworzeniu nowej tabeli!!! przydzielać
 
 CREATE TABLE expected_temperature (time bigint PRIMARY KEY, T real);
