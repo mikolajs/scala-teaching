@@ -12,20 +12,20 @@ def distances(d:Char) = d match
 
 def randDist = (rand.nextInt(5) + 97).toChar
 
-def mkRandomRuns(d:Char) = 
-  val dist = distances(d)
-  val nr = rand.nextInt(21) + 5  
-  for i <- 1 to nr yield
-    math.round((dist/10.0*(0.9 + rand.nextDouble()/2.0) + dist/100.0)*100.0)/100.0
+def mkRandomTri() = 
+  val a = rand.nextInt(1000) + 1  
+  val b = rand.nextInt(1000) + 1
+  val c = if a > b then a - b  + rand.nextInt(b) else b - a + rand.nextInt(a) 
+  s"$a $b $c"
 
 @main
 def main():Unit = 
   val fnames = Source.fromFile("nazwiska/imiona.csv").getLines.toList
     .map(s => s.substring(0,1).toUpperCase + s.substring(1).toLowerCase)
-    .map(s => s.split(",").head).take(500)
+    .map(s => s.split(",").head).take(1000).map(s => s.split(" ").head)
+    .filter(s => s.head.toInt < 128)
+  val lines = Random.shuffle(fnames).take(300)
     .map(s => 
-        val d = randDist
-        val runs = mkRandomRuns(d).toList.mkString(" ")
-        s"$s $d $runs"
+        s"$s ${mkRandomTri()}"
         ).mkString("\n") 
-  println(fnames)
+  println(lines)
