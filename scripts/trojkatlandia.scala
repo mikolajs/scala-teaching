@@ -15,7 +15,7 @@ def randDist = (rand.nextInt(5) + 97).toChar
 def mkRandomTri() = 
   val a = rand.nextInt(1000) + 1  
   val b = rand.nextInt(1000) + 1
-  val c = if a > b then a - b  + rand.nextInt(b) else b - a + rand.nextInt(a) 
+  val c = if a > b then a - b  + rand.nextInt(b) + 1 else b - a + rand.nextInt(a) + 1
   s"$a $b $c"
 
 @main
