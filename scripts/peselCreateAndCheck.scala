@@ -28,7 +28,7 @@ lazy val womanNames = Source.fromFile("nazwiska_z.csv").getLines().toList
   .map(_.split(' ').head).map(_.map(changeLetter)).filterNot(n => n.exists(c => c.toInt > 127 || c.toInt < 33))
 
 def checkCode(p:String) = 
-  val arr = Array(1, 3, 5, 9, 1, 3, 5, 9, 1, 3)
+  val arr = Array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3)
   var sum = 0
   for i <- 0 until p.length do
     sum += (p(i).toInt-48)*arr(i)
@@ -43,6 +43,18 @@ def createPesel(y:Int) =
        ld.toString.split("-").last +
        (1 to 4).map(i => r.nextInt(10).toString).flatten.mkString
   p0 + checkCode(p0).toString
+
+def fullRandomPesel(y:Int) = 
+  val p = createPesel(y:Int)
+  var x = 9
+  var n = 0
+  if r.nextInt(10) < 8 then 
+    x = r.nextInt(5) + 2
+    n = r.nextInt(5) + 5
+  else 
+    x = r.nextInt(11)
+    n = r.nextInt(10)
+  p.take(x) + n.toString() + p.drop(x+1)
 
 def toMonth(y:Int, m:Int) = 
   val t = LocalDate.now().getYear - 2000 
@@ -60,13 +72,20 @@ def addName(pesel:String) =
 
 @main def main():Unit = 
   val ab = ArrayBuffer[String]()  
-  while ab.length < 210000 do
+  while ab.length < 100000 do
     val pesel = randomPesel
     if pesel.length == 11 then ab += pesel
-    else println(pesel)
-  val pesels = ab.distinct.take(200000).map(p => p + " " + addName(p))
-  
-  writeToFile("poszukiwanie.txt", pesels.mkString("\n"))
-  writeToFile("lista_uzytkownikow.txt", pesels.sorted.mkString("\n"))
+    //else println(pesel)
+  //val pesels = ab.distinct.take(200000).map(p => p + " " + addName(p))
+  while ab.length < 115000 do
+    val pesel = fullRandomPesel(r.nextInt(70)+5)
+    if pesel.length == 11 then ab += pesel
+    //else println(pesel)
+
+  println(Random.shuffle(ab.distinct.take(100000)).mkString(" "))
+  //println(checkCode("9812258281"))
+  //println(checkCode("8409174866"))
+  //writeToFile("poszukiwanie.txt", pesels.mkString("\n"))
+  //writeToFile("lista_uzytkownikow.txt", pesels.sorted.mkString("\n"))
 
  
