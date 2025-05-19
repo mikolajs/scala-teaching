@@ -14,9 +14,9 @@ const dataBoilerSetChart = [];
 const roomsMap = new Map();
 
 let dataLoaded = 0;
-const DATA_COUNT = 60; //300 minuts
+const DATA_COUNT = 100; //300 minuts
 const labels = [];
-for(let i = 0; i < DATA_COUNT; i++) labels.push(5*i);
+for(let i = 0; i < DATA_COUNT; i++) labels.push(3*i);
 
 function createMinutesAgo(t){
     return Math.ceil((now - t)/60000);
@@ -28,13 +28,13 @@ function createDataChartArray(tempArr, dataArr){
     let lastIndex = 0;
     let lastTemp = 0.0;
     while(tempArr[lastIndex][0] < 0) lastIndex++;
-    for(let i = 8; i <= DATA_COUNT*5; i+= 8){
+    for(let i = 3; i <= DATA_COUNT*3; i+= 3){
         //console.log(i);
         //while(tempArr[lastIndex][0] < i - 5) lastIndex++;
         if(lastIndex >= tempArr.length) break;
-        while(tempArr[lastIndex][0] < i - 8 && lastIndex < tempArr.length - 1) lastIndex++;
+        while(tempArr[lastIndex][0] < i - 3 && lastIndex < tempArr.length - 1) lastIndex++;
         //console.log(tempArr[lastIndex]);
-        if(tempArr[lastIndex][0] <= i && tempArr[lastIndex][0] >= i - 8) {
+        if(tempArr[lastIndex][0] <= i && tempArr[lastIndex][0] >= i - 3) {
             //lastTemp = tempArr[lastIndex][1];
             dataArr.push(tempArr[lastIndex][1]);
         } else dataArr.push(0.0);
@@ -206,4 +206,16 @@ let chart;
 function runMkChart(){
   insertDataSetMeasures();
   chart =  new Chart(ctx, config);
+}
+
+function reload_files(){
+    console.log("reload files");
+    const req = new XMLHttpRequest();
+    req.addEventListener("load", reqReloadFiles);
+    req.open("GET", "/reload_time_scheduler");
+    req.send();
+}
+
+function reqReloadFiles(){
+    console.log("return text ", this.responseText);
 }

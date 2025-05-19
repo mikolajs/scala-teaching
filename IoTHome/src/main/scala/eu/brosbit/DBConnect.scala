@@ -51,18 +51,18 @@ object DBConnect:
   def insertExpectedTemperature(t:Long, T:Float):Int =
       sql"insert into expected_temperature (time, T) values ($t, $T)".update.run.transact(xa).unsafeRunSync();
 
-  def selectBoilerSetTemperature(size: Int = 60): List[Boiler] =
+  def selectBoilerSetTemperature(size: Int = 100): List[Boiler] =
     sql"select time, T from boiler_set_temperature order by time desc limit $size".query[Boiler].to[List].transact(xa).unsafeRunSync()
 
   def selectLastMeasures(last: Int = 200): List[CheckMeasure] =
     sql"select th, time, T from measure order by time desc limit $last".query[CheckMeasure].stream.compile.toList
       .transact(xa).unsafeRunSync()
     
-  def selectLastBoilerExpectedTemperature(last: Int = 60): List[Boiler] =
+  def selectLastBoilerExpectedTemperature(last: Int = 100): List[Boiler] =
     sql"select time, T from expected_temperature order by time desc limit $last".query[Boiler].stream.compile.toList
       .transact(xa).unsafeRunSync()
    
-  def selectLastBoilerInfo(last: Int = 60): List[BoilerInfo] =
+  def selectLastBoilerInfo(last: Int = 100): List[BoilerInfo] =
     sql"""select time, return_temperature, boiler_temperature, setpoint_bound, oem_diagnostic from boiler_info
          | order by time desc limit $last
        """.stripMargin.query[BoilerInfo].stream.compile.toList.transact(xa).unsafeRunSync()

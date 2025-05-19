@@ -25,6 +25,12 @@ def getThird(a:Int, b:Int) =
       (a + b + (r.nextInt(10) + 1))
     
 
+import java.util.Locale
+
+def getIntegral =
+  val re = 100*r.nextDouble() - 50.0
+  val im = 100*r.nextDouble() - 50.0
+  String.format(Locale.US, "%.2f %.2f", re, im)
 
 
 @main 
@@ -34,5 +40,6 @@ def main():Unit =
     val b = randSide
     val c = getThird(a, b)
     s"$a $b $c"
+    getIntegral
     ).mkString("\n")
   save("/home/ms/Dokumenty/trojkaty.txt", m) 

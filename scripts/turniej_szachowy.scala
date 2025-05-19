@@ -45,7 +45,7 @@ def main():Unit =
     .map(s => s.substring(0,1).toUpperCase + s.substring(1).toLowerCase)
     .map(s => s.split(",").head).map(s => s.split(" ").head)
     .filter(s => !s.exists(c => c.toInt > 127))
-   val linesList = Random.shuffle(fnames).take(300)
+   val linesList = Random.shuffle(fnames.take(500).distinct).take(300)
    val lines  = linesList.map(n => s"$n $seria").mkString("\n")
    println(lines)
 
