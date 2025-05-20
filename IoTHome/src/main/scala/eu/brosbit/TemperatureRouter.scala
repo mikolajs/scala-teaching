@@ -110,6 +110,13 @@ class TemperatureRouter(vertx:Vertx):
     res.end(jsonStr)
   )
   
+  router.route(HttpMethod.GET, "/reload_time_scheduler").handler(ctx =>
+    val res = ctx.response()
+    TemperatureData.reloadDataFromFile()
+    res.putHeader("content-type", "html/text")
+    res.end("ok")
+  )
+  
   router.route(HttpMethod.GET, "/set_temperature").handler(ctx =>
     val parTemp: Float =
       try ctx.queryParam("T").asScala.head.trim.toFloat

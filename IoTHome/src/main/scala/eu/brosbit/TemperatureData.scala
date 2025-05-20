@@ -54,6 +54,7 @@ object TemperatureData:
         (l.head.split(":").map(_.toInt).reduce((h, m) => h*60+m),
           l.last.toFloat)).toMap
     source.close()
+    println(s"for file $file reloaded ${map.size}")
     map
 
   private def countAvgTemperature = lastTemperatures.map(_._2.T).sum / lastTemperatures.size
