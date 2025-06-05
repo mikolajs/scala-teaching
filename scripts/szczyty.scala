@@ -6,12 +6,12 @@ val rand = Random()
 val MAX = 1000
 def generatePoint:String = 
   val x = rand.nextInt(MAX*2) - MAX
-  val y = rand.nextInt(MAX)
+  val y = rand.nextInt(MAX-1)+1
   s"$x $y"
 
 
 @main def main():Unit =
-  for m <- 1 to 2001 do
+  for m <- 1 to 201 do
     println(generatePoint)
 
 
