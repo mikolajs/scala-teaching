@@ -3,13 +3,17 @@ package eu.brosbit
 import io.vertx.core.Vertx
 import io.vertx.core.file.OpenOptions
 import io.vertx.core.http.HttpServerResponse
+import io.vertx.ext.web.Router
 
 import scala.io.StdIn.readLine
 
 object Main {
   def main(args: Array[String]): Unit =
     val vertx = Vertx.vertx()
-    val temperatureRouter = TemperatureRouter(vertx)
+    val router = Router.router(vertx)
+    val temperatureRouter = TemperatureRouter(vertx, router)
+    val cameraRouter = CameraRouter(vertx, router)
+    val pzemRouter = PZEMRouter(vertx, router)
     //val fs = vertx.fileSystem()
     //val afile = fs.openBlocking("index.html", OpenOptions())
     //val gios = ClientGios()
@@ -17,9 +21,10 @@ object Main {
     val server = vertx.createHttpServer()
     hello
     server.requestHandler(
-      temperatureRouter.router
-    ).listen(8989, "192.168.0.120").onSuccess(server => {
-      println("Server: " + server.actualPort())
+      router
+    ).listen(8989, "192.168.0.218").onSuccess(server => {
+    // ).listen(8989, "192.168.0.120").onSuccess(server => {
+        println("Server: " + server.actualPort())
     }).onFailure(error => {
       println(s"Cannot set server ${error.toString}")
       System.exit(1)

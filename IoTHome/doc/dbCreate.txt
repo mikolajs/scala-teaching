@@ -1,15 +1,18 @@
-Tworzenie bazy danych SQL:
-Zalogowanie: sudo su postgres
-Utworzenie bazy: createdb iothome
-Wejście do bazy danych: psql iothome
-Uruchomienie skryptów:
+#Tworzenie bazy danych SQL:
+#Zalogowanie: sudo su postgres
+#Utworzenie bazy: createdb iothome
+#Wejście do bazy danych: psql iothome
+#Uruchomienie skryptów:
 Create user iothome with encrypted password 'zaq12wsx';
 GRANT ALL ON DATABASE iothome TO iothome;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO iothome;
-///za każdym razem po utworzeniu nowej tabeli!!! przydzielać
+#///za każdym razem po utworzeniu nowej tabeli!!! przydzielać
 
 CREATE TABLE expected_temperature (time bigint PRIMARY KEY, T real);
 CREATE TABLE boiler_set_temperature (time bigint PRIMARY KEY, T real);
 CREATE TABLE measure (th char, time bigint, T real);
 CREATE TABLE boiler_info (time bigint PRIMARY KEY, return_temperature real, boiler_temperature real, 
 	setpoint_bound real, oem_diagnostic int);
+
+CREATE TABLE camera_images_info (create_time bigint, camera_name varchar(100), PRIMARY KEY(create_time, camera_name));
+CREATE TABLE pzem_info (create_time bigint, measurer varchar(100), v float, c float, p float, e float, f float, pf float, PRIMARY KEY(create_time, measurer));

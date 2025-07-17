@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PZEM</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: solid 1px grey;
+        }
+        thead {
+            background-color: black;
+            color: white;
+        }
+        td, th {
+            padding: 4px 10px;
+        }
+        .buttons { padding: 5px 10px; background-color: darkorange; color: white;  text-decoration: none;
+            text-align: center; display:inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pomiary przez PZEM</h1>
+    <a href="/" class="buttons"> ←  Powrót</a>
+    <div>
+        <label for="pzemNames">Wybierz kamerę:</label> <select id="pzemNames"></select>
+        <button onclick="loadPZEMMeasures();">Ładuj</button>
+    </div>
+    <hr><hr>
+    <div>
+        <table>
+            <thead><tr><th>Time</th><th>V</th><th>A</th><th>W</th><th>kWh</th><th>Hz</th><th title="">PF</th></tr></thead>
+            <tbody id="dataPzem">
+
+            </tbody>
+        </table>
+    </div>
+    <script src="pzemmeasures.js"></script>
+</body>
+</html>

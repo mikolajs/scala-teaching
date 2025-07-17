@@ -9,8 +9,8 @@ import io.vertx.ext.web.Router
 import scala.jdk.CollectionConverters.*
 import java.util.Date
 
-class TemperatureRouter(vertx:Vertx):
-  val router: Router = Router.router(vertx)
+class TemperatureRouter(vertx: Vertx, router:Router) extends RouterBase(vertx, router):
+  //val router: Router = Router.router(vertx)
 
   router.route(HttpMethod.GET, "/temp").handler(ctx =>
     val parTemp: Float =
@@ -154,41 +154,6 @@ class TemperatureRouter(vertx:Vertx):
   createStateRoute("test.js")
   createPictureRoute("favicon.ico")
 
-  private def createStateRoute(path:String):Unit =
-    val arr = path.split('.')
-    val fullPath = if arr.last != "html" then "/"+path else "/"+arr.dropRight(1).mkString(".")
-    println(fullPath)
-    router.route(HttpMethod.GET, fullPath).handler(ctx => {
-      val res = ctx.response()
-      vertx.fileSystem().readFile(path).onSuccess(file => {
-        val data = file.toString("UTF-8")
-        insertTypeString(path, res)
-        res.end(data)
-      }).onFailure(e => {
-        res.setStatusCode(404)
-        res.end("error\n")
-      })
-    })
-    
-  private def createPictureRoute(path:String):Unit =
-    router.route(HttpMethod.GET, "/" + path).handler(ctx => {
-      val res = ctx.response()
-      vertx.fileSystem().readFile(path).onSuccess(file => {
-        val data = file
-        insertTypeString(path, res)
-        res.end(data)
-      }).onFailure(e => {
-        res.setStatusCode(404)
-        res.end("error\n")
-      })
-    })
-    
-  private def insertTypeString(path:String, res:HttpServerResponse):Unit =
-    path.split('.').last match
-      case ext if ext == "js" => res.putHeader("content-type", "text/javascript")
-      case ext if ext == "json" =>res.putHeader("content-type", "application/json")
-      case ext if ext == "ico" => res.putHeader("content-type", "image/x-icon")
-      case ext if ext == "png" => res.putHeader("content/type", "image/png")
-      case _ =>
+
 
 

@@ -19,6 +19,8 @@ case class CheckMeasure(th:String, t:Long, T:Float):
 case class BoilerInfo(t:Long, rt:Float, bt:Float, sb:Float, oem:Int):
   def toJson = s"""{"time":$t, "returnTemp":$rt, "boilerTemp":$bt, "setpointBound":$sb, "oemDiagnostic":$oem}"""
   
+case class CameraImageInfo(createTime:Long, cameraName:String)
+case class PzemMeasure(createTime:Long, pzemName:String, v:Float, c:Float, p:Float, e:Float, f:Float, pf:Float)
 
 object DBConnect:
   import cats.effect.unsafe.implicits. global
@@ -86,5 +88,30 @@ object DBConnect:
   private def mkDeleteOldExpectedTemperature(before: Long): Int =
     sql"""delete from expected_temperature where time < $before""".update.run.transact(xa).unsafeRunSync()
 
+  /// FOR CAMERA
+  def insertCameraImageInfo(camName:String, createTime:Long):Int =
+    sql"""insert into camera_images_info values ($createTime, $camName)"""
+      .update.run.transact(xa).unsafeRunSync()
+  
+  def getCameraImages(dir:String, from:Long, limit:Int = 24):List[CameraImageInfo] = {
+    //println(dir + " " + from)
+    sql"""select * from camera_images_info where camera_name = $dir and create_time > $from limit $limit"""
+      .query[CameraImageInfo].stream.compile.toList.transact(xa).unsafeRunSync()
+  }
 
-
+  def getCameraNames: List[String] =
+    sql"""select distinct camera_name from camera_images_info"""
+      .query[String].stream.compile.toList.transact(xa).unsafeRunSync()
+      
+  ///FOR PZEM
+  def insertPZEMMeasure(create_time:Long, measurer:String, v:Float, c:Float, p:Float, e:Float, f:Float, pf:Float):Int =
+    sql"""insert into pzem_info values ($create_time, $measurer, $v, $c, $p, $e, $f, $pf)"""
+      .update.run.transact(xa).unsafeRunSync()
+      
+  def selectPzemNames():List[String] =
+    sql"""select distinct measurer from pzem_info"""
+      .query[String].stream.compile.toList.transact(xa).unsafeRunSync()
+      
+  def selectPzemMeasures(pzemName:String) =
+    sql"""select * from pzem_info where measurer = $pzemName order by create_time DESC"""
+      .query[PzemMeasure].stream.compile.toList.transact(xa).unsafeRunSync()

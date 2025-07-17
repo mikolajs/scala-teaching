@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kamery</title>
+    <link  href="/picker.min.css" rel="stylesheet">
+    <script src="/picker.min.js"></script>
+    <style>
+        .imagesView { padding: 20px 20px; border: gray solid 2px; }
+        .buttons { padding: 5px 10px; background-color: darkorange; color: white;  text-decoration: none;
+            text-align: center; display:inline-block;
+        }
+        #fulldiv {
+
+        }
+        #fullimg {
+
+        }
+    </style>
+</head>
+<body>
+<h1>Kamery</h1>
+<a href="/" class="buttons"> ←  Powrót</a>
+<div>
+    <label for="cameras">Wybierz kamerę:</label> <select id="cameras"></select>&nbsp;&nbsp;&nbsp;
+    <label for="picker">Wybierz czas początkowy:</label>
+    <input type="text" id="picker"> <button onclick="loadCameras();">Ładuj</button>
+</div>
+<hr>
+<div id="images">
+
+</div>
+<div id="fulldiv"><img src="" id="fullimg" onclick="closeFull();"></div>
+<script src="camera.js"></script>
+</body>
+</html>
