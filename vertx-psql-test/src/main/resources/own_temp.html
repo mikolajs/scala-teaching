@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>Own temperature</title>
+    <style>
+        .buttons { padding: 5px 10px; background-color: green; color: white;  text-decoration: none;
+            text-align: center; display:inline-block;
+        }
+
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/" class="buttons" style="padding: 5px 10px; background-color: crimson; color: white;  text-decoration: none;
+  text-align: center; display:inline-block;"> ← Powrót</a>
+</nav>
+<section>
+    <label for="setTemp">Ustawienie temperatury teraz:
+    <input type="range" name="setTemp" id="setTemp" onchange="setTemperature();"  min="18" max="24" step="0.5">
+        <span id="temp"></span>°C
+    </label> <br>
+    <label for="setOwn"> Włącz ustawienie temperatury:
+      <input type="checkbox" name="" id="setOwn" onchange="setTemperature()" value="false">
+    </label>
+    <p>dodać ustawienia daty dni wolne? Dodać zmiany czasu temperatur?</p>
+    <script>
+        function setTemperature(){
+            let slide = document.getElementById('setTemp');
+            let check = document.getElementById('setOwn');
+            let t = parseFloat(slide.value);
+            let on = check.checked;
+            setBoilerTemperature(t, on);
+            document.getElementById('temp').innerHTML = t;
+            console.log('ustwienia temperatury', t);
+        }
+        function checkSettingTemp(){
+            const req = new XMLHttpRequest();
+            req.addEventListener("load", reqInfoSetting);
+            req.open("GET", "/info/temp_setting");
+            req.send();
+        }
+        function reqInfoSetting(){
+            let json = JSON.parse(this.responseText);
+            //console.log(json);
+            let t = json.settings.T;
+            let on = json.settings.on;
+            document.getElementById('temp').innerHTML = t;
+            document.getElementById('setOwn').value = on;
+            document.getElementById('setTemp').value = t;
+        }
+        function setBoilerTemperature(t, on){
+            const req = new XMLHttpRequest();
+            req.addEventListener("load", reqBoilerTemperature);
+            req.open("GET", "/set_temperature?t="+t+"&on="+on);
+            req.send();
+        }
+        function reqBoilerTemperature(){
+            console.log('set temperature');
+            //dodać odczyt wyniku
+        }
+        checkSettingTemp();
+    </script>
+</section>
+</body>
+</html>

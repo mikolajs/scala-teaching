@@ -9,7 +9,7 @@ import cats.effect.*
 import cats.implicits.*
 
 import java.util.Date
-
+///TODO: change to data insert by vertx native
 case class Boiler(t:Long, T:Float):
   def toJson = s"""{"t":$t, "T":$T}"""
 case class CheckBoiler(ch:String, tT:Long, TT:Float, tB:Long, TB:Float)
@@ -21,6 +21,7 @@ case class BoilerInfo(t:Long, rt:Float, bt:Float, sb:Float, oem:Int):
   
 case class CameraImageInfo(createTime:Long, cameraName:String)
 case class PzemMeasure(createTime:Long, pzemName:String, v:Float, c:Float, p:Float, e:Float, f:Float, pf:Float)
+case class WateringInfo(wateringTime:Long, device:String)
 
 object DBConnect:
   import cats.effect.unsafe.implicits. global
@@ -112,6 +113,19 @@ object DBConnect:
     sql"""select distinct measurer from pzem_info"""
       .query[String].stream.compile.toList.transact(xa).unsafeRunSync()
       
-  def selectPzemMeasures(pzemName:String) =
-    sql"""select * from pzem_info where measurer = $pzemName order by create_time DESC"""
+  def selectPzemMeasures(pzemName:String, limit:Int = 120):List[PzemMeasure] =
+    sql"""select * from pzem_info where measurer = $pzemName order by create_time DESC limit $limit"""
       .query[PzemMeasure].stream.compile.toList.transact(xa).unsafeRunSync()
+
+  ///Watering flower and tunel
+  def insertWatering(watering_time:Long, device: String):Int =
+    sql"""insert into watering_info values($watering_time, $device)"""
+      .update.run.transact(xa).unsafeRunSync()
+
+  def selectWateringDeviceNames():List[String] =
+    sql"""select distinct device from watering_info"""
+      .query[String].stream.compile.toList.transact(xa).unsafeRunSync()
+
+  def selectWateringLast(device:String, limit:Int = 30):List[Long] =
+    sql"""select watering_time from watering_info where device = $device order by watering_time DESC limit $limit"""
+       .query[Long].stream.compile.toList.transact(xa).unsafeRunSync()

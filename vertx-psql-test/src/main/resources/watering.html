@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Podlewanie</title>
+    <style>
+    table {
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: solid 1px grey;
+    }
+    thead {
+        background-color: black;
+        color: white;
+    }
+    td, th {
+        padding: 4px 10px;
+    }
+    .buttons { padding: 5px 10px; background-color: darkorange; color: white;  text-decoration: none;
+        text-align: center; display:inline-block;
+    }
+        .refresh {
+        padding: 5px 10px; background-color: darkred; color: white;
+            text-decoration: none; text-align: center; float: right;
+        }
+    </style>
+</head>
+<body>
+<h1>Podlewanie</h1>
+<a href="/" class="buttons"> ←  Powrót</a>
+<button onclick="reloadScheduler()" class="refresh">Odśwież konfigurację podlewania</button>
+<div>
+    <label for="deviceNames">Wybierz miejsce:</label> <select id="deviceNames"></select>
+    <button onclick="loadWatering();">Ładuj</button>
+</div>
+<hr><hr>
+<div>
+    <table>
+        <thead><tr><th>Time</th></tr></thead>
+        <tbody id="wateringData">
+
+        </tbody>
+    </table>
+</div>
+<script src="watering.js"></script>
+</body>
+</html>
