@@ -35,6 +35,7 @@ function loadWatering(){
 }
 
 function reqWatering(){
+    console.log("start reqWatering");
     if(this.status == 200){
         console.log(this.responseText);
         let json = JSON.parse(this.responseText);

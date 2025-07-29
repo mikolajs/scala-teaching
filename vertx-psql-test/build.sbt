@@ -35,7 +35,9 @@ lazy val root = project
       "io.vertx" % "vertx-web-client" % "4.5.9",
       "io.vertx"% "vertx-pg-client"% "4.5.9",
       "com.ongres.scram" % "client" % "2.1",
-      "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % "2.37.0",
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % "2.37.0" % "compile-internal",
+"com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
       "ch.qos.logback" % "logback-classic" % "1.3.5",
       "org.scalameta" %% "munit" % "0.7.29" % Test
     )

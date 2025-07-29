@@ -10,10 +10,10 @@ object Main {
   def main(args: Array[String]): Unit =
     val vertx = Vertx.vertx()
     val router = Router.router(vertx)
-//    val temperatureRouter = TemperatureRouter(vertx, router)
-//    val cameraRouter = CameraRouter(vertx, router)
-//    val pzemRouter = PZEMRouter(vertx, router)
     val dbCon = DBConnect(vertx)
+//    val temperatureRouter = TemperatureRouter(vertx, router)
+    val cameraRouter = CameraRouter(vertx, router, dbCon)
+//    val pzemRouter = PZEMRouter(vertx, router)
     val wateringRouter = WateringRouter(vertx, router, dbCon)
     //val fs = vertx.fileSystem()
     //val afile = fs.openBlocking("index.html", OpenOptions())

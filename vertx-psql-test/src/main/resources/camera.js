@@ -24,12 +24,13 @@ function loadCameras(){
 }
 
 function reqCameras(){
+    //console.log(this.responseText);
     let json = JSON.parse(this.responseText);
-    //console.log(json);
+    console.log(json);
     let imagesHtml = "";
-    for(let imgSrc of json.images){
+    for(let imgSrc of json){
         imagesHtml += '<img class="imagesView" src="';
-        imagesHtml += imgSrc;
+        imagesHtml += imgSrc.cameraName;
         imagesHtml += '" alt="not found img" width="300" onclick="showFull(this)">';
     }
     //console.log(imagesHtml);
@@ -48,7 +49,7 @@ function reqCameraNames(){
     let json = JSON.parse(this.responseText);
     //console.log(json);
     let options = "";
-    for(name of json.cameraNames){
+    for(name of json.devices){
         options += "<option>";
         options += name;
         options += "</option>";
