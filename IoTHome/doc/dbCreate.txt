@@ -10,7 +10,7 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO iothome;
 
 CREATE TABLE expected_temperature (time bigint PRIMARY KEY, T real);
 CREATE TABLE boiler_set_temperature (time bigint PRIMARY KEY, T real);
-CREATE TABLE measure (th char, time bigint, T real);
+CREATE TABLE measure (th varchar(50), time bigint, T real);
 CREATE TABLE boiler_info (time bigint PRIMARY KEY, return_temperature real, boiler_temperature real, 
 	setpoint_bound real, oem_diagnostic int);
 

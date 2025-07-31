@@ -2,7 +2,8 @@ package eu.brosbit
 
 import io.vertx.core.Vertx
 import io.vertx.core.http.{HttpMethod, HttpServerResponse}
-import io.vertx.ext.web.Router
+import io.vertx.ext.web.{Router, RoutingContext}
+import scala.jdk.CollectionConverters.*
 
 class RouterBase(vertx:Vertx, router: Router):
   protected def createStateRoute(path: String): Unit =
@@ -33,14 +34,14 @@ class RouterBase(vertx:Vertx, router: Router):
         res.end("error\n")
       })
     })
-    
-  protected def notFoundData(res:HttpServerResponse):Unit = 
+
+  protected def notFoundData(res: HttpServerResponse): HttpServerResponse =
     res.setStatusCode(204).putHeader("Content-Type", "plain/text")
 
-  protected def foundData(res:HttpServerResponse):Unit =
+  protected def foundData(res: HttpServerResponse): HttpServerResponse =
     res.setStatusCode(200).putHeader("Content-Type", "application/json")
-    
-  protected def notFoundResource(res:HttpServerResponse):Unit =
+
+  protected def notFoundResource(res: HttpServerResponse): HttpServerResponse =
     res.setStatusCode(404).putHeader("Content-Type", "plain/text")
   
   private def insertTypeString(path: String, res: HttpServerResponse): Unit =
@@ -50,3 +51,28 @@ class RouterBase(vertx:Vertx, router: Router):
       case ext if ext == "ico" => res.putHeader("content-type", "image/x-icon")
       case ext if ext == "png" => res.putHeader("content/type", "image/png")
       case _ =>
+  
+  protected def getParamStr(n:String, ctx:RoutingContext):String =
+    ctx.queryParam(n).asScala.toList match {
+      case Nil => ""
+      case h::rest => h.trim
+    }
+
+//  protected def getParamNumb[A <: Numeric](n: String, ctx: RoutingContext): A = {
+//    val param = getParamStr(n, ctx)
+//    val a:A = Numeric.
+//    if param.isEmpty then 0
+//    else if param.forall(ch => ch.isDigit || ch == '.') then param
+//  }
+
+  protected def getParamInt(n:String, ctx:RoutingContext):Int = 
+    val param = getParamStr(n, ctx)
+    if param.isEmpty then 0
+    else if param.forall(ch => ch.isDigit) then param.toInt
+    else 0
+
+  protected def getParamFloat(n: String, ctx: RoutingContext): Float =
+    val param = getParamStr(n, ctx)
+    if param.isEmpty then 0.0f
+    else if param.forall(ch => ch.isDigit) then param.toFloat
+    else 0.0f

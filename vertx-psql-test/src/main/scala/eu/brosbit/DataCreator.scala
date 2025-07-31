@@ -43,7 +43,7 @@ object DataCreator:
         val row = it.next()
         list = row.toJson.toString::list
 
-    s"""{"$objName":[${list.reverse.mkString(".")}]}"""
+    s"""{"$objName":[${list.reverse.mkString(",")}]}"""
 
 
   def createImagesCameraList[A <: Product](rows: RowSet[Row])(using getArrayDB: GetArrayDB[A]):List[A] =

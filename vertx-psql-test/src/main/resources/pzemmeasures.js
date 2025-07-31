@@ -30,25 +30,25 @@ function loadPZEMMeasures(){
 }
 
 function reqMeasures(){
-    //console.log(this.responseText);
+    console.log(this.responseText);
     let json = JSON.parse(this.responseText);
     //console.log(json);
     let str = ""
-    for(let measure of json.measures){
+    for(let measure of json.devices){
         str += "<tr><td>";
-        str += new Date(measure.createTime).toLocaleString("pl-PL");
+        str += new Date(measure.create_time).toLocaleString("pl-PL");
         str += "</td><td>";
-        str += measure.v;
+        str += measure.v.toFixed(2);
         str += "</td><td>";
-        str += measure.c;
+        str += measure.c.toFixed(3);
         str += "</td><td>";
-        str += measure.p;
+        str += measure.p.toFixed(2);
         str += "</td><td>";
-        str += measure.e;
+        str += measure.e.toFixed(2);
         str += "</td><td>";
-        str += measure.f;
+        str += measure.f.toFixed(2);
         str += "</td><td>";
-        str += measure.pf;
+        str += measure.pf.toFixed(2);
         str += "</td></tr>";
     }
     document.getElementById("dataPzem").innerHTML = str;
