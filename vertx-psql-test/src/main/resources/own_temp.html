@@ -33,7 +33,7 @@
             let on = check.checked;
             setBoilerTemperature(t, on);
             document.getElementById('temp').innerHTML = t;
-            console.log('ustwienia temperatury', t);
+            console.log('ustawienia temperatury', t);
         }
         function checkSettingTemp(){
             const req = new XMLHttpRequest();
@@ -42,12 +42,13 @@
             req.send();
         }
         function reqInfoSetting(){
+            console.log(this.responseText);
             let json = JSON.parse(this.responseText);
             //console.log(json);
             let t = json.settings.T;
             let on = json.settings.on;
             document.getElementById('temp').innerHTML = t;
-            document.getElementById('setOwn').value = on;
+            document.getElementById('setOwn').checked = on;
             document.getElementById('setTemp').value = t;
         }
         function setBoilerTemperature(t, on){
@@ -58,6 +59,7 @@
         }
         function reqBoilerTemperature(){
             console.log('set temperature');
+            console.log(this.responseText);
             //dodać odczyt wyniku
         }
         checkSettingTemp();

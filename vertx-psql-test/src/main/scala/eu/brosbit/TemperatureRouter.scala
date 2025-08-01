@@ -22,6 +22,7 @@ class TemperatureRouter(vertx: Vertx, router:Router, dbCon:DBConnect) extends Ro
 //      println("Save info for TemperatureData")
       val client = dbCon.client
       val time = Date().getTime
+      tempData.addMeasure(parTherm, time, parTemp)
       val query = s"insert into measure  (th, time, T) values ('$parTherm', $time, $parTemp)"
       client.query(query).execute()
         .onComplete(ar =>
@@ -34,13 +35,20 @@ class TemperatureRouter(vertx: Vertx, router:Router, dbCon:DBConnect) extends Ro
   //check expected temperature for boiler
   router.route(HttpMethod.GET, "/boiler").handler(ctx =>
     val T = tempData.getTemperatureForBoiler
+    val aTime = Date().getTime 
     val client = dbCon.client
-    val query = ""
+    val query = s"insert into boiler_set_temperature values ($aTime, $T)"
     client.query(query).execute()
       .onComplete(ar =>
-        if ar.succeeded() then MainLogger.infoLog("insert set boiler temperature succeed")
-        else MainLogger.infoLog("Temperature set boiled not succeed")
+        if !ar.succeeded() then MainLogger.infoLog("Temperature set boiled NOT succeed")
       ).onFailure(e => MainLogger.infoLog("Error set boiler temp\n"+e.getMessage))
+    val airT = tempData.getExpectedTemperatureOfAir
+    val query2 = s"insert into expected_temperature values ($aTime, $airT)"
+    client.query(query).execute()
+      .onComplete(ar =>
+        if !ar.succeeded() then MainLogger.infoLog("Set expected air temperature FAILURE")
+      ).onFailure(e => MainLogger.infoLog("Error set boiler temp\n" + e.getMessage))
+
     val res = ctx.response()
     //println(s"Set temperature boiler: $T")
     MainLogger.infoLog(s"Expected temperature for boiler: $T")
@@ -74,7 +82,7 @@ class TemperatureRouter(vertx: Vertx, router:Router, dbCon:DBConnect) extends Ro
         if ar.succeeded() then
           val rows = ar.result()
           val boilerData = DataCreator.createJsonArray(rows, "boiler", 2)
-          foundData(res).end("{\"boiler\":[" + boilerData.mkString(",") + "]}")
+          foundData(res).end(boilerData)
         else notFoundData(res).end("Not found")
       ).onFailure(e => MainLogger.infoLog("Error reading expected temperature of boiler\n"+e.getMessage)
       )
@@ -89,7 +97,7 @@ class TemperatureRouter(vertx: Vertx, router:Router, dbCon:DBConnect) extends Ro
         if ar.succeeded() then
           val rows = ar.result()
           val data = DataCreator.createJsonArray(rows, "measures", 3)
-          foundData(res).end("{\"measures\":[" + data.mkString(",") + "]}\n")
+          foundData(res).end(data)
         else notFoundData(res).end()
       ).onFailure(e => MainLogger.infoLog("Error info measures\n"+e.getMessage))
   )
@@ -104,7 +112,7 @@ class TemperatureRouter(vertx: Vertx, router:Router, dbCon:DBConnect) extends Ro
         if ar.succeeded() then
           val rows = ar.result()
           val data = DataCreator.createJsonArray(rows, "boiler", 5)
-          foundData(res).end("{\"boiler\":[" + data.mkString(",") + "]}")
+          foundData(res).end(data)
         else notFoundData(res).end()
       ).onFailure(e => MainLogger.infoLog("Error boiler info\n"+e.getMessage))
   )
@@ -117,7 +125,7 @@ class TemperatureRouter(vertx: Vertx, router:Router, dbCon:DBConnect) extends Ro
         if ar.succeeded() then
           val rows = ar.result()
           val data = DataCreator.createJsonArray(rows, "boiler", 2)
-          foundData(res).end("{\"boiler\":[" + data.mkString(", ") + "]}")
+          foundData(res).end(data)
         else notFoundData(res).end()
       ).onFailure(e => MainLogger.infoLog("Error boiler set temperature\n"+e.getMessage))
   )
@@ -136,6 +144,7 @@ class TemperatureRouter(vertx: Vertx, router:Router, dbCon:DBConnect) extends Ro
     res.end("ok")
   )
 
+  //ustwienie własnej temperatury ze strony. 
   router.route(HttpMethod.GET, "/set_temperature").handler(ctx =>
     val parTemp: Float = getParamFloat("T", ctx)
     val parOn: Boolean = try ctx.queryParam("on").asScala.head.trim.toBoolean

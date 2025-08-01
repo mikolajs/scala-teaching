@@ -23,8 +23,9 @@ function createMinutesAgo(t){
 }
 
 function createDataChartArray(tempArr, dataArr){
-    console.log('create data Array');
+    //console.log('create data Array');
     //console.log(tempArr);
+    if(tempArr.length == 0) return;
     let lastIndex = 0;
     let lastTemp = 0.0;
     while(tempArr[lastIndex][0] < 0) lastIndex++;
@@ -44,7 +45,7 @@ function createDataChartArray(tempArr, dataArr){
 }
 
 function loadMeasures(){
-    console.log("load measures");
+    //console.log("load measures");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqMeasures);
     req.open("GET", "/info/measures");
@@ -59,12 +60,12 @@ function reqMeasures(){
     //console.log(measureDataList);
     //console.log(roomsMap);
     for(const m of json.measures){
-        //console.log(md);
-        let minAgo = createMinutesAgo(m.t);
+        //console.log(m);
+        let minAgo = createMinutesAgo(m.time);
         if(minAgo > 300) continue;
         let arr = [];
         arr.push(minAgo);
-        arr.push(m.T);
+        arr.push(m.t);
         let roomsData = roomsMap.get(m.th);
         roomsData.push(arr);
         roomsMap.set(m.th, roomsData);
@@ -74,21 +75,22 @@ function reqMeasures(){
 }
 
 function loadBoilerSet(){
-    console.log("load boiler set");
+    //console.log("load boiler set");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerSet);
     req.open("GET", "info/boiler_set_temp");
     req.send();
 }
 function reqBoilerSet(){
+    console.log(this.responseText);
     let json = JSON.parse(this.responseText);
     let str = '';
     let dataArr = [];
     for(b of json.boiler) {
-        dataArr.push([createMinutesAgo(b.t), b.T]);
+        dataArr.push([createMinutesAgo(b.time), b.t]);
     }
     //console.log(json)
-    console.log('load boiler set');
+    //console.log('load boiler set');
     createDataChartArray(dataArr, dataBoilerSetChart);
     //console.log(boilerSetDataList);
     dataLoaded++;
@@ -96,18 +98,18 @@ function reqBoilerSet(){
 }
 
 function loadBoilerInfo(){
-    console.log("load boiler info");
+    //console.log("load boiler info");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerInfo);
     req.open("GET", "/info/boiler_info");
     req.send();
 }
 function reqBoilerInfo(){
-    //console.log(this.responseText);
+    console.log(this.responseText);
     let json = JSON.parse(this.responseText);
     let dataArr = []
     for(b of json.boiler) {
-        dataArr.push([createMinutesAgo(b.time), b.boilerTemp]);
+        dataArr.push([createMinutesAgo(b.time), b.boiler_temperature]);
     }
     console.log('load boiler info');
     createDataChartArray(dataArr, dataBoilerInfoChart);
@@ -184,11 +186,13 @@ const config = {
 
 function insertDataSetMeasures(){
     let colorsChartForTemp = [
-        Utils.CHART_COLORS.orange, Utils.CHART_COLORS.blue, Utils.CHART_COLORS.purple, Utils.CHART_COLORS.green
+        Utils.CHART_COLORS.blue, Utils.CHART_COLORS.purple, Utils.CHART_COLORS.green,
+        Utils.CHART_COLORS.black, Utils.CHART_COLORS.orange
     ];
     let c = 0;
    for(let k of roomsMap.keys()){
        let dataArr = [];
+       //console.log(roomsMap);
        createDataChartArray(roomsMap.get(k), dataArr);
       data.datasets.push(
           {

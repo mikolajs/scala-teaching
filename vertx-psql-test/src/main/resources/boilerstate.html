@@ -27,7 +27,7 @@
 
 
   function reqBoiler(){
-    //console.log(this.responseText);
+    console.log(this.responseText);
     let json = JSON.parse(this.responseText);
     let str = '';
     for(b of json.boiler) {
@@ -35,13 +35,13 @@
       str += 'czas: ';
       str += new Date(b.time).toLocaleString('pl-Pl');
       str += ', temperatura wracająca: ';
-      str += b.returnTemp;
+      str += b.return_temperature;
       str += ', temperatura boilera: ';
-      str += b.boilerTemp;
+      str += b.boiler_temperature;
       str += ', ustwienie temperatury pokrętłem: ';
-      str += b.setpointBound;
+      str += b.setpoint_bound;
       str += ', OEM kod diagnostyki: ';
-      str += b.oemDiagnostic;
+      str += b.oem_diagnostic;
       str += '</p>';
     }
     document.getElementById('dane').innerHTML = str;

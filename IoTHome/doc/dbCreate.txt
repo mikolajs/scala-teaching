@@ -18,3 +18,4 @@ CREATE TABLE camera_images_info (create_time bigint, camera_name varchar(100), P
 CREATE TABLE pzem_info (create_time bigint, measurer varchar(100), v float, c float, p float, e float, f float, pf float, PRIMARY KEY(create_time, measurer));
 CREATE TABLE watering_info (watering_time bigint, device varchar(100), PRIMARY KEY(watering_time, device));
 
+## alter table measure alter column th type varchar(50); !!!

@@ -1,6 +1,6 @@
 
 function loadMeasures(){
-    console.log("load measures");
+    //console.log("load measures");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqMeasures);
     req.open("GET", "/info/measures");
@@ -14,9 +14,9 @@ function reqMeasures(){
         str += '<tr><td>';
         str += m.th;
         str += '</td><td>';
-        str += new Date(m.t).toLocaleString('pl-Pl');
+        str += new Date(m.time).toLocaleString('pl-Pl');
         str += '</td><td>';
-        str +=  m.T;
+        str +=  m.t;
         str += '</td></tr>';
     }
     document.getElementById('measuresTab').innerHTML = str;
@@ -25,20 +25,21 @@ function reqMeasures(){
 }
 
 function loadBoilerSet(){
-    console.log("load boiler set");
+    //console.log("load boiler set");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerSet);
     req.open("GET", "/info/boiler_set_temp");
     req.send();
 }
 function reqBoilerSet(){
+    //console.log(this.responseText);
     let json = JSON.parse(this.responseText);
     let str = '';
     for(b of json.boiler) {
         str += '<tr><td>';
-        str += new Date(b.t).toLocaleString('pl-Pl');
+        str += new Date(b.time).toLocaleString('pl-Pl');
         str += '</td><td>';
-        str +=  b.T;
+        str +=  b.t;
         str += '</td></tr>';
     }
     document.getElementById('boilerSetTab').innerHTML = str;
@@ -46,7 +47,7 @@ function reqBoilerSet(){
 }
 
 function loadBoilerInfo(){
-    console.log("load boiler info");
+    //console.log("load boiler info");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerInfo);
     req.open("GET", "/info/boiler_info");
@@ -60,13 +61,13 @@ function reqBoilerInfo(){
         str += '<tr><td>';
         str += new Date(b.time).toLocaleString('pl-Pl');
         str += '</td><td>';
-        str +=  b.returnTemp;
+        str +=  b.return_temperature;
         str += '</td><td>';
-        str +=  b.boilerTemp;
+        str +=  b.boiler_temperature;
         str += '</td><td>';
-        str +=  b.setpointBound;
+        str +=  b.setpoint_bound;
         str += '</td><td>';
-        str +=  b.oemDiagnostic;
+        str +=  b.oem_diagnostic;
         str += '</td></tr>';
 
     }
@@ -74,7 +75,7 @@ function reqBoilerInfo(){
     //console.log(json);
 }
 function loadBoilerExpectedTemp(){
-    console.log("load Expected Temp");
+    //console.log("load Expected Temp");
     const req = new XMLHttpRequest();
     req.addEventListener("load", reqBoilerExpectedTemp);
     req.open("GET", "/info/expected_temperature");
@@ -86,9 +87,9 @@ function reqBoilerExpectedTemp(){
     let str = '';
     for(b of json.boiler) {
         str += '<tr><td>';
-        str += new Date(b.t).toLocaleString('pl-Pl');
+        str += new Date(b.time).toLocaleString('pl-Pl');
         str += '</td><td>';
-        str +=  b.T;
+        str +=  b.t;
         str += '</td></tr>';
     }
     document.getElementById('expectedTempTab').innerHTML = str;
