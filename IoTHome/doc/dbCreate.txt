@@ -8,9 +8,13 @@ GRANT ALL ON DATABASE iothome TO iothome;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO iothome;
 #///za każdym razem po utworzeniu nowej tabeli!!! przydzielać
 
+#Oczekiwana temperatura powietrza w budynku
 CREATE TABLE expected_temperature (time bigint PRIMARY KEY, T real);
+#ustawiona temperatura na boilerze
 CREATE TABLE boiler_set_temperature (time bigint PRIMARY KEY, T real);
+#Pomiary przez termometry temperatur
 CREATE TABLE measure (th varchar(50), time bigint, T real);
+#Dane ze stanu boilera
 CREATE TABLE boiler_info (time bigint PRIMARY KEY, return_temperature real, boiler_temperature real, 
 	setpoint_bound real, oem_diagnostic int);
 

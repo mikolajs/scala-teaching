@@ -8,4 +8,5 @@ val words = (1 to 100).map(_ => {
   for(_ <- 2 to n) s += (r.nextInt(10) + 65).toChar.toString
   s})
 
-words.foreach(println)
+@main def main():Unit =
+  words.foreach(println)

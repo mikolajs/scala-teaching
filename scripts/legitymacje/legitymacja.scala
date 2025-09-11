@@ -7,14 +7,18 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 
 val imgReader = ImageIO.getImageReadersBySuffix("PNG").next()
 
-case class Pupil(val PESEL:String, val firstName:String, val lastName:String, val code:String){
-  def toFileName = s"$lastName-$firstName-$PESEL-$code"
+case class Pupil(val nr:Int, val firstName:String, val lastName:String){
+  def toFileName = s"${to2Digit(nr)}_$lastName-$firstName"
+  def to2Digit(nr:Int) = if nr < 10 then "0"+nr.toString else nr.toString
 }
 
+
+
 def readCSV =
-  val data = scala.io.Source.fromFile("klasa.csv").getLines.toList.map(_.split(";")).filter(_.size > 2)
+  val data = scala.io.Source.fromFile("klasa.csv").getLines.toList.map(_.split(";")).filter(_.size > 2).drop(1)
+  println("klasa.csv uczniów: " + data.length)
   for line <- data yield
-    Pupil(line(2), line(1), line(0),line(3))
+    Pupil(line(0).toInt, line(2),line(1))
 
 def splitPictures(imageBuf:BufferedImage, w:Int, h:Int, rows:Int, cols:Int, pupils:List[Pupil]) =
   println(s"W: ${imageBuf.getWidth()}, H: ${imageBuf.getHeight}")
@@ -28,7 +32,7 @@ def splitPictures(imageBuf:BufferedImage, w:Int, h:Int, rows:Int, cols:Int, pupi
   for r <- 0 until rows do
     x = dx
     for c <- 0 until cols do
-      println(s"x: $x, y: $y")
+      //println(s"x: $x, y: $y")
       if n < pupils.size then
         val subImageBuf = imageBuf.getSubimage(x+(W-w)/2, y+(H-h)/2, w, h)
         saveFile(pupils(n).toFileName, subImageBuf)
