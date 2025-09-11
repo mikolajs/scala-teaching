@@ -8,7 +8,7 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 val imgReader = ImageIO.getImageReadersBySuffix("PNG").next()
 
 case class Pupil(val nr:Int, val firstName:String, val lastName:String){
-  def toFileName = s"${to2Digit(nr)}_$lastName-$firstName"
+  def toFileName = s"$lastName_$firstName"
   def to2Digit(nr:Int) = if nr < 10 then "0"+nr.toString else nr.toString
 }
 
