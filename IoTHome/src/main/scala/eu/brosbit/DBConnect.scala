@@ -13,8 +13,8 @@ import java.util.Date
 case class Boiler(t:Long, T:Float):
   def toJson = s"""{"t":$t, "T":$T}"""
 case class CheckBoiler(ch:String, tT:Long, TT:Float, tB:Long, TB:Float)
-case class CheckMeasure(th:String, t:Long, T:Float):
-  def toJson = s"""{"th":"$th", "t":$t, "T":$T}"""
+case class CheckMeasure(th:String, t:Long, T:Float, h:Float, p:Float, s:Float):
+  def toJson = s"""{"th":"$th", "t":$t, "T":$T, "h":$h, "p":$p, "s":$s}"""
   
 case class BoilerInfo(t:Long, rt:Float, bt:Float, sb:Float, oem:Int):
   def toJson = s"""{"time":$t, "returnTemp":$rt, "boilerTemp":$bt, "setpointBound":$sb, "oemDiagnostic":$oem}"""
@@ -22,6 +22,8 @@ case class BoilerInfo(t:Long, rt:Float, bt:Float, sb:Float, oem:Int):
 case class CameraImageInfo(createTime:Long, cameraName:String)
 case class PzemMeasure(createTime:Long, pzemName:String, v:Float, c:Float, p:Float, e:Float, f:Float, pf:Float)
 case class WateringInfo(wateringTime:Long, device:String)
+case class MoistureInfo(moistureTime:Long, device:String, moisture:Int):
+  def toJson = s"""{"time":$moistureTime, "moisture":$moisture}"""
 
 object DBConnect:
   import cats.effect.unsafe.implicits. global
@@ -36,8 +38,8 @@ object DBConnect:
   val y = xa.yolo
   import y._
 
-  def insertMeasure(therm:Char, t:Long, T:Float):Int =
-    sql"""insert into measure  (th, time, T) values (${therm.toString}, $t, $T)""".update
+  def insertMeasure(therm:String, t:Long, T:Float, h:Float, p:Float, s:Float):Int =
+    sql"""insert into measure  (th, time, T, h, p, s) values (${therm.toString}, $t, $T, $h, $p, $s)""".update
       .run.transact(xa).unsafeRunSync()
 
   def insertBoilerSetTemperature(t:Long, T:Float):Int =
@@ -58,7 +60,7 @@ object DBConnect:
     sql"select time, T from boiler_set_temperature order by time desc limit $size".query[Boiler].to[List].transact(xa).unsafeRunSync()
 
   def selectLastMeasures(last: Int = 200): List[CheckMeasure] =
-    sql"select th, time, T from measure order by time desc limit $last".query[CheckMeasure].stream.compile.toList
+    sql"select th, time, t, h, p, s from measure order by time desc limit $last".query[CheckMeasure].stream.compile.toList
       .transact(xa).unsafeRunSync()
     
   def selectLastBoilerExpectedTemperature(last: Int = 100): List[Boiler] =
@@ -129,3 +131,15 @@ object DBConnect:
   def selectWateringLast(device:String, limit:Int = 30):List[Long] =
     sql"""select watering_time from watering_info where device = $device order by watering_time DESC limit $limit"""
        .query[Long].stream.compile.toList.transact(xa).unsafeRunSync()
+
+  def insertMoisture(watering_time: Long, device: String, moisture: Int): Int =
+    sql"""insert into moisture_info values($watering_time, $device, $moisture)"""
+      .update.run.transact(xa).unsafeRunSync()
+
+  def selectMoistureNames(): List[String] =
+    sql"""select distinct device from moisture_info"""
+      .query[String].stream.compile.toList.transact(xa).unsafeRunSync()
+
+  def selectMoistureLast(device: String, limit: Int = 30): List[MoistureInfo] =
+    sql"""select moisture_time, device, moisture from moisture_info where device = $device order by moisture_time DESC limit $limit"""
+      .query[MoistureInfo].stream.compile.toList.transact(xa).unsafeRunSync()

@@ -16,7 +16,7 @@ Compile / packageBin / mappings += {
   (baseDirectory.value / "vertx" / "vertx-version.txt") -> "vertx/vertx-version.txt"
 }
 
-val ver = "0.5"
+val ver = "0.6"
 
 lazy val root = project
   .in(file("."))

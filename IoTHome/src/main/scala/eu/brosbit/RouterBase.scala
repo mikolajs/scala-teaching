@@ -2,7 +2,8 @@ package eu.brosbit
 
 import io.vertx.core.Vertx
 import io.vertx.core.http.{HttpMethod, HttpServerResponse}
-import io.vertx.ext.web.Router
+import io.vertx.ext.web.{Router, RoutingContext}
+import scala.jdk.CollectionConverters.*
 
 class RouterBase(vertx:Vertx, router: Router):
   protected def createStateRoute(path: String): Unit =
@@ -33,6 +34,25 @@ class RouterBase(vertx:Vertx, router: Router):
         res.end("error\n")
       })
     })
+    
+  protected def getParam(name:String, ctx:RoutingContext):String = {
+    val p = ctx.queryParam(name)
+    if !p.isEmpty then p.asScala.head.trim else ""
+  }
+  
+  protected def getParamInt(name:String, ctx:RoutingContext):Int =
+    val p = getParam(name, ctx)
+    if p.nonEmpty && p.forall(c => c.isDigit) then p.toInt
+    else 0
+
+  protected def getParamFloat(name: String, ctx: RoutingContext): Float =
+    val p = getParam(name, ctx)
+    if p.nonEmpty && p.split('.').mkString.forall(c => c.isDigit) then p.toFloat
+    else 0.0f
+    
+  protected def getParamBoolean(name: String, ctx: RoutingContext): Boolean =
+    val p = getParam(name, ctx)
+    if p.nonEmpty && (p == "true" || p == "false") then p.toBoolean else false
 
   private def insertTypeString(path: String, res: HttpServerResponse): Unit =
     path.split('.').last match

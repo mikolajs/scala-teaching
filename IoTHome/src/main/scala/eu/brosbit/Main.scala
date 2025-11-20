@@ -5,12 +5,12 @@ import io.vertx.ext.web.Router
 
 object Main {
   val port = 8989
-  val ipHost = "192.168.0.218"
-//  val ipHost = "192.168.0.120"
+//  val ipHost = "192.168.0.218"
+  val ipHost = "192.168.0.120"
   def main(args: Array[String]): Unit =
     val vertx = Vertx.vertx()
     val router = Router.router(vertx)
-    val temperatureRouter = TemperatureRouter(vertx, router)
+    val temperatureRouter = SensorRouter(vertx, router)
     val cameraRouter = CameraRouter(vertx, router)
     val pzemRouter = PZEMRouter(vertx, router)
     val wateringRouter = WateringRouter(vertx, router)
@@ -22,7 +22,6 @@ object Main {
     server.requestHandler(
       router
     ).listen(port, ipHost).onSuccess(server => {
-//     ).listen(8989, "192.168.0.120").onSuccess(server => {
         println(s"Server: http://$ipHost:$port")
     }).onFailure(error => {
       println(s"Cannot set server ${error.toString}")

@@ -9,27 +9,20 @@ import io.vertx.ext.web.Router
 import scala.jdk.CollectionConverters.*
 import java.util.Date
 
-class TemperatureRouter(vertx: Vertx, router:Router) extends RouterBase(vertx, router):
+class SensorRouter(vertx: Vertx, router:Router) extends RouterBase(vertx, router):
   //val router: Router = Router.router(vertx)
 
-  router.route(HttpMethod.GET, "/temp").handler(ctx =>
-    val parTemp: Float =
-      try ctx.queryParam("T").asScala.head.trim.toFloat
-      catch
-        case e => 0.0f
-    val parTherm = 
-      try ctx.queryParam("th").asScala.head.trim
-      catch
-        case e => ""
-    val parHum =
-      try ctx.queryParam("h").asScala.head.trim
-      catch
-        case e => 0.0f
-    println(s"temperature measure T=$parTemp from $parTherm humidity $parHum")
+  router.route(HttpMethod.GET, "/measures").handler(ctx =>
+    val parTemp: Float = getParamFloat("T", ctx)
+    val parTherm = getParam("th", ctx) 
+    val parHum = getParamFloat("h", ctx)
+    val parSmoke = getParamFloat("s", ctx)
+    val parPres = getParamFloat("p", ctx)
+    println(s"temperature measure T=$parTemp from $parTherm humidity $parHum smoke $parSmoke")
     val res = ctx.response()
     if parTemp > 0.0f && parTherm.nonEmpty then
       println("Save info for TemperatureData")
-      TemperatureData.addMeasure(parTherm.head, Date().getTime, parTemp)
+      SensorData.addMeasure(parTherm, Date().getTime, parTemp, parHum, parPres, parSmoke)
       res
       .putHeader("content-type", "plain/text")
       .end("OK\n")
@@ -40,7 +33,7 @@ class TemperatureRouter(vertx: Vertx, router:Router) extends RouterBase(vertx, r
   )
 
   router.route(HttpMethod.GET, "/boiler").handler(ctx =>
-    val T = TemperatureData.getTemperatureForBoiler
+    val T = SensorData.getTemperatureForBoiler
     val res = ctx.response()
     println(s"Set temperature boiler: $T")
     res.putHeader("content-type", "plain/text").end(T.toString)
@@ -104,7 +97,7 @@ class TemperatureRouter(vertx: Vertx, router:Router) extends RouterBase(vertx, r
   )
   
   router.route(HttpMethod.GET, "/info/temp_setting").handler(ctx =>
-    val jsonStr = TemperatureData.getOwnSettings
+    val jsonStr = SensorData.getOwnSettings
     val res = ctx.response()
     res.putHeader("content-type", "application/json")
     res.end(jsonStr)
@@ -112,26 +105,20 @@ class TemperatureRouter(vertx: Vertx, router:Router) extends RouterBase(vertx, r
   
   router.route(HttpMethod.GET, "/reload_time_scheduler").handler(ctx =>
     val res = ctx.response()
-    TemperatureData.reloadDataFromFile()
+    SensorData.reloadDataFromFile()
     res.putHeader("content-type", "html/text")
     res.end("ok")
   )
   
   router.route(HttpMethod.GET, "/set_temperature").handler(ctx =>
-    val parTemp: Float =
-      try ctx.queryParam("T").asScala.head.trim.toFloat
-      catch
-        case e => 0.0f
-    val parOn: Boolean =
-      try ctx.queryParam("on").asScala.head.trim.toBoolean
-      catch
-        case e => false
+    val parTemp: Float = getParamFloat("T", ctx)
+    val parOn: Boolean = getParamBoolean("on", ctx)
 
     //println(s"set temperature $parTemp on? $parOn")
-    TemperatureData.setOwnSettings(parTemp, parOn)
+    SensorData.setOwnSettings(parTemp, parOn)
     val res = ctx.response()
     res.putHeader("content-type", "application/json")
-    res.end(TemperatureData.getOwnSettings)
+    res.end(SensorData.getOwnSettings)
   )
   
   router.route(HttpMethod.GET, "/").handler(ctx =>{

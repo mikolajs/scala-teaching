@@ -7,33 +7,13 @@ import io.vertx.core.http.HttpMethod
 
 class PZEMRouter(vertx: Vertx, router: Router) extends RouterBase(vertx, router):
   router.route(HttpMethod.GET, "/addpowerinfo").handler(ctx =>
-    val measurerName: String = ctx.queryParam("m").asScala.toList match
-      case Nil => ""
-      case m :: rest => m.trim
-
-    val voltage:Float = ctx.queryParam("v").asScala.toList match
-      case Nil => 0.0
-      case v::rest => try v.trim.toFloat catch case e => 0.0
-
-    val current: Float = ctx.queryParam("a").asScala.toList match
-      case Nil => 0.0
-      case v :: rest => try v.trim.toFloat catch case e => 0.0
-
-    val power: Float = ctx.queryParam("p").asScala.toList match
-      case Nil => 0.0
-      case v :: rest => try v.trim.toFloat catch case e => 0.0
-
-    val energy: Float = ctx.queryParam("e").asScala.toList match
-      case Nil => 0.0
-      case v :: rest => try v.trim.toFloat catch case e => 0.0
-
-    val frequency: Float = ctx.queryParam("f").asScala.toList match
-      case Nil => 0.0
-      case v :: rest => try v.trim.toFloat catch case e => 0.0
-
-    val pf: Float = ctx.queryParam("x").asScala.toList match
-      case Nil => 0.0
-      case v :: rest => try v.trim.toFloat catch case e => 0.0
+    val measurerName: String = getParam("m", ctx)
+    val voltage:Float = getParamFloat("v", ctx)
+    val current: Float = getParamFloat("a", ctx)
+    val power: Float = getParamFloat("p", ctx)
+    val energy: Float = getParamFloat("e", ctx)
+    val frequency: Float = getParamFloat("f", ctx)
+    val pf: Float = getParamFloat("x", ctx)
     //println(s"$measurerName, $voltage, $current, $power, $energy, $frequency, $pf")
     val res = ctx.response()
     PZEMData.saveMeasure(measurerName, voltage, current, power, energy, frequency, pf)
@@ -49,10 +29,7 @@ class PZEMRouter(vertx: Vertx, router: Router) extends RouterBase(vertx, router)
   )
 
   router.route(HttpMethod.GET, "/getPzemMeasures").handler(ctx =>
-    val pzemName = ctx.queryParam("n").asScala.toList match {
-      case Nil => ""
-      case n::rest => n.trim
-    }
+    val pzemName = getParam("n", ctx)
     val jsonStr = PZEMData.getMeasures(pzemName)
     val res = ctx.response()
     res.setStatusCode(200)

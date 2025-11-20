@@ -1,0 +1,57 @@
+## sensors temperatura
+/measures : th[string], t[float], h[float], s[float], p[float]
+
+/boiler 
+
+/addboilerinfo : rwt[float], bwt[float], spb[float], oemd[int]
+
+/info/expected_temperature 
+
+/info/measures
+
+/info/boiler_info
+
+/info/boiler_set_temp
+
+/info/temp_setting
+
+/reload_time_scheduler
+
+/set_temperature : T[float], on[boolean]
+
+## camera
+
+/setImage : name[string]
+
+/getCameraImages : t[long], d[string]
+
+/getCameraNames 
+
+/cameras/*
+
+## PZEM
+/addpowerinfo : m[string], v[float], a[float], p[float], e[float], f[float], x[float]
+
+/getPzemNames 
+
+/getPzemMeasures : n[string]
+
+## watering plants
+/getWateringDevices
+
+/setWateringInfo : d[string]
+
+/getWateringInfo : d[string]
+
+/canWatering : d[string]
+
+/getMoistureDevices 
+
+/getMoistureInfo : d[string]
+
+/setMoistureInfo : d[string], m[int]
+
+/reloadWateringScheduler
+
+
+  

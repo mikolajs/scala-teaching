@@ -17,6 +17,12 @@ function reqMeasures(){
         str += new Date(m.t).toLocaleString('pl-Pl');
         str += '</td><td>';
         str +=  m.T;
+        str += '</td><td>';
+        str +=  m.h;
+        str += '</td><td>';
+        str +=  m.p;
+        str += '</td><td>';
+        str +=  m.s;
         str += '</td></tr>';
     }
     document.getElementById('measuresTab').innerHTML = str;
@@ -32,6 +38,7 @@ function loadBoilerSet(){
     req.send();
 }
 function reqBoilerSet(){
+    //console.log(this.responseText)
     let json = JSON.parse(this.responseText);
     let str = '';
     for(b of json.boiler) {
@@ -84,6 +91,7 @@ function reqBoilerExpectedTemp(){
     //console.log(this.responseText);
     let json = JSON.parse(this.responseText);
     let str = '';
+    if(!json.boiler) return;
     for(b of json.boiler) {
         str += '<tr><td>';
         str += new Date(b.t).toLocaleString('pl-Pl');

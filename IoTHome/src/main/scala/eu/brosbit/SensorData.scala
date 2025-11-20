@@ -2,15 +2,15 @@ package eu.brosbit
 
 import java.util.{Calendar, Date}
 
-case class TemperatureMeasure(t:Long, T:Float)
+case class SensorMeasure(t:Long, T:Float)
 
-object TemperatureData:
+object SensorData:
   private val MAX_SIZE = 20
   private val THERMOMETERS = 2
   private val MAX_TEMP = 40.0f
   private val MIN_TEMP = 30.0f
   private val DELTA_TIME = 240000L
-  private val lastTemperatures = scala.collection.mutable.Map[Char, TemperatureMeasure]()
+  private val lastMeasures = scala.collection.mutable.Map[String, SensorMeasure]()
   private var tableTemperaturesWorkingDay = loadExpectedTempScheduler("workingdays")
   private var tableTemperaturesWeekendDay = loadExpectedTempScheduler("freedays")
   private var T_boiler = 30.0f
@@ -24,15 +24,16 @@ object TemperatureData:
   def getTemperatureForBoiler: Float =
     val TO = if TEMP_SETTING then TEMP_SETTING_VAL else checkExpectedTemp //oczekiwana
     val TP = countAvgTemperature // z pomiarów
+    println(s"getTempForBoiler: T expected: $TO T measured avg: $TP")
     changeBoilerTemp(TO, TP)
     DBConnect.insertBoilerSetTemperature(Date().getTime, T_boiler)
     T_boiler
 
-  def addMeasure(C:Char, t:Long, T:Float):Unit =
-    DBConnect.insertMeasure(C, t, T)
-    lastTemperatures += (C -> TemperatureMeasure(t, T))
-    for m <- lastTemperatures do
-      if m._2.t < t - 2L*3600000L then lastTemperatures.remove(m._1)
+  def addMeasure(deviceName:String, t:Long, T:Float, h:Float = 0.0f, p:Float = 0.0f, s:Float = 0.0f):Unit =
+    DBConnect.insertMeasure(deviceName, t, T, h, p, s)
+    lastMeasures += (deviceName -> SensorMeasure(t, T))
+    for m <- lastMeasures do
+      if m._2.t < t - 3600000L then lastMeasures.remove(m._1)
 
   def getOwnSettings = s"""{"settings":{"T":$TEMP_SETTING_VAL, "on":$TEMP_SETTING}}"""
 
@@ -57,9 +58,10 @@ object TemperatureData:
     println(s"for file $file reloaded ${map.size}")
     map
 
-  private def countAvgTemperature = lastTemperatures.map(_._2.T).sum / lastTemperatures.size
+  private def countAvgTemperature =
+    val temp = lastMeasures.map(_._2.T).sum / lastMeasures.size
+    if temp.isNaN then 21.0f else temp
 
-  import scala.compiletime.ops.double
   import scala.math.*
 
   private def countChange(TO: Float, TP: Float): Float =

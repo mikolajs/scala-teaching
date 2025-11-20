@@ -10,8 +10,19 @@ object WateringData:
     DBConnect.insertWatering(time, device) > 0
   }
 
-  def getDeviceNames:String =
+  def saveMoisture(time:Long, device:String, moisture:Int):Boolean = {
+    MainLogger.infoLog(s"trying to save moisture info by device $device, at: $time val: $moisture")
+    DBConnect.insertMoisture(time, device, moisture) > 0
+  }
+
+  def getWateringDeviceNames:String =
     val content = DBConnect.selectWateringDeviceNames().map(d =>
+      s"\"$d\""
+    ).mkString(",")
+    s"""{"devices":[$content]}"""
+
+  def getMoistureDeviceNames: String =
+    val content = DBConnect.selectMoistureNames().map(d =>
       s"\"$d\""
     ).mkString(",")
     s"""{"devices":[$content]}"""
@@ -21,6 +32,10 @@ object WateringData:
       s"$t"
     ).mkString(",")
     s"""{"wateringTimes":[$content]}"""
+
+  def getLastMoisture(device: String): String =
+    val content = DBConnect.selectMoistureLast(device).map(t => t.toJson).mkString(",")
+    s"""{"moistureTimes":[$content]}"""
     
   def checkMakeWatering(device:String):Boolean =
     val lastWatering: Long = DBConnect.selectWateringLast(device).headOption.getOrElse(0L)
