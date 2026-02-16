@@ -1,6 +1,5 @@
 import scala.util.Random
 import scala.io.Source
-
 val rand = Random()
 
 def rzut = rand.nextInt(181)

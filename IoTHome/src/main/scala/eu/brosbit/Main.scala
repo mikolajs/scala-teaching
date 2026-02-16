@@ -14,6 +14,7 @@ object Main {
     val cameraRouter = CameraRouter(vertx, router)
     val pzemRouter = PZEMRouter(vertx, router)
     val wateringRouter = WateringRouter(vertx, router)
+    val variousActionsRouter = VariousActionsRouter(vertx, router)
     //val fs = vertx.fileSystem()
     //val afile = fs.openBlocking("index.html", OpenOptions())
     //val gios = ClientGios()

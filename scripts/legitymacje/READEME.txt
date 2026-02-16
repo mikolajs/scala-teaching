@@ -7,3 +7,6 @@
 4. Uruchom legitymacja.scala
 
 
+
+
+

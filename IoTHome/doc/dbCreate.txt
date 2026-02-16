@@ -21,6 +21,7 @@ CREATE TABLE camera_images_info (create_time bigint, camera_name varchar(100), P
 CREATE TABLE pzem_info (create_time bigint, measurer varchar(100), v float, c float, p float, e float, f float, pf float, PRIMARY KEY(create_time, measurer));
 CREATE TABLE watering_info (watering_time bigint, device varchar(100), PRIMARY KEY(watering_time, device));
 CREATE TABLE moisture_info (moisture_time bigint, device varchar(100), moisture integer, PRIMARY KEY(moisture_time, device));
+CREATE TABLE christmas_tree (id int, state int, PRIMARY KEY(id));
 
 ## alter table measure alter column th type varchar(50); !!!
 ALTER TABLE measure ALTER COLUMN th type VARCHAR(50);
