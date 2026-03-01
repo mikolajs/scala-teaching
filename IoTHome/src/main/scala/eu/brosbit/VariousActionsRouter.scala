@@ -7,8 +7,9 @@ import io.vertx.core.http.HttpMethod
 class VariousActionsRouter(vertx:Vertx, router:Router) extends RouterBase (vertx, router):
   router.route(HttpMethod.GET, "/getChristmasTreeState").handler(ctx =>
     val state = VariousActionData.getChristmasTreeInfo
+    val json = s"""{"state":$state}"""
     val res = ctx.response()
-    res.setStatusCode(200).putHeader("Content-Type", "plain/text").send(state.toString)
+    res.setStatusCode(200).putHeader("Content-Type", "application/json").send(json)
   )
   router.route(HttpMethod.GET, "/setChristmasTreeState").handler(ctx =>
     val s = getParamInt("state", ctx)
@@ -20,4 +21,5 @@ class VariousActionsRouter(vertx:Vertx, router:Router) extends RouterBase (vertx
     else
       res.setStatusCode(404).send("Error")
   )
-
+  createStateRoute("christmastree.html")
+  createPictureRoute("chtree.png")

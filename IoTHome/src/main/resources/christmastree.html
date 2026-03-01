@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>In/On light Christmas Tree</title>
+    <style>
+        .buttons { padding: 5px 10px; background-color: red; color: white;  text-decoration: none;
+            text-align: center; display:inline-block;
+        }
+        label { font-size: 16px;}
+    </style>
+
+</head>
+<body>
+<nav>
+    <a href="/" class="buttons" style="padding: 5px 10px; background-color: crimson; color: white;  text-decoration: none;
+  text-align: center; display:inline-block;"> ← Powrót</a>
+</nav>
+<section>
+    <label for="setOn"> Włącz/Wyłącz choinkę: <br>
+        <input type="checkbox" name="" id="setOn" onchange="setChristmasTree()" value="false">
+        <span id="onInfo" style="color:darkgreen">Wyłączone</span>
+    </label>
+    <div>
+        <img src="/chtree.png" alt="tree">
+    </div>
+    <script>
+        function setChristmasTree(){
+            let check = document.getElementById('setOn');
+            let on = check.checked;
+            setChristmasTreeOn(on);
+        }
+        function setChristmasTreeOn(on){
+            const req = new XMLHttpRequest();
+            req.addEventListener("load", checkChristmasTreeConfirm);
+            let onInt = 0;
+            if(on) onInt = 1;
+            else onInt = 0;
+            req.open("GET", "/setChristmasTreeState?state="+onInt);
+            req.send();
+        }
+        function checkChristmasTreeConfirm(){
+            console.log('set confirmed');
+            checkChristmasTree();
+
+        }
+        function checkChristmasTree(){
+            const req = new XMLHttpRequest();
+            req.addEventListener("load", reqChristmasTree);
+            req.open("GET", "/getChristmasTreeState");
+            req.send();
+        }
+        function reqChristmasTree(){
+            console.log(this.responseText);
+            let json = JSON.parse(this.responseText);
+            console.log(json);
+            let on = json.state;
+            let info = "Wyłączona"
+            if(on > 0) info = "Włączona"
+            document.getElementById("onInfo").innerHTML = info;
+            document.getElementById('setOn').value = on;
+        }
+
+        checkChristmasTree();
+    </script>
+</section>
+</body>
+</html>

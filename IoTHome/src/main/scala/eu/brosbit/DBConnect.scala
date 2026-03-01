@@ -144,9 +144,10 @@ object DBConnect:
     sql"""select moisture_time, device, moisture from moisture_info where device = $device order by moisture_time DESC limit $limit"""
       .query[MoistureInfo].stream.compile.toList.transact(xa).unsafeRunSync()
 
-  def insertChristmastTree(state:Int):Int =
-    sql"""insert into christmas_tree values(1, $state)"""
+  def insertChristmastTree(state:Int):Int = {
+    sql"""update christmas_tree set state = $state where id = 1"""
       .update.run.transact(xa).unsafeRunSync()
+  }
 
   def selectChristmasTree():List[Int] =
     sql"""select state from christmas_tree where id = 1"""

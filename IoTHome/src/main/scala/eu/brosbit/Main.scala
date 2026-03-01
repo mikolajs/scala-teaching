@@ -5,8 +5,8 @@ import io.vertx.ext.web.Router
 
 object Main {
   val port = 8989
-//  val ipHost = "192.168.0.218"
-  val ipHost = "192.168.0.120"
+  val ipHost = "192.168.0.218"
+//  val ipHost = "192.168.0.120"
   def main(args: Array[String]): Unit =
     val vertx = Vertx.vertx()
     val router = Router.router(vertx)

@@ -6,7 +6,7 @@ object VariousActionData:
     MainLogger.infoLog(s"get christmas tree info, state = $s")
     s
   
-  def setChristmasTreeState(state:Int):Boolean = { 
+  def setChristmasTreeState(state:Int):Boolean = {
     MainLogger.infoLog(s"set christmas tree state to $state")
     DBConnect.insertChristmastTree(state) > 0
   }

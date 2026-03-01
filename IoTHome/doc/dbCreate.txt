@@ -22,6 +22,8 @@ CREATE TABLE pzem_info (create_time bigint, measurer varchar(100), v float, c fl
 CREATE TABLE watering_info (watering_time bigint, device varchar(100), PRIMARY KEY(watering_time, device));
 CREATE TABLE moisture_info (moisture_time bigint, device varchar(100), moisture integer, PRIMARY KEY(moisture_time, device));
 CREATE TABLE christmas_tree (id int, state int, PRIMARY KEY(id));
+INSERT INTO christmas_tree values(1, 0);
+///dalej robię update christmas_tree!!!
 
 ## alter table measure alter column th type varchar(50); !!!
 ALTER TABLE measure ALTER COLUMN th type VARCHAR(50);

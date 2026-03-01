@@ -28,6 +28,7 @@ class RouterBase(vertx:Vertx, router: Router):
       vertx.fileSystem().readFile(path).onSuccess(file => {
         val data = file
         insertTypeString(path, res)
+        println("picture: " + path)
         res.end(data)
       }).onFailure(e => {
         res.setStatusCode(404)
@@ -59,5 +60,5 @@ class RouterBase(vertx:Vertx, router: Router):
       case ext if ext == "js" => res.putHeader("content-type", "text/javascript")
       case ext if ext == "json" => res.putHeader("content-type", "application/json")
       case ext if ext == "ico" => res.putHeader("content-type", "image/x-icon")
-      case ext if ext == "png" => res.putHeader("content/type", "image/png")
+      case ext if ext == "png" => res.putHeader("content-type", "image/png")
       case _ =>
